@@ -19,7 +19,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="float-left">Kpi Server
-                                    {{ date('d-m-Y', strtotime($tgl1)) . ' ~ ' . date('d-m-Y', strtotime($tgl2)) }}</h5>
+                                    {{ tanggal($tgl1) . ' ~ ' . tanggal($tgl2) }}</h5>
                                 <button data-toggle="modal" data-target="#view" type="button"
                                     class="float-right btn btn-info btn-sm"><i class="fa fa-calendar-alt"></i>
                                     View</button>

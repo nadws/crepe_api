@@ -1138,7 +1138,6 @@ class Point_masak extends Controller
         // END SDB VAR -------------------------------------------------
 
 
-
         $sheet5
             ->setCellValue('B1', "TAKEMORI")
             ->setCellValue('A2', 'No')
@@ -1154,13 +1153,12 @@ class Point_masak extends Controller
             ->setCellValue('K2', 'KOM PENJUALAN')
             ->setCellValue('L2', 'KOM STK')
             ->setCellValue('M2', 'KOM MAJO')
-            ->setCellValue('N2', 'KOM KPI')
-            ->setCellValue('O2', 'TOTAL KOM & GAJI')
-            ->setCellValue('P2', 'TIPS')
-            ->setCellValue('Q2', 'KASBON')
-            ->setCellValue('R2', 'DENDA')
+            ->setCellValue('N2', 'TOTAL KOM & GAJI')
+            ->setCellValue('O2', 'TIPS')
+            ->setCellValue('P2', 'KASBON')
+            ->setCellValue('Q2', 'DENDA')
 
-            ->setCellValue('S2', 'SISA GAJI')
+            ->setCellValue('R2', 'SISA GAJI')
 
             ->setCellValue('U1', 'Org P ')
             ->setCellValue('V1', $jumlah_orang->jumlah)
@@ -1209,18 +1207,17 @@ class Point_masak extends Controller
             $sheet5->setCellValue('K' . $kolom, $kom_penjualan);
             $sheet5->setCellValue('L' . $kolom, round($k->kom, 0));
             $sheet5->setCellValue('M' . $kolom, $komaj);
-            $sheet5->setCellValue('N' . $kolom, round($komKpi, 0));
-            $sheet5->setCellValue('O' . $kolom, $ttlKomGaji);
-            $sheet5->setCellValue('P' . $kolom, '');
-            $sheet5->setCellValue('Q' . $kolom, $k->kasbon);
-            $sheet5->setCellValue('R' . $kolom, $k->denda);
-            $sheet5->setCellValue('S' . $kolom, round($gaji + $kom_penjualan + $k->kom + $komaj + $komKpi - $k->kasbon - $k->denda, 0));
+            $sheet5->setCellValue('N' . $kolom, $ttlKomGaji);
+            $sheet5->setCellValue('O' . $kolom, '');
+            $sheet5->setCellValue('P' . $kolom, $k->kasbon);
+            $sheet5->setCellValue('Q' . $kolom, $k->denda);
+            $sheet5->setCellValue('R' . $kolom, round($gaji + $kom_penjualan + $k->kom + $komaj + $komKpi - $k->kasbon - $k->denda, 0));
 
             $kolom++;
         }
         // ----------------------------------------
         $batasA = count($server) + 2;
-        $sheet5->getStyle('A2:S' . $batasA)->applyFromArray($styleSdb);
+        $sheet5->getStyle('A2:R' . $batasA)->applyFromArray($styleSdb);
 
         $rowSdba = $batasA + 2;
         $rSdbas = $rowSdba + 1;
@@ -1243,12 +1240,11 @@ class Point_masak extends Controller
             ->setCellValue('K' . $rSdbas, 'KOM PENJUALAN')
             ->setCellValue('L' . $rSdbas, 'KOM STK')
             ->setCellValue('M' . $rSdbas, 'KOM MAJO')
-            ->setCellValue('N' . $rSdbas, 'KOM KPI')
-            ->setCellValue('O' . $rSdbas, 'TOTAL KOM & GAJI')
-            ->setCellValue('P' . $rSdbas, 'TIPS')
-            ->setCellValue('Q' . $rSdbas, 'KASBON')
-            ->setCellValue('R' . $rSdbas, 'DENDA')
-            ->setCellValue('S' . $rSdbas, 'SISA GAJI')
+            ->setCellValue('N' . $rSdbas, 'TOTAL KOM & GAJI')
+            ->setCellValue('O' . $rSdbas, 'TIPS')
+            ->setCellValue('P' . $rSdbas, 'KASBON')
+            ->setCellValue('Q' . $rSdbas, 'DENDA')
+            ->setCellValue('R' . $rSdbas, 'SISA GAJI')
 
             ->setCellValue('U' . $rowSdba, 'Org P ')
             ->setCellValue('V' . $rowSdba, $jumlah_orang_sdb->jumlah)
@@ -1295,12 +1291,11 @@ class Point_masak extends Controller
             $sheet5->setCellValue('K' . $kolomSdba, $kom_penjualan_sdb);
             $sheet5->setCellValue('L' . $kolomSdba, round($k->kom, 0));
             $sheet5->setCellValue('M' . $kolomSdba, $komaj);
-            $sheet5->setCellValue('N' . $kolomSdba,  round($komKpi, 0));
-            $sheet5->setCellValue('O' . $kolomSdba, $ttlKomGajiSdb);
-            $sheet5->setCellValue('P' . $kolomSdba, '');
-            $sheet5->setCellValue('Q' . $kolomSdba, $k->kasbon);
-            $sheet5->setCellValue('R' . $kolomSdba, $k->denda);
-            $sheet5->setCellValue('S' . $kolomSdba, round($gaji + $kom_penjualan_sdb + $k->kom + $komaj + $komKpi - $k->kasbon - $k->denda, 0));
+            $sheet5->setCellValue('N' . $kolomSdba, $ttlKomGajiSdb);
+            $sheet5->setCellValue('O' . $kolomSdba, '');
+            $sheet5->setCellValue('P' . $kolomSdba, $k->kasbon);
+            $sheet5->setCellValue('Q' . $kolomSdba, $k->denda);
+            $sheet5->setCellValue('R' . $kolomSdba, round($gaji + $kom_penjualan_sdb + $k->kom + $komaj + $komKpi - $k->kasbon - $k->denda, 0));
 
             $kolomSdba++;
         }
@@ -1308,7 +1303,7 @@ class Point_masak extends Controller
         $batasAwala = $rowSdba + 1;
         $batasSdba = $kolomSdba - 1;
 
-        $sheet5->getStyle('A' . $batasAwala . ':S' . $batasSdba)->applyFromArray($styleSdb);
+        $sheet5->getStyle('A' . $batasAwala . ':R' . $batasSdba)->applyFromArray($styleSdb);
 
 
         // Start Denda
