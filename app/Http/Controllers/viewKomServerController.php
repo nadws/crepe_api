@@ -46,18 +46,17 @@ class viewKomServerController extends Controller
     $ttl_kom = 0;
 
     foreach ($server as $k) {
-        if($k->point != 'Y') {
-            continue;
-        } else {
-            $o = $l++;
-            $ttl_kom += $k->komisi;
-        }
-      
+      if ($k->point != 'Y') {
+        continue;
+      } else {
+        $o = $l++;
+        $ttl_kom += $k->komisi;
+      }
     }
-    
+
     foreach ($server as $k) {
       $o1 = $l1++;
-    //   $ttl_kom += $k->komisi;
+      //   $ttl_kom += $k->komisi;
     }
 
     $bagi_kom = $service->total;
@@ -81,17 +80,16 @@ class viewKomServerController extends Controller
     $ttl_kom2 = 0;
 
     foreach ($server2 as $k) {
-        if($k->point != 'Y') {
-            continue;
-        } else {
-            $o2 = $l2++;
-            $ttl_kom2 += $k->komisi;
-        }
-      
+      if ($k->point != 'Y') {
+        continue;
+      } else {
+        $o2 = $l2++;
+        $ttl_kom2 += $k->komisi;
+      }
     }
     foreach ($server2 as $k) {
-      $o22 = $l22++; 
-    //   $ttl_kom2 += $k->komisi;
+      $o22 = $l22++;
+      //   $ttl_kom2 += $k->komisi;
     }
 
 
@@ -123,7 +121,7 @@ class viewKomServerController extends Controller
     ];
     return view('allKomisiServer.loadTakemori', $data);
   }
-  
+
   public function loadSoondobu(Request $r)
   {
     $id_lokasi = 2;
@@ -145,16 +143,20 @@ class viewKomServerController extends Controller
     $ttl_kom = 0;
 
     foreach ($server as $k) {
-        if($k->point != 'Y') {
-            continue;
-        } else {
-            $ttl_kom += $k->komisi;
-        }
+      if ($k->point != 'Y') {
+        continue;
+      } else {
+        $ttl_kom += $k->komisi;
+      }
     }
-    
+
     foreach ($server as $k) {
-      $o = $l++;
-    //   $ttl_kom += $k->komisi;
+      if ($k->point != 'Y') {
+        continue;
+      } else {
+        $o = $l++;
+      }
+      //   $ttl_kom += $k->komisi;
     }
 
     $bagi_kom = $service->total;
@@ -177,15 +179,15 @@ class viewKomServerController extends Controller
     $ttl_kom2 = 0;
 
     foreach ($server2 as $k) {
-        if($k->point != 'Y') {
-            continue;
-        } else {
-            $ttl_kom2 += $k->komisi;
-        }
+      if ($k->point != 'Y') {
+        continue;
+      } else {
+        $ttl_kom2 += $k->komisi;
+      }
     }
     foreach ($server2 as $k) {
       $o2 = $l2++;
-    //   $ttl_kom2 += $k->komisi;
+      //   $ttl_kom2 += $k->komisi;
     }
 
 
@@ -209,7 +211,7 @@ class viewKomServerController extends Controller
       'bagi_kom' => $bagi_kom,
       'settingOrang' => DB::table('db_denda_kpi')->where('id', 1)->first()->rupiah,
       'persenBagi' => DB::table('db_denda_kpi')->where('id', 3)->first()->rupiah,
-      
+
       'id_lokasi' => $id_lokasi,
       'komisi' => '0',
       'logout' => $r->session()->get('logout'),
