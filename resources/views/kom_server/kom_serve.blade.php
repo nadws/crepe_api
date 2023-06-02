@@ -85,8 +85,8 @@ foreach ($server as $k) : ?>
                                 <div class="card-header">
                                     <h5 style="font-weight: bold">
                                         Kom Server
-                                        <?= date('d-m-Y',strtotime($tgl1)) ?> ~
-                                        <?= date('d-m-Y',strtotime($tgl2)) ?>
+                                        <?= tanggal($tgl1) ?> ~
+                                        <?= tanggal($tgl2) ?>
                                     </h5>
 
 
@@ -141,8 +141,8 @@ foreach ($server as $k) : ?>
                                 <div class="card-header">
                                     <h5 style="font-weight: bold">
                                         Absensi
-                                        <?= date('d-m-Y',strtotime($tgl1)) ?> ~
-                                        <?= date('d-m-Y',strtotime($tgl2)) ?>
+                                        <?= tanggal($tgl1) ?> ~
+                                        <?= tanggal($tgl2) ?>
                                     </h5>
                                 </div>
                                 {{-- <div class="card-header">
@@ -216,8 +216,8 @@ foreach ($server as $k) : ?>
                                 <div class="card-header">
                                     <h5 style="font-weight: bold">
                                         Kom Majoo 
-                                        <?= date('d-m-Y',strtotime($tgl1)) ?> ~
-                                        <?= date('d-m-Y',strtotime($tgl2)) ?>
+                                        <?= tanggal($tgl1) ?> ~
+                                        <?= tanggal($tgl2) ?>
                                     </h5>
 
 

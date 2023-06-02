@@ -20,7 +20,7 @@
                             <div class="card-header">
                                 <a href="" data-target="#view" data-toggle="modal"
                                     class="btn btn-info float-left btn-sm mr-2"><i class="fas fa-eye"></i> View</a>
-                                <h4>Kom Server {{ date('d/m/Y', strtotime($tgl1)) }} ~ {{ date('d/m/Y', strtotime($tgl2)) }}
+                                <h4>Kom Server {{ tanggal($tgl1) }} ~ {{ tanggal($tgl2) }}
                                 </h4>
 
                             </div>

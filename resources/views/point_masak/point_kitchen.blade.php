@@ -81,8 +81,8 @@ foreach ($masak as $k) : ?>
                                 <div class="card-header">
                                     <h5 style="font-weight: bold">
                                         Point masak
-                                        <?= date('d-m-Y',strtotime($tgl1)) ?> ~
-                                        <?= date('d-m-Y',strtotime($tgl2)) ?>
+                                        <?= tanggal($tgl1) ?> ~
+                                        <?= tanggal($tgl2) ?>
                                     </h5>
 
 
@@ -145,8 +145,8 @@ foreach ($masak as $k) : ?>
                                 <div class="card-header">
                                     <h5 style="font-weight: bold">
                                         Total Absen
-                                        <?= date('d-m-Y',strtotime($tgl1)) ?> ~
-                                        <?= date('d-m-Y',strtotime($tgl2)) ?>
+                                        <?= tanggal($tgl1) ?> ~
+                                        <?= tanggal($tgl2) ?>
                                     </h5>
                                 </div>
                                 <div class="card-body">
