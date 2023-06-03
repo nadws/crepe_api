@@ -1189,7 +1189,7 @@ class Point_masak extends Controller
             $pointR = $ttlRp / $settingOrang;
             $ttlPointRp = $pointR / 10;
             $komKpi = $k->point != 'Y' ? '0' : $pointR - $ttlPointRp * $k->ttl;
-            $ttlKomGaji = $gaji + $kom_penjualan + $k->kom + $komaj + $komKpi;
+            $ttlKomGaji = $gaji + $kom_penjualan + $k->kom + $komaj;
             $totalKerja = new DateTime($k->tgl_masuk);
             $today = new DateTime();
             $tKerja = $today->diff($totalKerja);
@@ -1211,7 +1211,7 @@ class Point_masak extends Controller
             $sheet5->setCellValue('O' . $kolom, '');
             $sheet5->setCellValue('P' . $kolom, $k->kasbon);
             $sheet5->setCellValue('Q' . $kolom, $k->denda);
-            $sheet5->setCellValue('R' . $kolom, round($gaji + $kom_penjualan + $k->kom + $komaj + $komKpi - $k->kasbon - $k->denda, 0));
+            $sheet5->setCellValue('R' . $kolom, round($gaji + $kom_penjualan + $k->kom + $komaj - $k->kasbon - $k->denda, 0));
 
             $kolom++;
         }
@@ -1276,7 +1276,7 @@ class Point_masak extends Controller
             // kom kpi
             $komKpi = $k->point != 'Y' ? '0' : $pointR - $ttlPointRp * $k->ttl;
             $gaji = ($k->rp_m * $k->qty_m) + ($k->rp_e * $k->qty_e) + ($k->rp_sp * $k->qty_sp);
-            $ttlKomGajiSdb = $gaji + $kom_penjualan_sdb + $k->kom + $komaj + $komKpi;
+            $ttlKomGajiSdb = $gaji + $kom_penjualan_sdb + $k->kom + $komaj;
 
             $sheet5->setCellValue('A' . $kolomSdba, $i++);
             $sheet5->setCellValue('B' . $kolomSdba, $tKerja->y . ' Tahun ' . $tKerja->m . ' Bulan');
@@ -1295,7 +1295,7 @@ class Point_masak extends Controller
             $sheet5->setCellValue('O' . $kolomSdba, '');
             $sheet5->setCellValue('P' . $kolomSdba, $k->kasbon);
             $sheet5->setCellValue('Q' . $kolomSdba, $k->denda);
-            $sheet5->setCellValue('R' . $kolomSdba, round($gaji + $kom_penjualan_sdb + $k->kom + $komaj + $komKpi - $k->kasbon - $k->denda, 0));
+            $sheet5->setCellValue('R' . $kolomSdba, round($gaji + $kom_penjualan_sdb + $k->kom + $komaj - $k->kasbon - $k->denda, 0));
 
             $kolomSdba++;
         }
