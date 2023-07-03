@@ -1173,12 +1173,14 @@ class Point_masak extends Controller
         $i = 1;
 
         $ttlKomMajoTkmr = 0;
-        foreach($server as $k) {
+        $iu = 0;
+        foreach($server as $i => $k) {
             $komisiG = Http::get("https://majoo-laravel.putrirembulan.com/api/komisiGaji/1/$k->karyawan_majo/$tgl1/$tgl2");
             $komaj = empty($komisiG['komisi']) ? 0 : $komisiG['komisi'][0]['dt_komisi'];
             $ttlKomMajoTkmr += $komaj;
+            $iu += $i+1;
         }
-        dd($ttlKomMajoTkmr);
+        dd($ttlKomMajoTkmr . " : $iu");
         foreach ($server as $k) {
             $gaji = ($k->rp_m * $k->qty_m) + ($k->rp_e * $k->qty_e) + ($k->rp_sp * $k->qty_sp);
             $komisiServer = $k->point != 'Y' ? 0 : round($k->kom, 0);
