@@ -127,6 +127,7 @@ class PointQuery
                     a.tgl BETWEEN '$tgl1' 
                     AND '$tgl2' 
                     and a.id_lokasi = '$id_lokasi_tkm' 
+
                   GROUP BY 
                     a.admin
                 ) AS b ON b.admin = a.nama 

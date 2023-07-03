@@ -1190,7 +1190,7 @@ class Point_masak extends Controller
             // $komisiG = Http::get("https://majoo-laravel.putrirembulan.com/api/komisiGaji/1/$k->karyawan_majo/$tgl1/$tgl2");
             // $komaj = empty($komisiG['komisi']) ? 0 : $komisiG['komisi'][0]['dt_komisi'];
             $kom_penjualan = $k->point != 'Y' ? '0' : round(($kom / ($total_m + $total_sp)) * ($absen_m + $absen_sp), 0);
-            $komaj = $k->point != 'Y' ? '0' : round(($ttlKomMajoTkmr / ($total_m + $total_sp)) * ($absen_m + $absen_sp), 0);
+            $komaj = round(($ttlKomMajoTkmr / ($total_m + $total_sp)) * ($absen_m + $absen_sp), 0);
             // kom kpi
             $ttlRp = $komKpi1 * $persenBagi + $komKpi2 * $persenBagi;
             $pointR = $ttlRp / $settingOrang;
