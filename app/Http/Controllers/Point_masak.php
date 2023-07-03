@@ -927,7 +927,7 @@ class Point_masak extends Controller
             ->setCellValue('B11', $service_chargeTkm)
             ->setCellValue('B12', round($pb1_not_gojekTkm, 0))
             ->setCellValue('B13', round($majoTkm->bayar_majo, 0))
-            ->setCellValue('B14', round($majoTkm->bayar_majo * 0.1, 0))
+            ->setCellValue('B14', round($majoTkm->bayar_majo / 11, 0))
             ->setCellValue('B15', round(($total_gojekTkm->total + $majo_gojekTkm->bayar_majo) - $pb1_gojekTkm, 0))
             ->setCellValue('B16', round($pb1_gojekTkm, 0))
             ->setCellValue('B17', round($pb1_gojekTkm + $pb1_not_gojekTkm + ($majoTkm->bayar_majo * 0.1), 0))
