@@ -1178,7 +1178,7 @@ class Point_masak extends Controller
             $komaj = empty($komisiG['komisi']) ? 0 : $komisiG['komisi'][0]['dt_komisi'];
             $ttlKomMajoTkmr += $komaj;
         }
-
+        dd($ttlKomMajoTkmr);
         foreach ($server as $k) {
             $gaji = ($k->rp_m * $k->qty_m) + ($k->rp_e * $k->qty_e) + ($k->rp_sp * $k->qty_sp);
             $komisiServer = $k->point != 'Y' ? 0 : round($k->kom, 0);
