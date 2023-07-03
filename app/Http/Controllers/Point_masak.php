@@ -756,7 +756,7 @@ class Point_masak extends Controller
 
         $voidTkm = PointQuery::void($loc, $tgl1, $tgl2);
 
-        $pb1_gojekTkm = ($total_gojekTkm->total + $majo_gojekTkm->bayar_majo * 0.8) / 11;
+        $pb1_gojekTkm = (($total_gojekTkm->total + $majo_gojekTkm->bayar_majo) * 0.8) / 11;
 
         $service_chargeTkm = $total_not_gojekTkm->total * 0.07;
         $pb1_not_gojekTkm = ($total_not_gojekTkm->total  + $service_chargeTkm) * 0.1;
@@ -798,7 +798,7 @@ class Point_masak extends Controller
 
         $voidSdb =  PointQuery::void($locSdb, $tgl1, $tgl2);
 
-        $pb1_gojekSdb = ($total_gojekSdb->total + $majo_gojekSdb->bayar_majo * 0.8) / 11;
+        $pb1_gojekSdb = (($total_gojekSdb->total + $majo_gojekSdb->bayar_majo) * 0.8) / 11;
 
         $service_chargeSdb = $total_not_gojekSdb->total * 0.07;
         $pb1_not_gojekSdb = ($total_not_gojekSdb->total  + $service_chargeSdb) * 0.1;
