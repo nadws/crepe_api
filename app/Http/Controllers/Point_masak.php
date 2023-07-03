@@ -1065,15 +1065,15 @@ class Point_masak extends Controller
         $total_m = 0;
         $total_sp = 0;
         foreach ($server as $m) {
-            if ($m->point != 'Y') {
-                continue;
-            } else {
+            // if ($m->point != 'Y') {
+            //     continue;
+            // } else {
 
-                $orang =  $l++;
-                $total_m += $m->qty_m + $m->qty_e;
-                $total_sp += $m->qty_sp * 2;
-                $ttl_kom += $m->komisi;
-            }
+            // }
+            $orang =  $l++;
+            $total_m += $m->qty_m + $m->qty_e;
+            $total_sp += $m->qty_sp * 2;
+            $ttl_kom += $m->komisi;
         }
 
         // kpi ------------------------------
