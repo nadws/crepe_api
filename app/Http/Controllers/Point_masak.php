@@ -1172,6 +1172,13 @@ class Point_masak extends Controller
         $kolom = 3;
         $i = 1;
 
+        $ttlKomMajoTkmr = 0;
+        foreach($server as $k) {
+            $komisiG = Http::get("https://majoo-laravel.putrirembulan.com/api/komisiGaji/1/$k->karyawan_majo/$tgl1/$tgl2");
+            $komaj = empty($komisiG['komisi']) ? 0 : $komisiG['komisi'][0]['dt_komisi'];
+            $ttlKomMajoTkmr += $komaj;
+        }
+
         foreach ($server as $k) {
             $gaji = ($k->rp_m * $k->qty_m) + ($k->rp_e * $k->qty_e) + ($k->rp_sp * $k->qty_sp);
             $komisiServer = $k->point != 'Y' ? 0 : round($k->kom, 0);
@@ -1180,10 +1187,10 @@ class Point_masak extends Controller
             $absen_m = $k->qty_m + $k->qty_e;
             $absen_sp = $k->qty_sp * 2;
 
-            $komisiG = Http::get("https://majoo-laravel.putrirembulan.com/api/komisiGaji/1/$k->karyawan_majo/$tgl1/$tgl2");
-            $komaj = empty($komisiG['komisi']) ? 0 : $komisiG['komisi'][0]['dt_komisi'];
+            // $komisiG = Http::get("https://majoo-laravel.putrirembulan.com/api/komisiGaji/1/$k->karyawan_majo/$tgl1/$tgl2");
+            // $komaj = empty($komisiG['komisi']) ? 0 : $komisiG['komisi'][0]['dt_komisi'];
             $kom_penjualan = $k->point != 'Y' ? '0' : round(($kom / ($total_m + $total_sp)) * ($absen_m + $absen_sp), 0);
-
+            $komaj = $k->point != 'Y' ? '0' : round(($ttlKomMajoTkmr / ($total_m + $total_sp)) * ($absen_m + $absen_sp), 0);
             // kom kpi
             $ttlRp = $komKpi1 * $persenBagi + $komKpi2 * $persenBagi;
             $pointR = $ttlRp / $settingOrang;
