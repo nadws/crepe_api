@@ -31,7 +31,7 @@ class TabelController extends Controller
             'title' => 'Absensi',
             'logout' => $request->session()->get('logout'),
             'absensi' => Absen::select('tb_absen.*', 'tb_karyawan.nama')->join('tb_karyawan', 'tb_absen.id_karyawan', '=', 'tb_karyawan.id_karyawan')->orderBy('id_lokasi', 'DESC')->get(),
-            'karyawan' => Karyawan::all(),
+            'karyawan' => DB::select("SELECT nama, id_karyawan FROM tb_karyawan WHERE id_posisi = 13"),
             'tahun' => Absen::all(),
             'status' => DB::table('status')->get(),
             'bulan' => $bulan,

@@ -57,20 +57,23 @@
                 <div class="row">
 
                     <div class="col-md-12">
-
-                        <div id="badan">
+                        @livewire('absen2')
+                        {{-- <div id="badan">
 
                         </div>
-
+                        <center>
+                        <div class="spinner-border" id="spinnerTkm" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div> --}}
+                    </center>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 @endsection
 @section('script')
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             function getUrl(url) {
                 $("#badan").load(url, "data", function(response, status, request) {
@@ -100,8 +103,13 @@
 
                     url: "{{ route('tabel') }}?page=" + page,
                     dataType: "html",
+                    beforeSend: function() {
+                        $("#spinnerTkm").show();
+                    },
                     success: function(hasil) {
                         $('#badan').html(hasil);
+                    $("#spinnerTkm").hide();
+
                     }
                 });
             }
@@ -135,30 +143,30 @@
             });
 
             $(document).on('click', '.btnInput', function() {
-                if(!confirm('Apakah anda yakin ?')) {
-                    event.preventDefault();
-                } else {
-                    var nopage = $("#nopage").val(page)
-                    var id_karyawan = $(this).attr('id_karyawan')
-                    var bulan = $(this).attr('bulan')
-                    var tahun = $(this).attr('tahun')
-                    var tanggal = $(this).attr('tanggal')
-                    var status = $(this).attr('status')
-                    var url = "{{ route('tabel') }}?page=" + page + "&bulan=" + bulan + "&tahun=" +
-                        tahun
-                    $.ajax({
-                        type: "POST",
-                        data: {
-                            "_token": "{{ csrf_token() }}"
-                        },
-                        url: "{{ route('addAbsen') }}?page=4&id_departemen=3&id_karyawan=" +
-                            id_karyawan +
-                            "&status=" + status + "&tanggal=" + tanggal,
-                        success: function(response) {
-                            getUrl(url)
-                        }
-                    });
-                }
+                // if (!confirm('Apakah anda yakin ?')) {
+                //     event.preventDefault();
+                // } else {
+                // }
+                var nopage = $("#nopage").val(page)
+                var id_karyawan = $(this).attr('id_karyawan')
+                var bulan = $(this).attr('bulan')
+                var tahun = $(this).attr('tahun')
+                var tanggal = $(this).attr('tanggal')
+                var status = $(this).attr('status')
+                var url = "{{ route('tabel') }}?page=" + page + "&bulan=" + bulan + "&tahun=" +
+                    tahun
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        "_token": "{{ csrf_token() }}"
+                    },
+                    url: "{{ route('addAbsen') }}?page=4&id_departemen=3&id_karyawan=" +
+                        id_karyawan +
+                        "&status=" + status + "&tanggal=" + tanggal,
+                    success: function(response) {
+                        getUrl(url)
+                    }
+                });
             })
 
 
@@ -210,5 +218,5 @@
                 });
             })
         })
-    </script>
+    </script> --}}
 @endsection
