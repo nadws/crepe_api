@@ -418,10 +418,10 @@ Route::get('/downloadAbsen', [AbsenController::class, 'downloadAbsen'])->name('d
 Route::post('/addAbsen', [AbsenController::class, 'addAbsen'])->name('addAbsen')->middleware('auth');
 Route::post('/updateAbsen', [AbsenController::class, 'updateAbsen'])->name('updateAbsen')->middleware('auth');
 Route::post('/deleteAbsen', [AbsenController::class, 'deleteAbsen'])->name('deleteAbsen')->middleware('auth');
-Route::get('/tabel',[TabelController::class,'index'])->name('tabel')->middleware('auth');
-Route::get('/tabelKoki',[TabelController::class,'tabelKoki'])->name('tabelKoki')->middleware('auth');
+Route::get('/tabel', [TabelController::class, 'index'])->name('tabel')->middleware('auth');
+Route::get('/tabelKoki', [TabelController::class, 'tabelKoki'])->name('tabelKoki')->middleware('auth');
 
-Route::get('/welcome',[WelcomeController::class,'welcome'])->name('welcome')->middleware('auth');
+Route::get('/welcome', [WelcomeController::class, 'welcome'])->name('welcome')->middleware('auth');
 
 // menu orderan --------------------------------------------------------------------------
 Route::get('/orderan', [OrderanController::class, 'index'])->name('orderan');
@@ -586,7 +586,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/loadSoondobu', [viewKomServerController::class, 'loadSoondobu'])->name('loadSoondobu');
     Route::get('/apiKom', [viewKomServerController::class, 'apiKom'])->name('apiKom');
     Route::get('/kpi', [KpiController::class, 'index'])->name('kpi');
-    
+
     Route::get('/subKategori', [KpiController::class, 'subKategori'])->name('subKategori');
     Route::post('/saveDendaKpi', [KpiController::class, 'saveDendaKpi'])->name('saveDendaKpi');
     Route::get('/kategoriKpi', [KpiController::class, 'kategoriKpi'])->name('kategoriKpi');
@@ -599,5 +599,3 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/save_tambah_sub_kategori', [KpiController::class, 'save_tambah_sub_kategori'])->name('save_tambah_sub_kategori');
     Route::get('/delete_subkategori', [KpiController::class, 'delete_subkategori'])->name('delete_subkategori');
 });
-
-
