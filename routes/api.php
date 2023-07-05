@@ -510,7 +510,7 @@ Route::get('importAbsen', function () {
     $tgl1 = date('Y-m-d');
     $tgl2 = date('Y-m-t');
     $data = [
-        'absenTkmr' => DB::select("SELECT * FROM `tb_absen` WHERE id_lokasi = 1"),
+        'absenTkmr' => DB::select("SELECT * FROM `tb_absen` WHERE id_lokasi = 1 AND tgl = '$tgl1'"),
         // 'absenSdb' => DB::table('tb_absen')->where('id_lokasi',2)->get(),
     ];
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
