@@ -177,11 +177,19 @@ class PointQuery
                 Order by a.point DESC 
         ");
   }
+
   public static function getService($id_lokasi, $tgl1, $tgl2)
   {
     return DB::selectOne("SELECT SUM(if(tb_transaksi.total_orderan - discount - voucher < 0 ,0,tb_transaksi.total_orderan - discount - voucher)) as total FROM `tb_transaksi`
         LEFT JOIN(SELECT tb_order2.no_order2 as no_order, tb_order2.id_distribusi as id_distribusi FROM tb_order2 GROUP BY tb_order2.no_order2) dt_order ON tb_transaksi.no_order = dt_order.no_order
         WHERE tb_transaksi.id_lokasi = '$id_lokasi' and  dt_order.id_distribusi != '2' AND tb_transaksi.tgl_transaksi >= '$tgl1' AND tb_transaksi.tgl_transaksi <= '$tgl2'");
+  }
+
+  public static function getServiceServer($tgl1, $tgl2)
+  {
+    return DB::selectOne("SELECT SUM(if(tb_transaksi.total_orderan - discount - voucher < 0 ,0,tb_transaksi.total_orderan - discount - voucher)) as total FROM `tb_transaksi`
+        LEFT JOIN(SELECT tb_order2.no_order2 as no_order, tb_order2.id_distribusi as id_distribusi FROM tb_order2 GROUP BY tb_order2.no_order2) dt_order ON tb_transaksi.no_order = dt_order.no_order
+        WHERE dt_order.id_distribusi != '2' AND tb_transaksi.tgl_transaksi >= '$tgl1' AND tb_transaksi.tgl_transaksi <= '$tgl2'");
   }
 
   public static function getMasak($id_lokasi, $tgl1, $tgl2)
@@ -365,3 +373,12 @@ class PointQuery
             GROUP BY c.kd_kategori");
   }
 }
+
+class Server
+{
+  public static function getServer($tgl1, $tgl2)
+  {
+    
+  }
+}
+

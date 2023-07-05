@@ -674,24 +674,24 @@ class Point_masak extends Controller
         $rspSdba = $rsSdb + 2;
         $rsrSdba = $rspSdb + 1;
         $sheet2
-        ->setCellValue('B' . $rowSdba, 'Soondobu')
-        ->setCellValue('A' . $rSdba, 'NO')
-        ->setCellValue('B' . $rSdba, 'Nama')
-        ->setCellValue('C' . $rSdba, 'M')
-        ->setCellValue('D' . $rSdba, 'E')
-        ->setCellValue('E' . $rSdba, 'SP')
-        ->setCellValue('F' . $rSdba, 'Total')
-        ->setCellValue('G' . $rSdba, 'Rp M')
-        ->setCellValue('H' . $rSdba, 'Rp E')
-        ->setCellValue('I' . $rSdba, 'Rp SP')
-        ->setCellValue('J' . $rSdba, 'Gaji')
-        ->setCellValue('K' . $rSdba, 'Kom Point Masak')
-        ->setCellValue('L' . $rSdba, 'Total Kom & Gaji')
-        ->setCellValue('M' . $rSdba, 'Denda')
-        ->setCellValue('N' . $rSdba, 'Kasbon')
-        ->setCellValue('O' . $rSdba, 'Sisa Gaji')
-        ->setCellValue('P' . $rSdba, 'Terima Point')
-        ->setCellValue('Q' . $rSdba, 'Lama Kerja');
+            ->setCellValue('B' . $rowSdba, 'Soondobu')
+            ->setCellValue('A' . $rSdba, 'NO')
+            ->setCellValue('B' . $rSdba, 'Nama')
+            ->setCellValue('C' . $rSdba, 'M')
+            ->setCellValue('D' . $rSdba, 'E')
+            ->setCellValue('E' . $rSdba, 'SP')
+            ->setCellValue('F' . $rSdba, 'Total')
+            ->setCellValue('G' . $rSdba, 'Rp M')
+            ->setCellValue('H' . $rSdba, 'Rp E')
+            ->setCellValue('I' . $rSdba, 'Rp SP')
+            ->setCellValue('J' . $rSdba, 'Gaji')
+            ->setCellValue('K' . $rSdba, 'Kom Point Masak')
+            ->setCellValue('L' . $rSdba, 'Total Kom & Gaji')
+            ->setCellValue('M' . $rSdba, 'Denda')
+            ->setCellValue('N' . $rSdba, 'Kasbon')
+            ->setCellValue('O' . $rSdba, 'Sisa Gaji')
+            ->setCellValue('P' . $rSdba, 'Terima Point')
+            ->setCellValue('Q' . $rSdba, 'Lama Kerja');
 
         $kolomSdba = $rSdba;
         $i = 1;
@@ -1049,9 +1049,7 @@ class Point_masak extends Controller
 
         $batasLapSdb = $kolapSdb - 1;
         $sheet4->getStyle('K1:Q' . $batasLapSdb)->applyFromArray($style);
-        
 
-        // mulai gaji server
         $spreadsheet->createSheet();
         $spreadsheet->setActiveSheetIndex(4);
         $sheet5 = $spreadsheet->getActiveSheet();
@@ -1069,9 +1067,9 @@ class Point_masak extends Controller
         $jumlah_orang = DB::table('tb_jumlah_orang')->where('ket_karyawan', 'Server')->where('id_lokasi', 1)->first();
         $persen = DB::table('persentse_komisi')->where('nama_persentase', 'Server')->where('id_lokasi', 1)->first();
 
-        $server = PointQuery::getServer(1, $tgl1, $tgl2);
+        $server = PointQuery::getServer($id_lokasi_tkm, $tgl1, $tgl2);
 
-        $orang_real = 1;
+        $l = 1;
         $ttl_kom = 0;
         $total_m = 0;
         $total_sp = 0;
@@ -1079,12 +1077,11 @@ class Point_masak extends Controller
             if ($m->point != 'Y') {
                 continue;
             } else {
-                $orang =  $orang_real++;
+                $orang =  $l++;
                 $total_m += $m->qty_m + $m->qty_e;
                 $total_sp += $m->qty_sp * 2;
                 $ttl_kom += $m->komisi;
             }
-            
         }
 
         // kpi ------------------------------
@@ -1170,7 +1167,6 @@ class Point_masak extends Controller
             ->setCellValue('Q2', 'DENDA')
 
             ->setCellValue('R2', 'SISA GAJI')
-            ->setCellValue('S2', 'POINT')
 
             ->setCellValue('U1', 'Org P ')
             ->setCellValue('V1', $jumlah_orang->jumlah)
@@ -1185,14 +1181,12 @@ class Point_masak extends Controller
         $i = 1;
 
         $ttlKomMajoTkmr = 0;
-        foreach($server as $i => $k) {
+        foreach ($server as $i => $k) {
             $komisiG = Http::get("https://majoo-laravel.putrirembulan.com/api/komisiGaji/1/$k->karyawan_majo/$tgl1/$tgl2");
             $komaj = empty($komisiG['komisi']) ? 0 : $komisiG['komisi'][0]['dt_komisi'];
             $ttlKomMajoTkmr += $komaj;
         }
-        
-        $no = 1;
-        foreach ($server as  $k) {
+        foreach ($server as $k) {
             $gaji = ($k->rp_m * $k->qty_m) + ($k->rp_e * $k->qty_e) + ($k->rp_sp * $k->qty_sp);
             $komisiServer = $k->point != 'Y' ? 0 : round($k->kom, 0);
 
@@ -1214,7 +1208,7 @@ class Point_masak extends Controller
             $today = new DateTime();
             $tKerja = $today->diff($totalKerja);
 
-            $sheet5->setCellValue('A' . $kolom, $no++);
+            $sheet5->setCellValue('A' . $kolom, $i++);
             $sheet5->setCellValue('B' . $kolom, $tKerja->y . ' Tahun ' . $tKerja->m . ' Bulan');
             $sheet5->setCellValue('C' . $kolom, $k->nama);
             $sheet5->setCellValue('D' . $kolom, $k->qty_m);
@@ -1231,107 +1225,106 @@ class Point_masak extends Controller
             $sheet5->setCellValue('O' . $kolom, '');
             $sheet5->setCellValue('P' . $kolom, $k->kasbon);
             $sheet5->setCellValue('Q' . $kolom, $k->denda);
-            $sheet5->setCellValue('R' . $kolom, round($gaji + $kom_penjualan + $k->kom + $komaj - $k->kasbon - $k->denda, 0) );
-            $sheet5->setCellValue('S' . $kolom, $k->point);
+            $sheet5->setCellValue('R' . $kolom, round($gaji + $kom_penjualan + $k->kom + $komaj - $k->kasbon - $k->denda, 0));
 
             $kolom++;
         }
         // ----------------------------------------
         $batasA = count($server) + 2;
-        $sheet5->getStyle('A2:S' . $batasA)->applyFromArray($styleSdb);
+        $sheet5->getStyle('A2:R' . $batasA)->applyFromArray($styleSdb);
 
-        // $rowSdba = $batasA + 2;
-        // $rSdbas = $rowSdba + 1;
-        // $rsSdba = $rowSdb + 2;
-        // $rspSdba = $rsSdb + 2;
-        // $rsrSdba = $rspSdb + 1;
+        $rowSdba = $batasA + 2;
+        $rSdbas = $rowSdba + 1;
+        $rsSdba = $rowSdb + 2;
+        $rspSdba = $rsSdb + 2;
+        $rsrSdba = $rspSdb + 1;
 
-        // $sheet5
-        //     ->setCellValue('B' . $rowSdba, 'SOONDOBU')
-        //     ->setCellValue('A' . $rSdbas, 'No')
-        //     ->setCellValue('B' . $rSdbas, 'Lama Bekerja')
-        //     ->setCellValue('C' . $rSdbas, 'Nama')
-        //     ->setCellValue('D' . $rSdbas, 'M')
-        //     ->setCellValue('E' . $rSdbas, 'E')
-        //     ->setCellValue('F' . $rSdbas, 'SP')
-        //     ->setCellValue('G' . $rSdbas, 'Ttl hari')
-        //     ->setCellValue('H' . $rSdbas, 'Gaji Harian')
-        //     ->setCellValue('I' . $rSdbas, 'Gaji SP')
-        //     ->setCellValue('J' . $rSdbas, 'TOTAL GAJI')
-        //     ->setCellValue('K' . $rSdbas, 'KOM PENJUALAN')
-        //     ->setCellValue('L' . $rSdbas, 'KOM STK')
-        //     ->setCellValue('M' . $rSdbas, 'KOM MAJO')
-        //     ->setCellValue('N' . $rSdbas, 'TOTAL KOM & GAJI')
-        //     ->setCellValue('O' . $rSdbas, 'TIPS')
-        //     ->setCellValue('P' . $rSdbas, 'KASBON')
-        //     ->setCellValue('Q' . $rSdbas, 'DENDA')
-        //     ->setCellValue('R' . $rSdbas, 'SISA GAJI')
+        $sheet5
+            ->setCellValue('B' . $rowSdba, 'SOONDOBU')
+            ->setCellValue('A' . $rSdbas, 'No')
+            ->setCellValue('B' . $rSdbas, 'Lama Bekerja')
+            ->setCellValue('C' . $rSdbas, 'Nama')
+            ->setCellValue('D' . $rSdbas, 'M')
+            ->setCellValue('E' . $rSdbas, 'E')
+            ->setCellValue('F' . $rSdbas, 'SP')
+            ->setCellValue('G' . $rSdbas, 'Ttl hari')
+            ->setCellValue('H' . $rSdbas, 'Gaji Harian')
+            ->setCellValue('I' . $rSdbas, 'Gaji SP')
+            ->setCellValue('J' . $rSdbas, 'TOTAL GAJI')
+            ->setCellValue('K' . $rSdbas, 'KOM PENJUALAN')
+            ->setCellValue('L' . $rSdbas, 'KOM STK')
+            ->setCellValue('M' . $rSdbas, 'KOM MAJO')
+            ->setCellValue('N' . $rSdbas, 'TOTAL KOM & GAJI')
+            ->setCellValue('O' . $rSdbas, 'TIPS')
+            ->setCellValue('P' . $rSdbas, 'KASBON')
+            ->setCellValue('Q' . $rSdbas, 'DENDA')
+            ->setCellValue('R' . $rSdbas, 'SISA GAJI')
 
-        //     ->setCellValue('U' . $rowSdba, 'Org P ')
-        //     ->setCellValue('V' . $rowSdba, $jumlah_orang_sdb->jumlah)
-        //     ->setCellValue('U' . $rSdbas, 'Org R ')
-        //     ->setCellValue('V' . $rSdbas, $orang_sdb);
-        // $scpSdb = $rSdbas + 2;
-        // $scrSdb = $rSdbas + 3;
-        // $sheet5
-        //     ->setCellValue('U' . $scpSdb, 'Service charge P ')
-        //     ->setCellValue('V' . $scpSdb, ($service_charge_sdb / 7) * $persen_sdb->jumlah_persen)
-        //     ->setCellValue('U' . $scrSdb, 'Service charge R')
-        //     ->setCellValue('V' . $scrSdb, $kom_sdb);
+            ->setCellValue('U' . $rowSdba, 'Org P ')
+            ->setCellValue('V' . $rowSdba, $jumlah_orang_sdb->jumlah)
+            ->setCellValue('U' . $rSdbas, 'Org R ')
+            ->setCellValue('V' . $rSdbas, $orang_sdb);
+        $scpSdb = $rSdbas + 2;
+        $scrSdb = $rSdbas + 3;
+        $sheet5
+            ->setCellValue('U' . $scpSdb, 'Service charge P ')
+            ->setCellValue('V' . $scpSdb, ($service_charge_sdb / 7) * $persen_sdb->jumlah_persen)
+            ->setCellValue('U' . $scrSdb, 'Service charge R')
+            ->setCellValue('V' . $scrSdb, $kom_sdb);
 
-        // $kolomSdba = $rSdbas + 1;
-        // $i = 1;
-        // $ttlAbsenSdb = 0;
+        $kolomSdba = $rSdbas + 1;
+        $i = 1;
+        $ttlAbsenSdb = 0;
 
-        // $ttlKomMajoSdb = 0;
-        // foreach($server as $i => $k) {
-        //     $komisiG = Http::get("https://majoo-laravel.putrirembulan.com/api/komisiGaji/2/$k->karyawan_majo/$tgl1/$tgl2");
-        //     $komaj = empty($komisiG['komisi']) ? 0 : $komisiG['komisi'][0]['dt_komisi'];
-        //     $ttlKomMajoSdb += $komaj;
-        // }
-        // foreach ($server_sdb as $k) {
-        //     $komisiServer = $k->point != 'Y' ? 0 : round($k->kom, 0);
-        //     $totalKerja = new DateTime($k->tgl_masuk);
-        //     $today = new DateTime();
-        //     $tKerja = $today->diff($totalKerja);
-        //     $kom1 = $ttl_kom_sdb == '' ? '0' : ($kom_sdb / $bagi_kom_sdb) * $k->komisi;
-        //     $absen_m_sdb = $k->qty_m + $k->qty_e;
-        //     $absen_sp_sdb = $k->qty_sp * 2;
-        //     // $komisiG = Http::get("https://majoo-laravel.putrirembulan.com/api/komisiGaji/2/$k->karyawan_majo/$tgl1/$tgl2");
-        //     // $komaj = empty($komisiG['komisi']) ? 0 : $komisiG['komisi'][0]['dt_komisi'];
-        //     $kom_penjualan_sdb = $k->point != 'Y' ? '0' : round(($kom_sdb / ($total_m_sdb + $total_sp_sdb)) * ($absen_m_sdb + $absen_sp_sdb), 0);
-        //     $komaj = $k->point != 'Y' ? '0' : round(($ttlKomMajoTkmr / ($total_m_sdb + $total_sp_sdb)) * ($absen_m_sdb + $absen_sp_sdb), 0);
-        //     // kom kpi
-        //     $komKpi = $k->point != 'Y' ? '0' : $pointR - $ttlPointRp * $k->ttl;
-        //     $gaji = ($k->rp_m * $k->qty_m) + ($k->rp_e * $k->qty_e) + ($k->rp_sp * $k->qty_sp);
-        //     $ttlKomGajiSdb = $gaji + $kom_penjualan_sdb + $k->kom + $komaj;
+        $ttlKomMajoSdb = 0;
+        foreach ($server as $i => $k) {
+            $komisiG = Http::get("https://majoo-laravel.putrirembulan.com/api/komisiGaji/2/$k->karyawan_majo/$tgl1/$tgl2");
+            $komaj = empty($komisiG['komisi']) ? 0 : $komisiG['komisi'][0]['dt_komisi'];
+            $ttlKomMajoSdb += $komaj;
+        }
+        foreach ($server_sdb as $k) {
+            $komisiServer = $k->point != 'Y' ? 0 : round($k->kom, 0);
+            $totalKerja = new DateTime($k->tgl_masuk);
+            $today = new DateTime();
+            $tKerja = $today->diff($totalKerja);
+            $kom1 = $ttl_kom_sdb == '' ? '0' : ($kom_sdb / $bagi_kom_sdb) * $k->komisi;
+            $absen_m_sdb = $k->qty_m + $k->qty_e;
+            $absen_sp_sdb = $k->qty_sp * 2;
+            // $komisiG = Http::get("https://majoo-laravel.putrirembulan.com/api/komisiGaji/2/$k->karyawan_majo/$tgl1/$tgl2");
+            // $komaj = empty($komisiG['komisi']) ? 0 : $komisiG['komisi'][0]['dt_komisi'];
+            $kom_penjualan_sdb = $k->point != 'Y' ? '0' : round(($kom_sdb / ($total_m_sdb + $total_sp_sdb)) * ($absen_m_sdb + $absen_sp_sdb), 0);
+            $komaj = $k->point != 'Y' ? '0' : round(($ttlKomMajoTkmr / ($total_m_sdb + $total_sp_sdb)) * ($absen_m_sdb + $absen_sp_sdb), 0);
+            // kom kpi
+            $komKpi = $k->point != 'Y' ? '0' : $pointR - $ttlPointRp * $k->ttl;
+            $gaji = ($k->rp_m * $k->qty_m) + ($k->rp_e * $k->qty_e) + ($k->rp_sp * $k->qty_sp);
+            $ttlKomGajiSdb = $gaji + $kom_penjualan_sdb + $k->kom + $komaj;
 
-        //     $sheet5->setCellValue('A' . $kolomSdba, $i++);
-        //     $sheet5->setCellValue('B' . $kolomSdba, $tKerja->y . ' Tahun ' . $tKerja->m . ' Bulan');
-        //     $sheet5->setCellValue('C' . $kolomSdba, $k->nama);
-        //     $sheet5->setCellValue('D' . $kolomSdba, $k->qty_m);
-        //     $sheet5->setCellValue('E' . $kolomSdba, $k->qty_e);
-        //     $sheet5->setCellValue('F' . $kolomSdba, $k->qty_sp);
-        //     $sheet5->setCellValue('G' . $kolomSdba, $k->qty_sp + $k->qty_m + $k->qty_e);
-        //     $sheet5->setCellValue('H' . $kolomSdba, $k->rp_m);
-        //     $sheet5->setCellValue('I' . $kolomSdba, $k->rp_sp);
-        //     $sheet5->setCellValue('J' . $kolomSdba, $gaji);
-        //     $sheet5->setCellValue('K' . $kolomSdba, $kom_penjualan_sdb);
-        //     $sheet5->setCellValue('L' . $kolomSdba, round($k->kom, 0));
-        //     $sheet5->setCellValue('M' . $kolomSdba, $komaj);
-        //     $sheet5->setCellValue('N' . $kolomSdba, $ttlKomGajiSdb);
-        //     $sheet5->setCellValue('O' . $kolomSdba, '');
-        //     $sheet5->setCellValue('P' . $kolomSdba, $k->kasbon);
-        //     $sheet5->setCellValue('Q' . $kolomSdba, $k->denda);
-        //     $sheet5->setCellValue('R' . $kolomSdba, round($gaji + $kom_penjualan_sdb + $k->kom + $komaj - $k->kasbon - $k->denda, 0));
+            $sheet5->setCellValue('A' . $kolomSdba, $i++);
+            $sheet5->setCellValue('B' . $kolomSdba, $tKerja->y . ' Tahun ' . $tKerja->m . ' Bulan');
+            $sheet5->setCellValue('C' . $kolomSdba, $k->nama);
+            $sheet5->setCellValue('D' . $kolomSdba, $k->qty_m);
+            $sheet5->setCellValue('E' . $kolomSdba, $k->qty_e);
+            $sheet5->setCellValue('F' . $kolomSdba, $k->qty_sp);
+            $sheet5->setCellValue('G' . $kolomSdba, $k->qty_sp + $k->qty_m + $k->qty_e);
+            $sheet5->setCellValue('H' . $kolomSdba, $k->rp_m);
+            $sheet5->setCellValue('I' . $kolomSdba, $k->rp_sp);
+            $sheet5->setCellValue('J' . $kolomSdba, $gaji);
+            $sheet5->setCellValue('K' . $kolomSdba, $kom_penjualan_sdb);
+            $sheet5->setCellValue('L' . $kolomSdba, round($k->kom, 0));
+            $sheet5->setCellValue('M' . $kolomSdba, $komaj);
+            $sheet5->setCellValue('N' . $kolomSdba, $ttlKomGajiSdb);
+            $sheet5->setCellValue('O' . $kolomSdba, '');
+            $sheet5->setCellValue('P' . $kolomSdba, $k->kasbon);
+            $sheet5->setCellValue('Q' . $kolomSdba, $k->denda);
+            $sheet5->setCellValue('R' . $kolomSdba, round($gaji + $kom_penjualan_sdb + $k->kom + $komaj - $k->kasbon - $k->denda, 0));
 
-        //     $kolomSdba++;
-        // }
+            $kolomSdba++;
+        }
 
-        // $batasAwala = $rowSdba + 1;
-        // $batasSdba = $kolomSdba - 1;
+        $batasAwala = $rowSdba + 1;
+        $batasSdba = $kolomSdba - 1;
 
-        // $sheet5->getStyle('A' . $batasAwala . ':R' . $batasSdba)->applyFromArray($styleSdb);
+        $sheet5->getStyle('A' . $batasAwala . ':R' . $batasSdba)->applyFromArray($styleSdb);
 
 
         // Start Denda

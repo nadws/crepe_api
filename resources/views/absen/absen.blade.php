@@ -11,7 +11,7 @@
                         @endphp
                         <h1 class="ml-5">Absen : <span id="ketbul">{{ $bulan_2[$bulan1] }}</span> - <span
                                 id="ketah">{{ date('Y') }}</span></h1><br>
-                        <div class="row ml-5">
+                        {{-- <div class="row ml-5">
                             <div class="col-md-3">
                                 <select id="bulan" class="form-control mb-3 " name="bulan">
                                     <option value="">--Pilih Bulan--</option>
@@ -51,7 +51,7 @@
 
                                 <button id="btntes" class="ml-5 btn btn-primary btn-block">SIMPAN</button><br>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="row">
