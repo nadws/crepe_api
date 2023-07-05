@@ -11,6 +11,16 @@
         }
     </style>
     <div class="row">
+        <div class="col-lg-12">
+            @php
+                            $bulan_2 = ['bulan', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                            $bulan1 = (int) date('m');
+                        @endphp
+            <h1 class="ml-5">Absen : <span id="ketbul">{{ $bulan_2[$bulan1] }}</span> - <span
+                id="ketah">{{ date('Y') }}</span></h1><br>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-3 col-lg-2">
             <select wire:model="valBulan" id="bulan" class="form-control mb-3 " name="bulan">
                 <option value="">--Pilih Bulan-- </option>
@@ -97,6 +107,7 @@
                                                     'M' => 'success',
                                                     'E' => 'warning',
                                                     'SP' => 'primary',
+                                                    'OFF' => 'info',
                                                 ];
                                                 $warna = $statusColorMap[$data->status];
                                             @endphp

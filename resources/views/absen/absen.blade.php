@@ -3,7 +3,7 @@
     <div class="content-wrapper">
         <div class="content-header">
             <div class="container-fluid">
-                <div class="row mb-2 justify-content-center ml-3">
+                {{-- <div class="row mb-2 justify-content-center ml-3">
                     <div class="col-sm-12 ml-5">
                         @php
                             $bulan_2 = ['bulan', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
@@ -11,7 +11,7 @@
                         @endphp
                         <h1 class="ml-5">Absen : <span id="ketbul">{{ $bulan_2[$bulan1] }}</span> - <span
                                 id="ketah">{{ date('Y') }}</span></h1><br>
-                        {{-- <div class="row ml-5">
+                        <div class="row ml-5">
                             <div class="col-md-3">
                                 <select id="bulan" class="form-control mb-3 " name="bulan">
                                     <option value="">--Pilih Bulan--</option>
@@ -51,9 +51,9 @@
 
                                 <button id="btntes" class="ml-5 btn btn-primary btn-block">SIMPAN</button><br>
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="row">
 
                     <div class="ml-3 col-md-12">
