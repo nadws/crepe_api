@@ -17,7 +17,7 @@ class Absen2 extends Component
         $valTahun,
         $totalTgl,
         $tglTerakhir,
-        $perPage = 5;
+        $perPage = 10;
 
     public $listBulan = [
         1 => 'Januari',
@@ -85,7 +85,7 @@ class Absen2 extends Component
 
     public function loadMore()
     {
-        $this->perPage += 5;
+        $this->perPage += 10;
     }
 
     public function render()

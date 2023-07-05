@@ -30,6 +30,8 @@ use App\Models\Persentase_kom;
 use App\Models\Gaji;
 use App\Models\Orderan;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\DB;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -144,39 +146,6 @@ Route::post('tb_transaksi', function (r $b) {
     }
 
 });
-
-// Route::post('tb_majo', function (r $b) {
-//     foreach ($b->all() as $t) {
-//         $data = [
-//             'no_nota' => $t['no_nota'],
-//             'total' => $t['total'],
-//             'bayar' => $t['bayar'],
-//             'kembali' => $t['kembali'],
-//             'cash' => $t['cash'],
-//             'mandiri_kredit' => $t['mandiri_kredit'],
-//             'mandiri_debit' => $t['mandiri_debit'],
-//             'bca_debit' => $t['bca_debit'],
-//             'bca_kredit' => $t['bca_kredit'],
-//             'dp' => $t['dp'],
-//             'kd_dp' => $t['kd_dp'],
-//             'diskon' => $t['diskon'],
-//             'tgl_jam' => $t['tgl_jam'],
-//             'tgl_input' => $t['tgl_input'],
-//             'id_customer' => $t['id_customer'],
-//             'admin' => $t['admin'],
-//             'no_meja' => $t['no_meja'],
-//             'lokasi' => $t['lokasi'],
-//             'status' => $t['status'],
-//             'nm_void' => $t['nm_void'],
-//             'ket_void' => $t['ket_void'],
-//             'invoice' => $t['invoice'],
-//             'id_distribusi' => $t['id_distribusi'],
-//         ];
-//         DB::table('tb_invoice')->insert($data);
-
-//     }
-
-// });
 
 Route::post('tb_pembelian_majo', function (r $b) {
     foreach ($b->all() as $t) {
@@ -533,6 +502,20 @@ Route::get('gaji', function () {
 Route::get('users', function () {
     $data = [
         'users' => Users::all(),
+    ];
+    return response()->json($data, HttpFoundationResponse::HTTP_OK);
+});
+
+Route::get('importAbsen', function () {
+    $data = [
+        'absenTkmr' => DB::table('tb_absen')
+                ->whereBetween('tgl', [date('Y-m-d'), date('Y-m-t')])
+                ->where('id_lokasi', 1)
+                ->get(),
+        'absenSdb' => DB::table('tb_absen')
+                ->whereBetween('tgl', [date('Y-m-d'), date('Y-m-t')])
+                ->where('id_lokasi', 2)
+                ->get(),
     ];
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });

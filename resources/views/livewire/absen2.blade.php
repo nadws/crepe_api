@@ -13,11 +13,11 @@
     <div class="row">
         <div class="col-lg-12">
             @php
-                            $bulan_2 = ['bulan', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-                            $bulan1 = (int) date('m');
-                        @endphp
-            <h1 class="ml-5">Absen : <span id="ketbul">{{ $bulan_2[$bulan1] }}</span> - <span
-                id="ketah">{{ date('Y') }}</span></h1><br>
+                $bulan_2 = ['bulan', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                $bulan1 = (int) date('m');
+            @endphp
+            <h1 class="ml-5">Absen : <span id="ketbul">{{ $bulan_2[$this->valBulan] }}</span> - <span
+                    id="ketah">{{ $this->valTahun }}</span></h1><br>
         </div>
     </div>
     <div class="row">
@@ -42,11 +42,12 @@
             </select>
         </div>
         <div class="col-lg-4">
-            
+
             <a href="{{ route('downloadAbsen', [
                 'bulanDwn' => $this->valBulan,
                 'tahunDwn' => $this->valTahun,
-            ]) }}" target="_blank" class="btn btn-sm btn-success mb-3" href="#">
+            ]) }}"
+                target="_blank" class="btn btn-sm btn-success mb-3" href="#">
                 <i class="fa fa-download"></i> DOWNLOAD
             </a>
         </div>
@@ -65,7 +66,7 @@
                                 style="white-space: nowrap;position: sticky;
                                 left: 0;
                                 z-index: 999;">
-                                NAMA 
+                                NAMA
                             </th>
                             @php
                                 $totalLoop = $valBulan == (int) date('m') ? (int) date('d') : cal_days_in_month(CAL_GREGORIAN, $this->valBulan, $this->valTahun);
