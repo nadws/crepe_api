@@ -507,15 +507,11 @@ Route::get('users', function () {
 });
 
 Route::get('importAbsen', function () {
+    $tgl1 = date('Y-m-d');
+    $tgl2 = date('Y-m-t');
     $data = [
-        'absenTkmr' => DB::table('tb_absen')
-                ->whereBetween('tgl', [date('Y-m-d'), date('Y-m-t')])
-                ->where('id_lokasi', 1)
-                ->get(),
-        'absenSdb' => DB::table('tb_absen')
-                ->whereBetween('tgl', [date('Y-m-d'), date('Y-m-t')])
-                ->where('id_lokasi', 2)
-                ->get(),
+        'absenTkmr' => DB::select("SELECT * from tb_absen WHERE tgl BETWEEN '$tgl1' AND '$tgl2' AND id_lokasi = 1"),
+        'absenSdb' => DB::select("SELECT * from tb_absen WHERE tgl BETWEEN '$tgl1' AND '$tgl2' AND id_lokasi = 2"),
     ];
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
