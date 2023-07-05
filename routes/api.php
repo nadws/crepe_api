@@ -502,11 +502,15 @@ Route::get('importAbsen', function () {
     $tahun = date('y');
     $data = [
         'absenTkmr' => DB::table('tb_absen')
-            ->select('id_absen', 'id_karyawan', 'tgl', 'id_lokasi', 'status')
-            ->where('id_lokasi', 1)->whereMonth('tgl', $bulan)->get(),
+            ->whereMonth('tgl', $bulan)
+            ->whereYear('tgl', $tahun)
+            ->where('id_lokasi', 1)
+            ->get(),
         'absenSdb' => DB::table('tb_absen')
-            ->select('id_absen', 'id_karyawan', 'tgl', 'id_lokasi', 'status')
-            ->where('id_lokasi', 2)->whereYear('tgl', $tahun)->get(),
+            ->whereMonth('tgl', $bulan)
+            ->whereYear('tgl', $tahun)
+            ->where('id_lokasi', 2)
+            ->get(),,
     ];
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
