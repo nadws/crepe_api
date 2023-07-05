@@ -510,12 +510,8 @@ Route::get('importAbsen', function () {
     $tgl1 = date('Y-m-d');
     $tgl2 = date('Y-m-t');
     $data = [
-        'absenTkmr' => DB::table('tb_absen')
-                        ->select('id_absen', 'id_karyawan', 'tgl', 'id_lokasi', 'status')
-                        ->where('id_lokasi',1)->whereBetween('tgl', [$tgl1, $tgl2])->get(),
-        'absenSdb' => DB::table('tb_absen')
-                        ->select('id_absen', 'id_karyawan', 'tgl', 'id_lokasi', 'status')
-                        ->where('id_lokasi',2)->whereBetween('tgl', [$tgl1, $tgl2])->get(),
+        'absenTkmr' => DB::select("SELECT * FROM tb_absen WHERE id_lokasi = 1 AND tgl BETWEEN '$tgl1' AND '$tgl2'"),
+        'absenSdb' => DB::select("SELECT * FROM tb_absen WHERE id_lokasi = 2 AND tgl BETWEEN '$tgl1' AND '$tgl2'"),
     ];
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
