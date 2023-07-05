@@ -16,7 +16,7 @@ class AbsenController extends Controller
         $agent = new Agent();
         $id_user = Auth::user()->id;
         $id_menu = DB::table('tb_permission')->select('id_menu')->where('id_user',$id_user)
-        ->where('id_menu', 2)->first();
+        ->where('id_menu', 1)->first();
         if(empty($id_menu)) {
             return back();
         } else {

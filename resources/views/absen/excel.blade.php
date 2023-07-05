@@ -1,4 +1,7 @@
-
+<?php
+header('Content-type: application/vnd-ms-excel');
+header('Content-Disposition: attachmen; filename=Absensi Resto.xls');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -170,7 +173,5 @@
 
     </table>
 </body>
-<script>
-    window.print()
-</script>
+
 </html>

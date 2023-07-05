@@ -22,6 +22,7 @@
     </div>
     <div class="row">
         <div class="col-md-3 col-lg-2">
+            <label for="">Bulan</label>
             <select wire:model="valBulan" id="bulan" class="form-control mb-3 " name="bulan">
                 <option value="">--Pilih Bulan-- </option>
                 @foreach ($listBulan as $key => $value)
@@ -31,6 +32,7 @@
             </select>
         </div>
         <div class="col-md-3 col-lg-2">
+            <label for="">Tahun</label>
             <select wire:model="valTahun" id="tahun" class="form-control mb-3 " name="tahun">
                 <option value="">--Pilih Tahun--</option>
                 <option value="{{ date('Y') - 1 }}">{{ date('Y') - 1 }}</option>
@@ -41,8 +43,12 @@
                 @endfor
             </select>
         </div>
+        <div class="col-lg-2">
+            <label for="">Pencarian</label>
+            <input autofocus type="text" class="form-control" wire:model="search" placeholder="ketik nama">
+        </div>
         <div class="col-lg-4">
-
+            <label for="">Aksi</label> <br>
             <a href="{{ route('downloadAbsen', [
                 'bulanDwn' => $this->valBulan,
                 'tahunDwn' => $this->valTahun,
@@ -113,7 +119,9 @@
                                                 $warna = $statusColorMap[$data->status];
                                             @endphp
                                             <div class="dropdown">
-                                                <button class="btn btn-block btn-{{ $warna }} dropdown-toggle"
+                                                <button
+                                                    {{ $i < date('d') || $valBulan != (int) date('m') ? 'disabled' : '' }}
+                                                    class="btn btn-block btn-{{ $warna }} dropdown-toggle"
                                                     type="button" id="dropdownMenuButton" data-toggle="dropdown"
                                                     aria-haspopup="true" aria-expanded="false">
                                                     {{ $data->status }}
@@ -121,7 +129,7 @@
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                     <a wire:click="clickEdit({{ $data->id_absen }}, 'M')"
                                                         style="width:60px;"
-                                                        class="btnUpdate btn text-center btn-warning mb-3">M</a>
+                                                        class="btnUpdate btn text-center btn-success mb-3">M</a>
                                                     <a wire:click="clickEdit({{ $data->id_absen }}, 'E')"
                                                         style="width:60px;"
                                                         class="btnUpdate btn text-center btn-warning mb-3">E</a>
@@ -137,10 +145,12 @@
                                         </td>
                                     @else
                                         <td class="bg-info m">
-                                            <a wire:click="clickOff({{ $d->id_karyawan }}, {{ $i }})"
-                                                class="btnInput btn btn-block  btn-info">
+                                            <button
+                                                {{ $i < date('d') || $valBulan != (int) date('m') ? 'disabled' : '' }}
+                                                wire:click="clickOff({{ $d->id_karyawan }}, {{ $i }})"
+                                                class="btnInput   btn btn-block  btn-info">
                                                 OFF
-                                            </a>
+                                            </button>
                                         </td>
                                     @endif
                                 @endfor
