@@ -32,7 +32,11 @@
             </select>
         </div>
         <div class="col-lg-4">
-            <a id="download" target="_blank" class="btn btn-sm btn-success mb-3" href="#">
+            
+            <a href="{{ route('downloadAbsen', [
+                'bulanDwn' => $this->valBulan,
+                'tahunDwn' => $this->valTahun,
+            ]) }}" target="_blank" class="btn btn-sm btn-success mb-3" href="#">
                 <i class="fa fa-download"></i> DOWNLOAD
             </a>
         </div>
@@ -51,10 +55,10 @@
                                 style="white-space: nowrap;position: sticky;
                                 left: 0;
                                 z-index: 999;">
-                                NAMA
+                                NAMA 
                             </th>
                             @php
-                                $totalLoop = $valBulan == (int) date('m') ? (int) date('d') : $totalTgl;
+                                $totalLoop = $valBulan == (int) date('m') ? (int) date('d') : cal_days_in_month(CAL_GREGORIAN, $this->valBulan, $this->valTahun);
                             @endphp
                             @for ($i = 1; $i <= $totalLoop; $i++)
                                 <th class="text-center">{{ $i }}</th>
@@ -72,7 +76,7 @@
                                     style="white-space: nowrap;position: sticky;
                                     left: 0;
                                     z-index: 999;">
-                                    <h5>{{ $d->nm_karyawan }} {{ $valBulan }}</h5>
+                                    <h5>{{ $d->nm_karyawan }} </h5>
                                 </td>
 
                                 @for ($i = 1; $i <= $totalLoop; $i++)
@@ -103,6 +107,9 @@
                                                     {{ $data->status }}
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <a wire:click="clickEdit({{ $data->id_absen }}, 'M')"
+                                                        style="width:60px;"
+                                                        class="btnUpdate btn text-center btn-warning mb-3">M</a>
                                                     <a wire:click="clickEdit({{ $data->id_absen }}, 'E')"
                                                         style="width:60px;"
                                                         class="btnUpdate btn text-center btn-warning mb-3">E</a>
@@ -129,7 +136,7 @@
                                 <td class="bg-light">{{ $this->getTotal($d->id_karyawan, 'E') }}</td>
                                 <td class="bg-light">{{ $this->getTotal($d->id_karyawan, 'SP') }}</td>
                                 <td class="bg-light">
-                                    {{ $totalTgl - $this->getTotal($d->id_karyawan, 'M') + $this->getTotal($d->id_karyawan, 'E') + $this->getTotal($d->id_karyawan, 'SP') }}
+                                    {{ $totalLoop - ($this->getTotal($d->id_karyawan, 'M') + $this->getTotal($d->id_karyawan, 'E') + $this->getTotal($d->id_karyawan, 'SP')) }}
                                 </td>
                             </tr>
                         @endforeach

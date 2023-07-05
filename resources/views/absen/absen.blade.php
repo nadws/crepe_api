@@ -56,7 +56,7 @@
                 </div>
                 <div class="row">
 
-                    <div class="col-md-12">
+                    <div class="ml-3 col-md-12">
                         @livewire('absen2')
                         {{-- <div id="badan">
 

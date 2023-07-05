@@ -143,14 +143,14 @@ class AbsenController extends Controller
     {
         $bulan = $request->bulanDwn;
         $tahun = $request->tahunDwn;
-
         $data = [
-            'absensi' => Absen::select('tb_absen.*', 'tb_karyawan.nama')->join('tb_karyawan', 'tb_absen.id_karyawan', '=', 'tb_karyawan.id_karyawan')->orderBy('id_absen', 'desc')->get(),
+            'absensi' => Absen::select('tb_absen.*', 'tb_karyawan.nama')
+                        ->join('tb_karyawan', 'tb_absen.id_karyawan', '=', 'tb_karyawan.id_karyawan')
+                        ->orderBy('id_absen', 'desc')->get(),
             'karyawan' => Karyawan::all(),
             'bulan' => $bulan,
             'tahun' => $tahun,
         ];
-
         return view('absen.excel',$data);
     }
 

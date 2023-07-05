@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Absen;
 use App\Models\Karyawan;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -15,6 +16,7 @@ class Absen2 extends Component
         $valBulan,
         $valTahun,
         $totalTgl,
+        $tglTerakhir,
         $perPage = 5;
 
     public $listBulan = [
@@ -40,13 +42,20 @@ class Absen2 extends Component
         $this->totalTgl = cal_days_in_month(CAL_GREGORIAN, $this->valBulan, $this->valTahun);
     }
 
+    public function updatedValBulan($value)
+    {
+        $this->valBulan = $value;
+        $this->tglTerakhir = Carbon::createFromDate($this->valTahun, $this->valBulan, 1)->endOfMonth()->toDateString();
+
+    }
+
     public function getTotal($id_karyawan, $status)
     {
-        $c = Absen::whereBetween('tgl', ['2023-05-01', '2023-05-31'])->where([
+        $tglTerakhir = cal_days_in_month(CAL_GREGORIAN, $this->valBulan, $this->valTahun);
+        $c = Absen::whereBetween('tgl', ["$this->valTahun-$this->valBulan-1", "$this->valTahun-$this->valBulan-$tglTerakhir"])->where([
             ['id_karyawan', $id_karyawan],
             ['status', $status],
         ])->count();
-
         return $c;
     }
 
