@@ -43,7 +43,7 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
-Route::get('komisi_gaji', function(){
+Route::get('komisi_gaji', function () {
     $komisi = Http::get("https://majoo-laravel.putrirembulan.com/api/komisiGaji/1/2022-11-01/2022-11-09");
     $kom = $komisi['komisi'];
     dd($kom[0]);
@@ -85,11 +85,10 @@ Route::post('tb_order', function (r $b) {
             'print' => 'Y',
             'copy_print' => 'Y',
             'voucher' => $t['voucher']
-            
+
         ];
         DB::table('tb_order')->insert($data);
     }
-    
 });
 
 
@@ -98,53 +97,51 @@ Route::post('tb_order', function (r $b) {
 Route::post('tb_jurnal', function (r $b) {
     foreach ($b->all() as $t) {
         $data = [
-             'id_buku' => $t['id_buku'],
-                'id_akun' => $t['id_akun'],
-                'kd_gabungan' => $t['kd_gabungan'],
-                'no_nota' => $t['no_nota'],
-                'id_lokasi' => $t['id_lokasi'],
-                'debit' => $t['debit'],
-                'kredit' => $t['kredit'],
-                'tgl' => $t['tgl'],
-                'ket' => $t['ket'],
-                'admin' => $t['admin'],
-                'status' => $t['status'],
-                'created_at' => $t['created_at'],
-                'updated_at' => $t['updated_at'],
+            'id_buku' => $t['id_buku'],
+            'id_akun' => $t['id_akun'],
+            'kd_gabungan' => $t['kd_gabungan'],
+            'no_nota' => $t['no_nota'],
+            'id_lokasi' => $t['id_lokasi'],
+            'debit' => $t['debit'],
+            'kredit' => $t['kredit'],
+            'tgl' => $t['tgl'],
+            'ket' => $t['ket'],
+            'admin' => $t['admin'],
+            'status' => $t['status'],
+            'created_at' => $t['created_at'],
+            'updated_at' => $t['updated_at'],
         ];
         Jurnal::create($data);
     }
-
 });
 
 
 Route::post('tb_transaksi', function (r $b) {
     foreach ($b->all() as $t) {
         $data = [
-        'tgl_transaksi' => $t['tgl_transaksi'],
-        'no_order' => $t['no_order'],
-        'total_orderan' => $t['total_orderan'],
-        'discount' => $t['discount'],
-        'voucher' => $t['voucher'],
-        'dp' => $t['dp'],
-        'gosen' => $t['gosen'],
-        'total_bayar' => $t['total_bayar'],
-        'admin' => $t['admin'],
-        'round' => $t['round'],
-        'id_lokasi' => $t['id_lokasi'],
-        'cash' => $t['cash'],
-        'd_bca' => $t['d_bca'],
-        'k_bca' => $t['k_bca'],
-        'd_mandiri' => $t['d_mandiri'],
-        'k_mandiri' => $t['k_mandiri'],
-        'ongkir' => $t['ongkir'],
-        'service' => $t['service'],
-        'tax' => $t['tax'],
-        'kembalian' => $t['kembalian'],
+            'tgl_transaksi' => $t['tgl_transaksi'],
+            'no_order' => $t['no_order'],
+            'total_orderan' => $t['total_orderan'],
+            'discount' => $t['discount'],
+            'voucher' => $t['voucher'],
+            'dp' => $t['dp'],
+            'gosen' => $t['gosen'],
+            'total_bayar' => $t['total_bayar'],
+            'admin' => $t['admin'],
+            'round' => $t['round'],
+            'id_lokasi' => $t['id_lokasi'],
+            'cash' => $t['cash'],
+            'd_bca' => $t['d_bca'],
+            'k_bca' => $t['k_bca'],
+            'd_mandiri' => $t['d_mandiri'],
+            'k_mandiri' => $t['k_mandiri'],
+            'ongkir' => $t['ongkir'],
+            'service' => $t['service'],
+            'tax' => $t['tax'],
+            'kembalian' => $t['kembalian'],
         ];
         Transaksi::create($data);
     }
-
 });
 
 Route::post('tb_pembelian_majo', function (r $b) {
@@ -168,9 +165,7 @@ Route::post('tb_pembelian_majo', function (r $b) {
             'bayar' => $t['bayar'],
         ];
         DB::table('tb_pembelian')->insert($data);
-
     }
-
 });
 
 Route::post('tb_invoice_new', function (r $b) {
@@ -181,17 +176,15 @@ Route::post('tb_invoice_new', function (r $b) {
             'bayar' => $t['bayar'],
             'tgl_jam' => $t['tgl_jam'],
             'tgl_input' => $t['tgl_input'],
-            
+
             'admin' => $t['admin'],
             'no_meja' => $t['no_meja'],
             'lokasi' => $t['lokasi'],
             'id_distribusi' => $t['id_distribusi'],
-            
+
         ];
         DB::table('tb_invoice')->insert($data);
-
     }
-
 });
 
 Route::post('tb_hapus_invoice', function (r $b) {
@@ -243,36 +236,34 @@ Route::post('tb_dp', function (r $b) {
         $kd_dp = $t['kd_dp'];
         $cek = DB::table('tb_dp')->where('kd_dp', $kd_dp)->first();
         $data = [
-             'kd_dp' => $t['kd_dp'],
-                'nm_customer' =>  $t['nm_customer'],
-                'server' =>  $t['server'],
-                'jumlah' =>  $t['jumlah'],
-                'tgl' =>  $t['tgl'],
-                'ket' =>  $t['ket'],
-                'metode' =>  $t['metode'],
-                'tgl_input' =>  $t['tgl_input'],
-                'tgl_digunakan' =>  $t['tgl_digunakan'],
-                'status' =>  $t['status'],
-                'admin' => $t['admin'],
-                'id_lokasi' =>  $t['id_lokasi'],
-                'created_at' =>  $t['created_at'],
-                'updated_at' =>  $t['updated_at'],
+            'kd_dp' => $t['kd_dp'],
+            'nm_customer' =>  $t['nm_customer'],
+            'server' =>  $t['server'],
+            'jumlah' =>  $t['jumlah'],
+            'tgl' =>  $t['tgl'],
+            'ket' =>  $t['ket'],
+            'metode' =>  $t['metode'],
+            'tgl_input' =>  $t['tgl_input'],
+            'tgl_digunakan' =>  $t['tgl_digunakan'],
+            'status' =>  $t['status'],
+            'admin' => $t['admin'],
+            'id_lokasi' =>  $t['id_lokasi'],
+            'created_at' =>  $t['created_at'],
+            'updated_at' =>  $t['updated_at'],
         ];
-        if($cek) {
-           DB::table('tb_dp')->where('kd_dp', $kd_dp)->update($data);
+        if ($cek) {
+            DB::table('tb_dp')->where('kd_dp', $kd_dp)->update($data);
         } else {
             DB::table('tb_dp')->insert($data);
         }
-        
     }
-
 });
 
 Route::post('tb_voucherUpdate', function (r $b) {
     foreach ($b->all() as $t) {
         $kode = $t['kode'];
         $terpakai = $t['terpakai'];
-        if($terpakai == 'belum') {
+        if ($terpakai == 'belum') {
             Voucher::where('kode', $kode)->update(['terpakai' => 'belum', 'updated_at' => $t["updated_at"]]);
         } else {
             Voucher::where('kode', $kode)->update(['terpakai' => 'sudah', 'updated_at' => $t["updated_at"]]);
@@ -284,7 +275,7 @@ Route::post('tb_produk_majo', function (r $b) {
     foreach ($b->all() as $t) {
         $id_produk = $t['id_produk'];
         $id_lokasi = $t['id_lokasi'];
-        DB::table('tb_produk')->where([['id_produk', $id_produk],['id_lokasi', $id_lokasi]])->update(['stok' => $t['stok']]);
+        DB::table('tb_produk')->where([['id_produk', $id_produk], ['id_lokasi', $id_lokasi]])->update(['stok' => $t['stok']]);
     }
 });
 
@@ -400,14 +391,14 @@ Route::get('voucher', function () {
 
 Route::get('voucher_tkmr', function () {
     $data = [
-        'voucher' => Voucher::where('lokasi','1')->get(),
+        'voucher' => Voucher::where('lokasi', '1')->get(),
     ];
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
 
 Route::get('voucher_sdb', function () {
     $data = [
-        'voucher' => Voucher::where('lokasi','2')->get(),
+        'voucher' => Voucher::where('lokasi', '2')->get(),
     ];
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
@@ -460,7 +451,7 @@ Route::get('delete_berskala', function () {
         'transaksi_tkm' => DB::table('tb_transaksi')->where('id_lokasi', 1)->get(),
         'pembelian_majo_tkm' => DB::table('tb_pembelian')->where('lokasi', 1)->get(),
         'invoice_majo_tkm' => DB::table('tb_invoice')->where('lokasi', 1)->get(),
-        
+
         'order_sdb' => DB::table('tb_order')->where('id_lokasi', 2)->get(),
         'order2_sdb' => DB::table('tb_order2')->where('id_lokasi', 2)->get(),
         'transaksi_sdb' => DB::table('tb_transaksi')->where('id_lokasi', 2)->get(),
@@ -507,11 +498,15 @@ Route::get('users', function () {
 });
 
 Route::get('importAbsen', function () {
-    $tgl1 = date('Y-m-d');
-    $tgl2 = date('Y-m-t');
+    $bulan = date('m');
+    $tahun = date('y');
     $data = [
-        'absenTkmr' => DB::select("SELECT * FROM tb_absen WHERE id_lokasi = 1 AND tgl BETWEEN '$tgl1' AND '$tgl2'"),
-        'absenSdb' => DB::select("SELECT * FROM tb_absen WHERE id_lokasi = 2 AND tgl BETWEEN '$tgl1' AND '$tgl2'"),
+        'absenTkmr' => DB::table('tb_absen')
+            ->select('id_absen', 'id_karyawan', 'tgl', 'id_lokasi', 'status')
+            ->where('id_lokasi', 1)->whereMonth('tgl', $bulan)->get(),
+        'absenSdb' => DB::table('tb_absen')
+            ->select('id_absen', 'id_karyawan', 'tgl', 'id_lokasi', 'status')
+            ->where('id_lokasi', 2)->whereYear('tgl', $tahun)->get(),
     ];
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
@@ -537,13 +532,13 @@ Route::get('point_kerja', function () {
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
 
-Route::get('pointKitchen/{id_lokasi}/{tgl1}/{tgl2}', function($id_lokasi, $tgl1, $tgl2){
+Route::get('pointKitchen/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tgl2) {
     $lamaMenit = DB::table('tb_menit')->where('id_lokasi', $id_lokasi)->first();
-    
+
     $total_not_gojek = DB::selectOne("SELECT SUM(if(tb_transaksi.total_orderan - discount - voucher < 0 ,0,tb_transaksi.total_orderan - discount - voucher)) as total FROM `tb_transaksi`
             LEFT JOIN(SELECT tb_order2.no_order2 as no_order, tb_order2.id_distribusi as id_distribusi FROM tb_order2 GROUP BY tb_order2.no_order2) dt_order ON tb_transaksi.no_order = dt_order.no_order
             WHERE tb_transaksi.id_lokasi = '$id_lokasi' and  dt_order.id_distribusi != '2' AND tb_transaksi.tgl_transaksi >= '$tgl1' AND tb_transaksi.tgl_transaksi <= '$tgl2'");
-    
+
     $masak = DB::select("SELECT a.nama,a.id_karyawan,b.rp_m, sum(l.qty_m) AS qty_m, sum(l.qty_e) AS qty_e, sum(l.qty_sp) AS qty_sp,e.point_gagal,f.point_berhasil, b.rp_e, b.rp_sp
             FROM tb_karyawan AS a
             left join tb_gaji AS b ON b.id_karyawan = a.id_karyawan
@@ -573,7 +568,7 @@ Route::get('pointKitchen/{id_lokasi}/{tgl1}/{tgl2}', function($id_lokasi, $tgl1,
                         WHERE a.id_status = '1' and a.tgl_masuk <= '$tgl2' and l.id_lokasi ='$id_lokasi' and a.id_posisi not in ('3','2') and a.point =  'Y'
                         group by a.id_karyawan
         ");
-        
+
     $absen = DB::select("SELECT a.nama,b.rp_m, sum(l.qty_m) AS qty_m, sum(l.qty_e) AS qty_e, sum(l.qty_sp) AS qty_sp,e.point_gagal,f.point_berhasil, b.rp_e, b.rp_sp
             FROM tb_karyawan AS a
             left join tb_gaji AS b ON b.id_karyawan = a.id_karyawan
@@ -603,63 +598,63 @@ Route::get('pointKitchen/{id_lokasi}/{tgl1}/{tgl2}', function($id_lokasi, $tgl1,
                         WHERE a.id_status = '1' and a.tgl_masuk <= '$tgl2' and l.id_lokasi ='$id_lokasi' and a.id_posisi not in ('3','2')
                         group by a.id_karyawan
         ");
-        
-        $jumlah_orang = DB::table('tb_jumlah_orang')->where('ket_karyawan', 'Kitchen')->where('id_lokasi', $id_lokasi)->first()->jumlah;
-        $jumlah_persen = DB::table('persentse_komisi')->where('nama_persentase', 'Kitchen')->where('id_lokasi', $id_lokasi)->first()->jumlah_persen;
-        
-        $l = 1; 
-        $point = 0;
-        $orang = 0;
-        
-        foreach($masak as $k) {
-            $orang = $l++;
-            $point += $k->point_berhasil + $k->point_gagal;
-        }
-        
-        $orang2 = !$orang ? '0': $orang;
-        $service_charge = $total_not_gojek->total * 0.07;
-        $kom =  (((($service_charge  / 7 ) * $jumlah_persen) / $jumlah_orang)  * $orang2);
-        
-        $data = [
-                'masak' => $masak,
-                'absen' => $absen,
-                'service_charge' => $service_charge,
-                'orang' => $orang,
-                'kom' => $kom,
-                'orang2' => $orang2,
-                'point' => $point,
-                'jumlah_orang' => $jumlah_orang,
-                'persen' => $jumlah_persen,
-          
-            ];
+
+    $jumlah_orang = DB::table('tb_jumlah_orang')->where('ket_karyawan', 'Kitchen')->where('id_lokasi', $id_lokasi)->first()->jumlah;
+    $jumlah_persen = DB::table('persentse_komisi')->where('nama_persentase', 'Kitchen')->where('id_lokasi', $id_lokasi)->first()->jumlah_persen;
+
+    $l = 1;
+    $point = 0;
+    $orang = 0;
+
+    foreach ($masak as $k) {
+        $orang = $l++;
+        $point += $k->point_berhasil + $k->point_gagal;
+    }
+
+    $orang2 = !$orang ? '0' : $orang;
+    $service_charge = $total_not_gojek->total * 0.07;
+    $kom =  (((($service_charge  / 7) * $jumlah_persen) / $jumlah_orang)  * $orang2);
+
+    $data = [
+        'masak' => $masak,
+        'absen' => $absen,
+        'service_charge' => $service_charge,
+        'orang' => $orang,
+        'kom' => $kom,
+        'orang2' => $orang2,
+        'point' => $point,
+        'jumlah_orang' => $jumlah_orang,
+        'persen' => $jumlah_persen,
+
+    ];
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
 
-Route::get('detailPoint/{id_lokasi}/{tgl1}/{tgl2}/{id_karyawan}', function($id_lokasi, $tgl1, $tgl2, $id_karyawan){
+Route::get('detailPoint/{id_lokasi}/{tgl1}/{tgl2}/{id_karyawan}', function ($id_lokasi, $tgl1, $tgl2, $id_karyawan) {
     $nm_karyawan = DB::table('tb_karyawan')->where('id_karyawan', $id_karyawan)->first();
-    
+
     $detail = DB::select("SELECT b.tipe,c.nama,a.tgl,a.no_order, b.nm_menu, b.point_menu, a.lama_masak, a.nilai_koki FROM `view_point2` as a
         LEFT JOIN view_menu2 as b on a.id_harga = b.id_harga
         LEFT JOIN tb_karyawan as c on a.koki = c.id_karyawan
         WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' AND a.id_lokasi = '$id_lokasi' AND c.id_karyawan = '$id_karyawan' AND a.lama_masak <= 25");
-        
+
     $data = [
         'nm_karyawan' => $nm_karyawan,
         'detail' => $detail,
     ];
-    
+
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
 
-Route::get('komisiServer/{id_lokasi}/{tgl1}/{tgl2}', function($id_lokasi, $tgl1, $tgl2){
+Route::get('komisiServer/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tgl2) {
     $id_lokasi = $id_lokasi;
     $tgl1 = $tgl1;
     $tgl2 = $tgl2;
-    
+
     $total_not_gojek = DB::selectOne("SELECT SUM(if(tb_transaksi.total_orderan - discount - voucher < 0 ,0,tb_transaksi.total_orderan - discount - voucher)) as total FROM `tb_transaksi`
           LEFT JOIN(SELECT tb_order2.no_order2 as no_order, tb_order2.id_distribusi as id_distribusi FROM tb_order2 GROUP BY tb_order2.no_order2) dt_order ON tb_transaksi.no_order = dt_order.no_order
           WHERE id_lokasi = '$id_lokasi' AND dt_order.id_distribusi != 2 AND tb_transaksi.tgl_transaksi >= '$tgl1' AND tb_transaksi.tgl_transaksi <= '$tgl2'");
-          
+
     $server = DB::select("SELECT 
             a.point, 
             a.nama, 
@@ -759,19 +754,19 @@ Route::get('komisiServer/{id_lokasi}/{tgl1}/{tgl2}', function($id_lokasi, $tgl1,
 
                 
             ");
-        
-        $data = [
-            'server' => $server,
-            'service' => $total_not_gojek,
-            'jumlah_orang' => DB::table('tb_jumlah_orang')->where('ket_karyawan', 'Server')->where('id_lokasi', $id_lokasi)->first(),
-            'persen' => DB::table('persentse_komisi')->where('nama_persentase', 'Server')->where('id_lokasi', $id_lokasi)->first(),
-            'settingOrang' => DB::table('db_denda_kpi')->where('id', 1)->first()->rupiah,
-            'persenBagi' => DB::table('db_denda_kpi')->where('id', 3)->first()->rupiah,
-        ];
+
+    $data = [
+        'server' => $server,
+        'service' => $total_not_gojek,
+        'jumlah_orang' => DB::table('tb_jumlah_orang')->where('ket_karyawan', 'Server')->where('id_lokasi', $id_lokasi)->first(),
+        'persen' => DB::table('persentse_komisi')->where('nama_persentase', 'Server')->where('id_lokasi', $id_lokasi)->first(),
+        'settingOrang' => DB::table('db_denda_kpi')->where('id', 1)->first()->rupiah,
+        'persenBagi' => DB::table('db_denda_kpi')->where('id', 3)->first()->rupiah,
+    ];
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
 
-Route::get('komisiKpi/{id_lokasi}/{tgl1}/{tgl2}', function($id_lokasi, $tgl1, $tgl2){
+Route::get('komisiKpi/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tgl2) {
     $client = new Client();
 
     $response = $client->request('GET', "https://ptagafood.com/api/komisiServer/1/$tgl1/$tgl2");
@@ -787,8 +782,8 @@ Route::get('komisiKpi/{id_lokasi}/{tgl1}/{tgl2}', function($id_lokasi, $tgl1, $t
     $ttl_kom = 0;
 
     foreach ($server as $k) {
-      $o = $l++;
-      $ttl_kom += $k->komisi;
+        $o = $l++;
+        $ttl_kom += $k->komisi;
     }
 
     $bagi_kom = $service->total;
@@ -796,8 +791,8 @@ Route::get('komisiKpi/{id_lokasi}/{tgl1}/{tgl2}', function($id_lokasi, $tgl1, $t
     $orang = $o ?? 0;
 
     $kom = ((($service_charge / 7) * $persen->jumlah_persen) / $jumlah_orang->jumlah) * $orang;
-    
-    
+
+
     // sdb
     $response = $client->request('GET', "https://ptagafood.com/api/komisiServer/2/$tgl1/$tgl2");
     $data2 = json_decode($response->getBody(), true);
@@ -811,8 +806,8 @@ Route::get('komisiKpi/{id_lokasi}/{tgl1}/{tgl2}', function($id_lokasi, $tgl1, $t
     $ttl_kom2 = 0;
 
     foreach ($server2 as $k) {
-      $o2 = $l2++;
-      $ttl_kom2 += $k->komisi;
+        $o2 = $l2++;
+        $ttl_kom2 += $k->komisi;
     }
 
 
@@ -820,16 +815,13 @@ Route::get('komisiKpi/{id_lokasi}/{tgl1}/{tgl2}', function($id_lokasi, $tgl1, $t
     $orang2 = $o2 ?? 0;
 
     $kom2 = ((($service_charge2 / 7) * $persen2->jumlah_persen) / $jumlah_orang2->jumlah) * $orang2;
-    
+
     $settingOrang = DB::table('db_denda_kpi')->where('id', 1)->first()->rupiah;
     $persenBagi = DB::table('db_denda_kpi')->where('id', 3)->first()->rupiah;
-      
+
     $ttlRp = $kom * $persenBagi + $kom2 * $persenBagi;
     $pointR = $ttlRp / $settingOrang;
     $ttlPointRp = $pointR / 10;
     dd($ttlPointRp);
     $komKpi = $pointR - $ttlPointRp * $k->ttl;
-    
-}); 
-
-
+});
