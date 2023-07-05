@@ -501,16 +501,14 @@ Route::get('importAbsen', function () {
     $bulan = date('m');
     $tahun = date('y');
     $data = [
-        'absenTkmr' => DB::table('tb_absen')
-            ->whereMonth('tgl', $bulan)
-            ->whereYear('tgl', $tahun)
-            ->where('id_lokasi', 1)
-            ->get(),
-        'absenSdb' => DB::table('tb_absen')
-            ->whereMonth('tgl', $bulan)
-            ->whereYear('tgl', $tahun)
-            ->where('id_lokasi', 2)
-            ->get(),
+        'absenTkmr' => DB::select("SELECT * FROM tb_absen 
+        WHERE MONTH(tgl) = '$bulan' 
+        AND YEAR(tgl) = '$tahun' 
+        AND id_lokasi = '1'"),
+        'absenSdb' => DB::select("SELECT * FROM tb_absen 
+        WHERE MONTH(tgl) = '$bulan' 
+        AND YEAR(tgl) = '$tahun' 
+        AND id_lokasi = '2'"),
     ];
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
