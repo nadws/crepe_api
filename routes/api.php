@@ -510,7 +510,7 @@ Route::get('importAbsen', function () {
             ->whereMonth('tgl', $bulan)
             ->whereYear('tgl', $tahun)
             ->where('id_lokasi', 2)
-            ->get(),,
+            ->get(),
     ];
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
