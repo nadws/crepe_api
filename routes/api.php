@@ -512,10 +512,10 @@ Route::get('importAbsen', function () {
     $data = [
         'absenTkmr' => DB::table('tb_absen')
                         ->select('id_absen', 'id_karyawan', 'tgl', 'id_lokasi', 'status')
-                        ->where('id_lokasi',1)->get(),
+                        ->where('id_lokasi',1)->whereBetween('tgl', [$tgl1, $tgl2])->get(),
         'absenSdb' => DB::table('tb_absen')
                         ->select('id_absen', 'id_karyawan', 'tgl', 'id_lokasi', 'status')
-                        ->where('id_lokasi',2)->get(),
+                        ->where('id_lokasi',2)->whereBetween('tgl', [$tgl1, $tgl2])->get(),
     ];
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
