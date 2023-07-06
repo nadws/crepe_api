@@ -16,7 +16,7 @@ class AbsenController extends Controller
         $agent = new Agent();
         $id_user = Auth::user()->id;
         $id_menu = DB::table('tb_permission')->select('id_menu')->where('id_user',$id_user)
-        ->where('id_menu', 2)->first();
+        ->where('id_menu', 1)->first();
         if(empty($id_menu)) {
             return back();
         } else {
@@ -143,14 +143,14 @@ class AbsenController extends Controller
     {
         $bulan = $request->bulanDwn;
         $tahun = $request->tahunDwn;
-
         $data = [
-            'absensi' => Absen::select('tb_absen.*', 'tb_karyawan.nama')->join('tb_karyawan', 'tb_absen.id_karyawan', '=', 'tb_karyawan.id_karyawan')->orderBy('id_absen', 'desc')->get(),
+            'absensi' => Absen::select('tb_absen.*', 'tb_karyawan.nama')
+                        ->join('tb_karyawan', 'tb_absen.id_karyawan', '=', 'tb_karyawan.id_karyawan')
+                        ->orderBy('id_absen', 'desc')->get(),
             'karyawan' => Karyawan::all(),
             'bulan' => $bulan,
             'tahun' => $tahun,
         ];
-
         return view('absen.excel',$data);
     }
 

@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Absen;
-use App\Models\Karyawan;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -14,8 +14,11 @@ class Absen2 extends Component
         $tahun,
         $valBulan,
         $valTahun,
-        $totalTgl,
-        $perPage = 5;
+        $valPosisi,
+        $search,
+        $tglTerakhir,
+        $perPage = 10,
+        $openVal;
 
     public $listBulan = [
         1 => 'Januari',
@@ -36,53 +39,71 @@ class Absen2 extends Component
     {
         $this->valBulan = (int) date('m');
         $this->valTahun = (int) date('Y');
+        $this->valPosisi = 1;
+        $this->openVal = (int) date('d');
+    }
 
-        $this->totalTgl = cal_days_in_month(CAL_GREGORIAN, $this->valBulan, $this->valTahun);
+    public function updatedValBulan($value)
+    {
+        $this->valBulan = $value;
+    }
+
+    public function open()
+    {
+        $this->openVal = $this->openVal == 1 ? (int) date('d') : 1;
     }
 
     public function getTotal($id_karyawan, $status)
     {
-        $c = Absen::whereBetween('tgl', ['2023-05-01', '2023-05-31'])->where([
+        $tglTerakhir = cal_days_in_month(CAL_GREGORIAN, $this->valBulan, $this->valTahun);
+        $c = Absen::whereBetween('tgl', ["$this->valTahun-$this->valBulan-1", "$this->valTahun-$this->valBulan-$tglTerakhir"])->where([
             ['id_karyawan', $id_karyawan],
             ['status', $status],
         ])->count();
-
         return $c;
     }
 
+
     public function clickEdit($id_absen, $status)
     {
+        $query = Absen::where('id_absen', $id_absen);
+
         if ($status == 'OFF') {
-            Absen::where('id_absen', $id_absen)->delete();
-        } else {
-            Absen::where('id_absen', $id_absen)->update([
-                'status' => $status,
-            ]);
+            $query->delete();
         }
+        $query->update([
+            'status' => $status,
+        ]);
     }
 
     public function clickOff($id_karyawan, $tgl)
     {
-
-        $id_lokasi = 1;
         $tgl = $this->valTahun . '-' . $this->valBulan . '-' . $tgl;
         Absen::create([
             'id_karyawan' => $id_karyawan,
             'status' => 'M',
             'tgl' => $tgl,
-            'id_lokasi' => $id_lokasi,
+            'id_lokasi' => session()->get('id_lokasi'),
         ]);
     }
 
     public function loadMore()
     {
-        $this->perPage += 5;
+        $this->perPage += 10;
     }
 
     public function render()
     {
+        $query = DB::table('tb_karyawan')->select('nama as nm_karyawan', 'id_karyawan')->where('id_status', $this->valPosisi);
+        if (!empty($this->search)) {
+            $query->where('nama', 'like', '%' . $this->search . '%');
+            $this->perPage = 10;
+        }
+        $result = $query->paginate($this->perPage);
+
         $data = [
-            'karyawan' => DB::table('tb_karyawan')->select('nama as nm_karyawan', 'id_karyawan')->paginate($this->perPage),
+            'karyawan' => $result,
+            'posisi' => DB::table('tb_status')->get()
         ];
         return view('livewire.absen2', $data);
     }

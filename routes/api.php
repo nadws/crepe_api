@@ -30,6 +30,8 @@ use App\Models\Persentase_kom;
 use App\Models\Gaji;
 use App\Models\Orderan;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\DB;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -144,39 +146,6 @@ Route::post('tb_transaksi', function (r $b) {
     }
 
 });
-
-// Route::post('tb_majo', function (r $b) {
-//     foreach ($b->all() as $t) {
-//         $data = [
-//             'no_nota' => $t['no_nota'],
-//             'total' => $t['total'],
-//             'bayar' => $t['bayar'],
-//             'kembali' => $t['kembali'],
-//             'cash' => $t['cash'],
-//             'mandiri_kredit' => $t['mandiri_kredit'],
-//             'mandiri_debit' => $t['mandiri_debit'],
-//             'bca_debit' => $t['bca_debit'],
-//             'bca_kredit' => $t['bca_kredit'],
-//             'dp' => $t['dp'],
-//             'kd_dp' => $t['kd_dp'],
-//             'diskon' => $t['diskon'],
-//             'tgl_jam' => $t['tgl_jam'],
-//             'tgl_input' => $t['tgl_input'],
-//             'id_customer' => $t['id_customer'],
-//             'admin' => $t['admin'],
-//             'no_meja' => $t['no_meja'],
-//             'lokasi' => $t['lokasi'],
-//             'status' => $t['status'],
-//             'nm_void' => $t['nm_void'],
-//             'ket_void' => $t['ket_void'],
-//             'invoice' => $t['invoice'],
-//             'id_distribusi' => $t['id_distribusi'],
-//         ];
-//         DB::table('tb_invoice')->insert($data);
-
-//     }
-
-// });
 
 Route::post('tb_pembelian_majo', function (r $b) {
     foreach ($b->all() as $t) {
@@ -533,6 +502,16 @@ Route::get('gaji', function () {
 Route::get('users', function () {
     $data = [
         'users' => Users::all(),
+    ];
+    return response()->json($data, HttpFoundationResponse::HTTP_OK);
+});
+
+Route::get('importAbsen', function () {
+    $tgl1 = date('Y-m-1');
+    $tgl2 = date('Y-m-t');
+    $data = [
+        'absenTkmr' => DB::select("SELECT * FROM `tb_absen` WHERE id_lokasi = 1 AND tgl BETWEEN '$tgl1' AND '$tgl2'"),
+        'absenSdb' => DB::select("SELECT * FROM `tb_absen` WHERE id_lokasi = 2 AND tgl BETWEEN '$tgl1' AND '$tgl2'"),
     ];
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });

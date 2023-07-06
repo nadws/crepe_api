@@ -3,6 +3,7 @@
     <strong>Copyright &copy; 2022 <a href="https://ptagafood.com"
             class="text-white">www.ptagafood.com</a>.</strong> All rights reserved.
 </footer>
+
 </div>
 <!-- ./wrapper -->
 
@@ -178,6 +179,7 @@
     });
 </script>
 @yield('script')
+@livewireScripts
 </body>
 
 </html>

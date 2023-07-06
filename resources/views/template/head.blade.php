@@ -51,7 +51,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     @livewireStyles
-    @livewireScripts
     <style>
         @keyframes blinking {
             0% {
