@@ -49,25 +49,26 @@ foreach ($masak as $k) : ?>
                         <div class="col-lg-6">
                             <h5>Org p/r :
                                 <?= number_format($jumlah_orang->jumlah,0) ?> /
-                                <?= number_format($orang,0) ?> 
+                                <?= number_format($orang,0) ?>
                                 <!--({{$service_charge}})-->
                             </h5>
                             <h5>Service Charge Dibagi :
                                 <?= number_format(($service_charge / 7) * $persen->jumlah_persen,0) ?>
                             </h5>
-                            @if($jumlah_orang->jumlah < $orang)
-                            @else
-                            <h5>Service charge real :
-                                
+                            @if($jumlah_orang->jumlah < $orang) @else <h5>Service charge real :
+
                                 <?= number_format($kom,0) ?>
-                            </h5>
-                            @endif
-                            
+                                </h5>
+                                @endif
+
                         </div>
                         <div class="col-lg-6">
                             <a href="{{ route('point_export_server')}}?id_lokasi={{$id_lokasi}}&tgl1={{$tgl1}}&tgl2={{$tgl2}}"
                                 class="btn btn-info float-right btn-sm "><i class="fas fa-file-excel"></i>
-                                Export</a>
+                                Export Kitchen</a>
+                            <a href="{{ route('Export_gaji_server')}}?id_lokasi={{$id_lokasi}}&tgl1={{$tgl1}}&tgl2={{$tgl2}}"
+                                class="btn btn-info float-right btn-sm mr-2"><i class="fas fa-file-excel"></i>
+                                Export Server</a>
                             <a href="" data-target="#view" data-toggle="modal"
                                 class="btn btn-info float-right btn-sm mr-2"><i class="fas fa-eye"></i> View</a>
                         </div>
@@ -94,7 +95,8 @@ foreach ($masak as $k) : ?>
                                         <thead style="white-space: nowrap; ">
                                             <tr>
                                                 <th>#</th>
-                                                <th style="font-size: 10px;text-align: center">Nama {{number_format($point,1)}}</th>
+                                                <th style="font-size: 10px;text-align: center">Nama
+                                                    {{number_format($point,1)}}</th>
                                                 <th style="font-size: 10px;text-align: right">M</th>
                                                 <th style="font-size: 10px;text-align: right">Gaji</th>
                                                 <th style="font-size: 10px;text-align: right">Point <br> Masak </th>
@@ -109,7 +111,12 @@ foreach ($masak as $k) : ?>
                                                     <?= $i++ ?>
                                                 </td>
                                                 <td>
-                                                    <a href="#" id_lokasi="{{Request::get('id_lokasi')}}" tgl1="{{$tgl1}}" tgl2="{{$tgl2}}" id="detailPoint" data-target="#viewDetail" data-toggle="modal" id_karyawan={{$k->id_karyawan}}><?= $k->nama ?></a>
+                                                    <a href="#" id_lokasi="{{Request::get('id_lokasi')}}"
+                                                        tgl1="{{$tgl1}}" tgl2="{{$tgl2}}" id="detailPoint"
+                                                        data-target="#viewDetail" data-toggle="modal"
+                                                        id_karyawan={{$k->id_karyawan}}>
+                                                        <?= $k->nama ?>
+                                                    </a>
                                                 </td>
                                                 <td style="text-align: right">
                                                     <?= number_format($k->rp_m,0) ?>
@@ -128,7 +135,7 @@ foreach ($masak as $k) : ?>
                                                 <?php $kom3 =  $point == '' ? '0' : ($k->point_gagal / $point) * $kom  ?>
 
                                                 <td style="text-align: right">
-                                                    <?= number_format($k->point_gagal,0) ?> 
+                                                    <?= number_format($k->point_gagal,0) ?>
                                                     <?= $jumlah_orang->jumlah < $orang ? '' : '/' . number_format($kom3,0) ?>
                                                 </td>
                                             </tr>
@@ -249,7 +256,7 @@ foreach ($masak as $k) : ?>
     <div class="modal fade" role="dialog" id="viewDetail" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div id="viewDetailPoint"></div>
-            
+
         </div>
     </div>
 </form>

@@ -376,9 +376,50 @@ class PointQuery
 
 class Server
 {
-  public static function getServer($tgl1, $tgl2)
+  public static function gaji_server($tgl1, $tgl2)
   {
-    
+   return DB::select("SELECT a.tgl_masuk, a.nama, sum(c.qty_m) as m, sum(c.qty_e) as e, sum(c.qty_sp) as sp, sum(c.qty_off) as off,  b.rp_e, b.rp_m, b.rp_sp, b.g_bulanan,
+   d.kasbon, e.denda, a.point, f.nm_posisi
+   FROM tb_karyawan as a 
+   left join tb_gaji as b on b.id_karyawan =  a.id_karyawan
+   left join tb_posisi as f on f.id_posisi =  a.id_posisi
+   left join (
+     SELECT c.id_karyawan, c.status, c.id_lokasi, 
+       if(c.status = 'M', COUNT(c.status),0) AS qty_m,
+       if(c.status = 'E', COUNT(c.status),0) AS qty_e,
+       if(c.status = 'SP', COUNT(c.status),0) AS qty_sp,
+       if(c.status = 'OFF', COUNT(c.status),0) AS qty_off
+       FROM tb_absen as c 
+       WHERE c.tgl BETWEEN '$tgl1' AND '$tgl2' and c.status != 'OFF' 
+       GROUP BY c.id_karyawan,  c.status
+   ) as c on c.id_karyawan = a.id_karyawan
+   LEFT JOIN
+   (
+    SELECT d.nm_karyawan, sum(d.nominal) as kasbon 
+    FROM tb_kasbon as d
+    WHERE d.tgl BETWEEN '$tgl1' AND '$tgl2'
+    GROUP BY d.nm_karyawan
+   ) as d ON d.nm_karyawan = a.nama
+   
+   Left JOIN (
+   SELECT e.nama , sum(e.nominal) as denda FROM tb_denda as e where e.tgl between '$tgl1' AND '$tgl2' group by e.nama
+   ) as e on e.nama = a.nama
+   
+   where a.id_status = 2
+   group by a.id_karyawan;");
   }
+
+  
+  
+  public static function komstk($tgl1, $tgl2)
+  {
+    return DB::select("SELECT b.komisi, sum(a.total) as total, sum(a.total * (b.komisi/100)) as komisi_bagi, a.lokasi
+    FROM tb_pembelian as a 
+    left join tb_produk as b on b.id_produk = a.id_produk
+    WHERE b.komisi != '0' and a.tanggal between '$tgl1' and '$tgl2' 
+    group by b.komisi , a.lokasi;");
+  }
+
+
 }
 

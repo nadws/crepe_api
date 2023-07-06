@@ -49,6 +49,7 @@ use App\Http\Controllers\Kom_server;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\StokmasukController;
 use App\Http\Controllers\OpnamemajoController;
+use App\Http\Controllers\Export_gaji_server;
 
 use App\Http\Controllers\KpiController;
 use App\Http\Controllers\viewKomServerController;
@@ -578,6 +579,8 @@ Route::post('/editStokMasuk', [StokmasukController::class, 'editStokMasuk'])->na
 Route::get('/printStokMasuk', [StokmasukController::class, 'printStokMasuk'])->name('printStokMasuk');
 Route::get('/deleteStok', [StokmasukController::class, 'deleteStok'])->name('deleteStok');
 Route::get('/tambahProdukMasuk', [StokmasukController::class, 'tambahProdukMasuk'])->name('tambahProdukMasuk');
+
+Route::get('/Export_gaji_server', [Export_gaji_server::class, 'index'])->name('Export_gaji_server');
 
 Route::middleware(['auth'])->group(function () {
 
