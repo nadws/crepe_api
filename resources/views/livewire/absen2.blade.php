@@ -12,11 +12,7 @@
     </style>
     <div class="row">
         <div class="col-lg-12">
-            @php
-                $bulan_2 = ['bulan', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-                $bulan1 = (int) date('m');
-            @endphp
-            <h1 class="ml-5">Absen : <span id="ketbul">{{ $bulan_2[$this->valBulan] }}</span> - <span
+            <h1 class="ml-5">Absen : <span id="ketbul">{{ $listBulan[$this->valBulan] }}</span> - <span
                     id="ketah">{{ $this->valTahun }}</span></h1><br>
         </div>
     </div>
@@ -75,11 +71,7 @@
 
     <div class="row">
         <div class="col-lg-12">
-
-
-            <div class="card" x-data="{
-                open: true
-            }">
+            <div class="card">
                 <div class="p-1">
                     <button wire:target='open, search, valPosisi, valBulan, valTahun' wire:loading
                         class="btn btn-primary" type="button" disabled="">
@@ -104,7 +96,7 @@
                                 $totalLoop = $valBulan == (int) date('m') ? (int) date('d') : cal_days_in_month(CAL_GREGORIAN, $this->valBulan, $this->valTahun);
                             @endphp
                             @for ($i = $openVal; $i <= $totalLoop; $i++)
-                                <th width="2%" class="text-center" x-show="open">{{ $i }}</th>
+                                <th width="2%" class="text-center">{{ $i }}</th>
                             @endfor
                             <th width="3%" class="text-center">M</th>
                             <th width="3%" class="text-center">E</th>
@@ -134,7 +126,7 @@
                                     @endphp
 
                                     @if ($data)
-                                        <td class="text-center m" x-show="open">
+                                        <td class="text-center m">
                                             @php
                                                 $statusColorMap = [
                                                     'M' => 'success',
@@ -180,7 +172,7 @@
 
                                         </td>
                                     @else
-                                        <td class="text-center m" x-show="open">
+                                        <td class="text-center m">
                                             <button
                                                 {{ $i < date('d') || $valBulan != (int) date('m') ? 'disabled' : '' }}
                                                 wire:click="clickOff({{ $d->id_karyawan }}, {{ $i }})"
