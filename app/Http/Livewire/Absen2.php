@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Models\Absen;
-use App\Models\Karyawan;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -15,7 +14,6 @@ class Absen2 extends Component
         $tahun,
         $valBulan,
         $valTahun,
-        $totalTgl,
         $search,
         $tglTerakhir,
         $perPage = 10;
@@ -39,14 +37,11 @@ class Absen2 extends Component
     {
         $this->valBulan = (int) date('m');
         $this->valTahun = (int) date('Y');
-
-        $this->totalTgl = cal_days_in_month(CAL_GREGORIAN, $this->valBulan, $this->valTahun);
     }
 
     public function updatedValBulan($value)
     {
         $this->valBulan = $value;
-        $this->tglTerakhir = Carbon::createFromDate($this->valTahun, $this->valBulan, 1)->endOfMonth()->toDateString();
     }
 
     public function getTotal($id_karyawan, $status)
@@ -74,14 +69,12 @@ class Absen2 extends Component
 
     public function clickOff($id_karyawan, $tgl)
     {
-
-        $id_lokasi = 1;
         $tgl = $this->valTahun . '-' . $this->valBulan . '-' . $tgl;
         Absen::create([
             'id_karyawan' => $id_karyawan,
             'status' => 'M',
             'tgl' => $tgl,
-            'id_lokasi' => $id_lokasi,
+            'id_lokasi' => session()->get('id_lokasi'),
         ]);
     }
 
@@ -95,9 +88,9 @@ class Absen2 extends Component
         $query = DB::table('tb_karyawan')->select('nama as nm_karyawan', 'id_karyawan');
         if (!empty($this->search)) {
             $query->where('nama', 'like', '%' . $this->search . '%');
-            $this->perPage = 10;
         }
         $result = $query->paginate($this->perPage);
+
         $data = [
             'karyawan' => $result,
         ];

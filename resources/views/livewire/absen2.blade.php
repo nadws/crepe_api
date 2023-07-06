@@ -9,6 +9,15 @@
         .scrl {
             overflow: auto;
         }
+
+        .hover {
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .hover:hover {
+            opacity: 1;
+        }
     </style>
     <div class="row">
         <div class="col-lg-12">
@@ -63,27 +72,31 @@
         <div class="col-lg-12">
 
 
-            <div class="card">
-                <table class="table table-md table-stripped table-bordered" width="100%">
+            <div class="card" x-data="{
+                open: true
+            }">
+                <table class="table table-stripped table-bordered" width="100%">
                     <thead class="table-success">
                         <tr>
 
-                            <th
+                            <th width="5%"
                                 style="white-space: nowrap;position: sticky;
                                 left: 0;
                                 z-index: 999;">
                                 NAMA
+                                <button @click="open = ! open"
+                                    class="hover btn btn-sm btn-info float-right">open</button>
                             </th>
                             @php
                                 $totalLoop = $valBulan == (int) date('m') ? (int) date('d') : cal_days_in_month(CAL_GREGORIAN, $this->valBulan, $this->valTahun);
                             @endphp
                             @for ($i = 1; $i <= $totalLoop; $i++)
-                                <th class="text-center">{{ $i }}</th>
+                                <th width="2%" class="text-center" x-show="open">{{ $i }}</th>
                             @endfor
-                            <th>M</th>
-                            <th>E</th>
-                            <th>SP</th>
-                            <th>OFF</th>
+                            <th width="3%" class="text-center">M</th>
+                            <th width="3%" class="text-center">E</th>
+                            <th width="3%" class="text-center">SP</th>
+                            <th width="3%" class="text-center">OFF</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -99,7 +112,7 @@
                                 @for ($i = 1; $i <= $totalLoop; $i++)
                                     @php
                                         $data = DB::table('tb_absen')
-                                            ->select('tb_absen.*')
+                                            ->select('status', 'id_absen')
                                             ->where('id_karyawan', '=', $d->id_karyawan)
                                             ->whereDay('tgl', '=', $i)
                                             ->whereMonth('tgl', '=', $valBulan)
@@ -108,7 +121,7 @@
                                     @endphp
 
                                     @if ($data)
-                                        <td class="text-center m">
+                                        <td class="text-center m" x-show="open">
                                             @php
                                                 $statusColorMap = [
                                                     'M' => 'success',
@@ -118,46 +131,52 @@
                                                 ];
                                                 $warna = $statusColorMap[$data->status];
                                             @endphp
-                                            <div class="dropdown">
-                                                <button
-                                                    {{ $i < date('d') || $valBulan != (int) date('m') ? 'disabled' : '' }}
-                                                    class="btn btn-block btn-{{ $warna }} dropdown-toggle"
-                                                    type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
+                                            @if ($i < date('d') || $valBulan != (int) date('m'))
+                                                <button disabled class="btn btn-block btn-{{ $warna }}">
                                                     {{ $data->status }}
                                                 </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <a wire:click="clickEdit({{ $data->id_absen }}, 'M')"
-                                                        style="width:60px;"
-                                                        class="btnUpdate btn text-center btn-success mb-3">M</a>
-                                                    <a wire:click="clickEdit({{ $data->id_absen }}, 'E')"
-                                                        style="width:60px;"
-                                                        class="btnUpdate btn text-center btn-warning mb-3">E</a>
-                                                    <a wire:click="clickEdit({{ $data->id_absen }}, 'SP')"
-                                                        style="width:60px;"
-                                                        class="btnUpdate btn text-center btn-primary mb-3">SP</a>
-                                                    <a wire:click="clickEdit({{ $data->id_absen }}, 'OFF')"
-                                                        style="width:60px;"
-                                                        class="btnUpdate btn text-center btn-info mb-3">OFF</a>
+                                            @else
+                                                <div class="dropdown">
+                                                    <button
+                                                        class="btn btn-block btn-{{ $warna }} dropdown-toggle"
+                                                        type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        {{ $data->status }}
+                                                    </button>
+                                                    <div class="dropdown-menu text-center"
+                                                        aria-labelledby="dropdownMenuButton">
+                                                        <a wire:click="clickEdit({{ $data->id_absen }}, 'M')"
+                                                            style="width:60px;"
+                                                            class="btn text-center btn-success mb-3">M</a>
+                                                        <a wire:click="clickEdit({{ $data->id_absen }}, 'E')"
+                                                            style="width:60px;"
+                                                            class="btn text-center btn-warning mb-3">E</a>
+                                                        <a wire:click="clickEdit({{ $data->id_absen }}, 'SP')"
+                                                            style="width:60px;"
+                                                            class="btn text-center btn-primary mb-3">SP</a>
+                                                        <a wire:click="clickEdit({{ $data->id_absen }}, 'OFF')"
+                                                            style="width:60px;"
+                                                            class="btn text-center btn-info mb-3">OFF</a>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            @endif
 
                                         </td>
                                     @else
-                                        <td class="bg-info m">
+                                        <td class="text-center m" x-show="open">
                                             <button
                                                 {{ $i < date('d') || $valBulan != (int) date('m') ? 'disabled' : '' }}
                                                 wire:click="clickOff({{ $d->id_karyawan }}, {{ $i }})"
-                                                class="btnInput   btn btn-block  btn-info">
+                                                class="btn btn-block btn-white">
                                                 OFF
                                             </button>
                                         </td>
                                     @endif
                                 @endfor
-                                <td class="bg-light">{{ $this->getTotal($d->id_karyawan, 'M') }}</td>
-                                <td class="bg-light">{{ $this->getTotal($d->id_karyawan, 'E') }}</td>
-                                <td class="bg-light">{{ $this->getTotal($d->id_karyawan, 'SP') }}</td>
-                                <td class="bg-light">
+                                <td class="bg-light" align="center">{{ $this->getTotal($d->id_karyawan, 'M') }}</td>
+                                <td class="bg-light" align="center">{{ $this->getTotal($d->id_karyawan, 'E') }}</td>
+                                <td class="bg-light" align="center">{{ $this->getTotal($d->id_karyawan, 'SP') }}</td>
+                                <td class="bg-light" align="center">
                                     {{ $totalLoop - ($this->getTotal($d->id_karyawan, 'M') + $this->getTotal($d->id_karyawan, 'E') + $this->getTotal($d->id_karyawan, 'SP')) }}
                                 </td>
                             </tr>
@@ -182,7 +201,6 @@
                             Processing...
                         </button>
                     </div>
-
                 </div>
             </div>
         </div>
