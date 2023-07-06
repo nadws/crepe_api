@@ -40,7 +40,7 @@ class Absen2 extends Component
         $this->valBulan = (int) date('m');
         $this->valTahun = (int) date('Y');
         $this->valPosisi = 1;
-        $this->openVal = 1;
+        $this->openVal = (int) date('d');
     }
 
     public function updatedValBulan($value)
