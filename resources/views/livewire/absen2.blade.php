@@ -145,18 +145,18 @@
                                                     </button>
                                                     <div class="dropdown-menu text-center"
                                                         aria-labelledby="dropdownMenuButton">
-                                                        <a wire:click="clickEdit({{ $data->id_absen }}, 'M')"
+                                                        <button type="button" wire:click="clickEdit({{ $data->id_absen }}, 'M')"
                                                             style="width:60px;"
-                                                            class="btn text-center btn-success mb-3">M</a>
-                                                        <a wire:click="clickEdit({{ $data->id_absen }}, 'E')"
+                                                            class="btn text-center btn-success mb-3">M</button>
+                                                        <button type="button" wire:click="clickEdit({{ $data->id_absen }}, 'E')"
                                                             style="width:60px;"
-                                                            class="btn text-center btn-warning mb-3">E</a>
-                                                        <a wire:click="clickEdit({{ $data->id_absen }}, 'SP')"
+                                                            class="btn text-center btn-warning mb-3">E</button>
+                                                        <button type="button" wire:click="clickEdit({{ $data->id_absen }}, 'SP')"
                                                             style="width:60px;"
-                                                            class="btn text-center btn-primary mb-3">SP</a>
-                                                        <a wire:click="clickEdit({{ $data->id_absen }}, 'OFF')"
+                                                            class="btn text-center btn-primary mb-3">SP</button>
+                                                        <button type="button" wire:click="clickEdit({{ $data->id_absen }}, 'OFF')"
                                                             style="width:60px;"
-                                                            class="btn text-center btn-info mb-3">OFF</a>
+                                                            class="btn text-center btn-info mb-3">OFF</button>
                                                     </div>
                                                 </div>
                                             @endif
