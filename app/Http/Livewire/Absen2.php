@@ -99,7 +99,7 @@ class Absen2 extends Component
             $query->where('nama', 'like', '%' . $this->search . '%');
             $this->perPage = 10;
         }
-        $result = $query->paginate($this->perPage);
+        $result = $query->orderBy('nama', 'ASC')->paginate($this->perPage);
 
         $data = [
             'karyawan' => $result,
