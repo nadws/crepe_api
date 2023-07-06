@@ -5,16 +5,16 @@
             style=" background:#197dab; color: #787878;">
             <div class="container">
                 @php
-                    if (Session::get('id_lokasi') == 1) {
-                        $gambar = 'Takemori_new.jpg';
-                        $h5 = 'TAKEMORI';
-                    } elseif (Session::get('id_lokasi') == 2) {
-                        $gambar = 'soondobu.jpg';
-                        $h5 = 'SOONDOBU';
-                    } else {
-                        $gambar = 'user copy.png';
-                        $h5 = 'ADMINISTRATOR';
-                    }
+                if (Session::get('id_lokasi') == 1) {
+                $gambar = 'Takemori_new.jpg';
+                $h5 = 'TAKEMORI';
+                } elseif (Session::get('id_lokasi') == 2) {
+                $gambar = 'soondobu.jpg';
+                $h5 = 'SOONDOBU';
+                } else {
+                $gambar = 'user copy.png';
+                $h5 = 'ADMINISTRATOR';
+                }
                 @endphp
                 <img src="{{ asset('assets') }}/pages/login/img/{{ $gambar }}" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8"> &nbsp;
