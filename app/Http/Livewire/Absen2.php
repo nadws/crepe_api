@@ -43,8 +43,14 @@ class Absen2 extends Component
         $this->openVal = (int) date('d');
     }
 
+    public function updatedValBulan()
+    {
+        $this->openVal = 1;
+    }
+
     public function open()
     {
+
         $this->openVal = $this->openVal == 1 ? (int) date('d') : 1;
     }
 
