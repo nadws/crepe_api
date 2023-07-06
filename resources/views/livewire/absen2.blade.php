@@ -10,14 +10,6 @@
             overflow: auto;
         }
 
-        .hover {
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .hover:hover {
-            opacity: 1;
-        }
     </style>
     <div class="row">
         <div class="col-lg-12">
@@ -99,10 +91,10 @@
                                 left: 0;
                                 z-index: 999;">
                                 NAMA
-                                {{-- <button @click="open = ! open"
-                                    class="hover btn btn-sm btn-info float-right">open</button> --}}
+                                @if ($valBulan == (int) date('m'))
                                 <button wire:click="open"
-                                    class="hover btn btn-sm btn-info float-right">open</button>
+                                    class="btn btn-sm btn-info float-right">open</button>
+                                @endif
                             </th>
                             @php
                                 $totalLoop = $valBulan == (int) date('m') ? (int) date('d') : cal_days_in_month(CAL_GREGORIAN, $this->valBulan, $this->valTahun);

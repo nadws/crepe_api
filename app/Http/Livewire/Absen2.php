@@ -50,9 +50,6 @@ class Absen2 extends Component
 
     public function open()
     {
-        if ($this->valBulan != (int)date('m')) {
-            $this->openVal = $this->openVal == 1 ? (int) date('t') : 1;
-        }
         $this->openVal = $this->openVal == 1 ? (int) date('d') : 1;
     }
 
