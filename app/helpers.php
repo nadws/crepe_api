@@ -420,6 +420,15 @@ class Server
     group by b.komisi , a.lokasi;");
   }
 
+  public static function penjualan_stk($id_lokasi,$tgl1, $tgl2)
+  {
+    return DB::select("SELECT b.nm_produk, sum(a.jumlah) as jumlah, b.komisi, sum(a.total) as total, a.lokasi 
+    FROM tb_pembelian as a 
+    left join tb_produk as b on b.id_produk = a.id_produk 
+    where a.tanggal BETWEEN '$tgl1' and '$tgl2' and b.komisi != '0' and a.lokasi = '$id_lokasi'
+    group by a.id_produk");
+  }
+
 
 }
 
