@@ -32,7 +32,7 @@
     <div class="row">
         <div class="col-md-3 col-lg-2">
             <label for="">Bulan</label>
-            <select wire:model="valBulan" id="bulan" class="form-control mb-3 " name="bulan">
+            <select wire:model="valBulan" wire:target="valBulan" wire:loading.class="loading" id="bulan" class="form-control mb-3 " name="bulan">
                 <option value="">--Pilih Bulan-- </option>
                 @foreach ($listBulan as $key => $value)
                     <option value="{{ $key }}" {{ (int) date('m') == $key ? 'selected' : '' }}>
@@ -42,7 +42,7 @@
         </div>
         <div class="col-md-3 col-lg-2">
             <label for="">Tahun</label>
-            <select wire:model="valTahun" id="tahun" class="form-control mb-3 " name="tahun">
+            <select wire:model="valTahun" wire:target="valTahun" wire:loading.class="loading" id="tahun" class="form-control mb-3 " name="tahun">
                 <option value="">--Pilih Tahun--</option>
                 <option value="{{ date('Y') - 1 }}">{{ date('Y') - 1 }}</option>
                 @for ($i = date('Y'); $i <= date('Y') + 3; $i++)
@@ -54,7 +54,7 @@
         </div>
         <div class="col-md-3 col-lg-2">
             <label for="">Posisi</label>
-            <select wire:model="valPosisi" class="form-control mb-3" name="tahun">
+            <select wire:model="valPosisi" wire:target="valPosisi" wire:loading.class="loading" class="form-control mb-3" name="tahun">
                 <option value="">--Pilih Posisi--</option>
                 @foreach ($posisi as $p)
                     <option {{$valPosisi == $p->id_status ? 'selected' : ''}} value="{{ $p->id_status }}">{{ $p->nm_status }}</option>
@@ -63,7 +63,7 @@
         </div>
         <div class="col-lg-2">
             <label for="">Pencarian</label>
-            <input autofocus type="text" class="form-control" wire:model="search" placeholder="ketik nama">
+            <input autofocus type="text" class="form-control" wire:target="search" wire:loading.class="loading" wire:model="search" placeholder="ketik nama">
         </div>
         <div class="col-lg-4">
             <label for="">Aksi</label> <br>
@@ -84,6 +84,12 @@
             <div class="card" x-data="{
                 open: true
             }">
+            <div class="p-1">
+                <button wire:target='open, search, valPosisi, valBulan, valTahun' wire:loading class="btn btn-primary" type="button" disabled="">
+                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                    Loading...
+                </button>
+            </div>
                 <table class="table table-stripped table-bordered" width="100%">
                     <thead class="table-success">
                         <tr>
