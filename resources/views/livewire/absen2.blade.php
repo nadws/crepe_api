@@ -9,7 +9,6 @@
         .scrl {
             overflow: auto;
         }
-
     </style>
     <div class="row">
         <div class="col-lg-12">
@@ -24,7 +23,8 @@
     <div class="row">
         <div class="col-md-3 col-lg-2">
             <label for="">Bulan</label>
-            <select wire:model="valBulan" wire:target="valBulan" wire:loading.class="loading" id="bulan" class="form-control mb-3 " name="bulan">
+            <select wire:model="valBulan" wire:target="valBulan" wire:loading.class="loading" id="bulan"
+                class="form-control mb-3 " name="bulan">
                 <option value="">--Pilih Bulan-- </option>
                 @foreach ($listBulan as $key => $value)
                     <option value="{{ $key }}" {{ (int) date('m') == $key ? 'selected' : '' }}>
@@ -34,7 +34,8 @@
         </div>
         <div class="col-md-3 col-lg-2">
             <label for="">Tahun</label>
-            <select wire:model="valTahun" wire:target="valTahun" wire:loading.class="loading" id="tahun" class="form-control mb-3 " name="tahun">
+            <select wire:model="valTahun" wire:target="valTahun" wire:loading.class="loading" id="tahun"
+                class="form-control mb-3 " name="tahun">
                 <option value="">--Pilih Tahun--</option>
                 <option value="{{ date('Y') - 1 }}">{{ date('Y') - 1 }}</option>
                 @for ($i = date('Y'); $i <= date('Y') + 3; $i++)
@@ -46,16 +47,19 @@
         </div>
         <div class="col-md-3 col-lg-2">
             <label for="">Posisi</label>
-            <select wire:model="valPosisi" wire:target="valPosisi" wire:loading.class="loading" class="form-control mb-3" name="tahun">
+            <select wire:model="valPosisi" wire:target="valPosisi" wire:loading.class="loading"
+                class="form-control mb-3" name="tahun">
                 <option value="">--Pilih Posisi--</option>
                 @foreach ($posisi as $p)
-                    <option {{$valPosisi == $p->id_status ? 'selected' : ''}} value="{{ $p->id_status }}">{{ $p->nm_status }}</option>
+                    <option {{ $valPosisi == $p->id_status ? 'selected' : '' }} value="{{ $p->id_status }}">
+                        {{ $p->nm_status }}</option>
                 @endforeach
             </select>
         </div>
         <div class="col-lg-2">
             <label for="">Pencarian</label>
-            <input autofocus type="text" class="form-control" wire:target="search" wire:loading.class="loading" wire:model="search" placeholder="ketik nama">
+            <input autofocus type="text" class="form-control" wire:target="search" wire:loading.class="loading"
+                wire:model="search" placeholder="ketik nama">
         </div>
         <div class="col-lg-4">
             <label for="">Aksi</label> <br>
@@ -76,12 +80,13 @@
             <div class="card" x-data="{
                 open: true
             }">
-            <div class="p-1">
-                <button wire:target='open, search, valPosisi, valBulan, valTahun' wire:loading class="btn btn-primary" type="button" disabled="">
-                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                    Loading...
-                </button>
-            </div>
+                <div class="p-1">
+                    <button wire:target='open, search, valPosisi, valBulan, valTahun' wire:loading
+                        class="btn btn-primary" type="button" disabled="">
+                        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
+                </div>
                 <table class="table table-stripped table-bordered" width="100%">
                     <thead class="table-success">
                         <tr>
@@ -92,8 +97,7 @@
                                 z-index: 999;">
                                 NAMA
                                 @if ($valBulan == (int) date('m'))
-                                <button wire:click="open"
-                                    class="btn btn-sm btn-info float-right">open</button>
+                                    <button wire:click="open" class="btn btn-sm btn-info float-right">open</button>
                                 @endif
                             </th>
                             @php
@@ -154,16 +158,20 @@
                                                     </button>
                                                     <div class="dropdown-menu text-center"
                                                         aria-labelledby="dropdownMenuButton">
-                                                        <button type="button" wire:click="clickEdit({{ $data->id_absen }}, 'M')"
+                                                        <button type="button"
+                                                            wire:click="clickEdit({{ $data->id_absen }}, 'M')"
                                                             style="width:60px;"
                                                             class="btn text-center btn-success mb-3">M</button>
-                                                        <button type="button" wire:click="clickEdit({{ $data->id_absen }}, 'E')"
+                                                        <button type="button"
+                                                            wire:click="clickEdit({{ $data->id_absen }}, 'E')"
                                                             style="width:60px;"
                                                             class="btn text-center btn-warning mb-3">E</button>
-                                                        <button type="button" wire:click="clickEdit({{ $data->id_absen }}, 'SP')"
+                                                        <button type="button"
+                                                            wire:click="clickEdit({{ $data->id_absen }}, 'SP')"
                                                             style="width:60px;"
                                                             class="btn text-center btn-primary mb-3">SP</button>
-                                                        <button type="button" wire:click="clickEdit({{ $data->id_absen }}, 'OFF')"
+                                                        <button type="button"
+                                                            wire:click="clickEdit({{ $data->id_absen }}, 'OFF')"
                                                             style="width:60px;"
                                                             class="btn text-center btn-info mb-3">OFF</button>
                                                     </div>
