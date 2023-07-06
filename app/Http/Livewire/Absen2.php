@@ -88,6 +88,7 @@ class Absen2 extends Component
         $query = DB::table('tb_karyawan')->select('nama as nm_karyawan', 'id_karyawan');
         if (!empty($this->search)) {
             $query->where('nama', 'like', '%' . $this->search . '%');
+            $this->perPage = 10;
         }
         $result = $query->paginate($this->perPage);
 
