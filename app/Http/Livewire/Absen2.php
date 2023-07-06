@@ -51,9 +51,9 @@ class Absen2 extends Component
     public function open()
     {
         if ($this->valBulan != (int)date('m')) {
-            $this->openVal = ($this->openVal === 1) ? date('t') : 1;
+            $this->openVal = $this->openVal == 1 ? (int) date('t') : 1;
         }
-        $this->openVal = ($this->openVal === 1) ? date('d') : 1;
+        $this->openVal = $this->openVal == 1 ? (int) date('d') : 1;
     }
 
     public function getTotal($id_karyawan, $status)
