@@ -14,9 +14,11 @@ class Absen2 extends Component
         $tahun,
         $valBulan,
         $valTahun,
+        $valPosisi,
         $search,
         $tglTerakhir,
-        $perPage = 10;
+        $perPage = 10,
+        $openVal;
 
     public $listBulan = [
         1 => 'Januari',
@@ -37,11 +39,21 @@ class Absen2 extends Component
     {
         $this->valBulan = (int) date('m');
         $this->valTahun = (int) date('Y');
+        $this->valPosisi = 1;
+        $this->openVal = 1;
     }
 
     public function updatedValBulan($value)
     {
         $this->valBulan = $value;
+    }
+
+    public function open()
+    {
+        if ($this->valBulan != (int)date('m')) {
+            $this->openVal = ($this->openVal === 1) ? date('t') : 1;
+        }
+        $this->openVal = ($this->openVal === 1) ? date('d') : 1;
     }
 
     public function getTotal($id_karyawan, $status)
@@ -85,7 +97,7 @@ class Absen2 extends Component
 
     public function render()
     {
-        $query = DB::table('tb_karyawan')->select('nama as nm_karyawan', 'id_karyawan');
+        $query = DB::table('tb_karyawan')->select('nama as nm_karyawan', 'id_karyawan')->where('id_status', $this->valPosisi);
         if (!empty($this->search)) {
             $query->where('nama', 'like', '%' . $this->search . '%');
             $this->perPage = 10;
@@ -94,6 +106,7 @@ class Absen2 extends Component
 
         $data = [
             'karyawan' => $result,
+            'posisi' => DB::table('tb_status')->get()
         ];
         return view('livewire.absen2', $data);
     }

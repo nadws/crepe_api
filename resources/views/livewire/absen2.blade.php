@@ -52,6 +52,15 @@
                 @endfor
             </select>
         </div>
+        <div class="col-md-3 col-lg-2">
+            <label for="">Posisi</label>
+            <select wire:model="valPosisi" class="form-control mb-3" name="tahun">
+                <option value="">--Pilih Posisi--</option>
+                @foreach ($posisi as $p)
+                    <option {{$valPosisi == $p->id_status ? 'selected' : ''}} value="{{ $p->id_status }}">{{ $p->nm_status }}</option>
+                @endforeach
+            </select>
+        </div>
         <div class="col-lg-2">
             <label for="">Pencarian</label>
             <input autofocus type="text" class="form-control" wire:model="search" placeholder="ketik nama">
@@ -84,13 +93,15 @@
                                 left: 0;
                                 z-index: 999;">
                                 NAMA
-                                <button @click="open = ! open"
+                                {{-- <button @click="open = ! open"
+                                    class="hover btn btn-sm btn-info float-right">open</button> --}}
+                                <button wire:click="open"
                                     class="hover btn btn-sm btn-info float-right">open</button>
                             </th>
                             @php
                                 $totalLoop = $valBulan == (int) date('m') ? (int) date('d') : cal_days_in_month(CAL_GREGORIAN, $this->valBulan, $this->valTahun);
                             @endphp
-                            @for ($i = 1; $i <= $totalLoop; $i++)
+                            @for ($i = $openVal; $i <= $totalLoop; $i++)
                                 <th width="2%" class="text-center" x-show="open">{{ $i }}</th>
                             @endfor
                             <th width="3%" class="text-center">M</th>
@@ -109,7 +120,7 @@
                                     <h5>{{ $d->nm_karyawan }} </h5>
                                 </td>
 
-                                @for ($i = 1; $i <= $totalLoop; $i++)
+                                @for ($i = $openVal; $i <= $totalLoop; $i++)
                                     @php
                                         $data = DB::table('tb_absen')
                                             ->select('status', 'id_absen')
