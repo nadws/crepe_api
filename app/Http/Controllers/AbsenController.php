@@ -50,7 +50,7 @@ class AbsenController extends Controller
             $tgl = $tg;
         }
         $data = [
-            'tb_karyawan' => Karyawan::all(),
+            'tb_karyawan' => Karyawan::orderBy('nama', 'ASC')->get(),
             'tgl' => $tgl
         ];
         return view('absenMobile.tabelAbsen', $data);
