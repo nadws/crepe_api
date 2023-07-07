@@ -86,9 +86,7 @@
             }
 
             $(document).on('click', '.save', function(event) {
-                if(!confirm('Apakah anda yakin ?')) {
-                    event.preventDefault();
-                } else {
+                
                     // var id_karyawan = $("#id_karyawan").val();
                     var id_karyawan = $(this).attr('id_karyawan');
                     var tgl = $("#tgl").val();
@@ -117,7 +115,7 @@
                             load_absen();
                         }
                     });
-                }
+                
                 
             });
             $(document).on('click', '.btn-del', function(event) {
