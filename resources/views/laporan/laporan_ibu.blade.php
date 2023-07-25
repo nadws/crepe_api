@@ -6,6 +6,7 @@
     <div class="card-body">
         <p><b>TAKEMORI : {{ number_format($takemori, 0) }}</b></p>
         <p><b>SOONDOBU : {{ number_format($soondobu, 0) }}</b></p>
+        <p><b>TOTAL : {{ number_format($takemori + $soondobu, 0) }}</b></p>
         
     </div>
 </div>
