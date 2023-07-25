@@ -2,15 +2,14 @@
 @section('content')
     <style>
         /* .icon-menu:hover{
-                background: #C8BED8;
-                border-radius: 50px;
-            } */
+                    background: #C8BED8;
+                    border-radius: 50px;
+                } */
 
         h6 {
             color: #155592;
             font-weight: bold;
         }
-
     </style>
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -60,11 +59,15 @@
 
                                     </div>
 
+
                                 </div>
                                 <div class="card-footer">
                                     <button class="btn bg-gradient btn-block">Lanjutkan</button>
                                 </div>
                             </div>
+
+                            <div id="loadLaporan"></div>
+
 
                         </form>
                     </div>
@@ -95,7 +98,6 @@
         .modal-lg-max {
             max-width: 900px;
         }
-
     </style>
 
     <div class="modal fade" id="koki_masak" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -111,9 +113,9 @@
 
                 </div>
                 <!-- <div class="modal-footer">
-                                <button type="button" class="btn btn-costume" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-costume">Edit/Save</button>
-                            </div> -->
+                                    <button type="button" class="btn btn-costume" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-costume">Edit/Save</button>
+                                </div> -->
             </div>
         </div>
     </div>
@@ -132,18 +134,33 @@
                 console.log(kat);
 
                 if (kat == '1') {
+
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ route('laporan_ibu') }}",
+                        data: {
+                            tgl1: tgl1,
+                            tgl2: tgl2,
+                            kat: kat,
+                        },
+                        success: function(r) {
+                            $("#loadLaporan").html(r);
+                        }
+                    });
+
+
                     var url = "<?= route('summary') ?>?tgl1=" + tgl1 + '&tgl2=' + tgl2;
                     $('#data-laporan').show();
                     $('#data-laporan').load(url);
                     $('#data-item').hide();
                     $('#data-server').hide();
-                } else if(kat == 2) {
+                } else if (kat == 2) {
                     var url = "<?= route('item') ?>?tgl1=" + tgl1 + '&tgl2=' + tgl2;
                     $('#data-item').show();
                     $('#data-item').load(url);
                     $('#data-laporan').hide();
                     $('#data-server').hide();
-                } else if(kat == 3) {
+                } else if (kat == 3) {
                     var url = "<?= route('item_majo') ?>?tgl1=" + tgl1 + '&tgl2=' + tgl2;
                     $('#data-server').show();
                     $('#data-server').load(url);

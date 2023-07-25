@@ -443,6 +443,7 @@ Route::get('/void', [VoidController::class, 'index'])->name('void');
 
 Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');
 Route::get('/summary', [LaporanController::class, 'summary'])->name('summary');
+Route::get('/laporan_ibu', [LaporanController::class, 'laporan_ibu'])->name('laporan_ibu');
 Route::get('/ex_summary', [LaporanController::class, 'ex_summary'])->name('ex_summary');
 Route::get('/item', [LaporanController::class, 'item'])->name('item');
 Route::get('/item_majo', [LaporanController::class, 'item_majo'])->name('item_majo');

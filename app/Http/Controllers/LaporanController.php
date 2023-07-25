@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
@@ -26,6 +27,66 @@ class LaporanController extends Controller
         }
     }
 
+    public function getQueryTransaksi($tgl1, $tgl2, $loc)
+    {
+        return DB::selectOne("SELECT COUNT(a.no_order) AS ttl_invoice, SUM(a.discount) as discount, SUM(a.voucher) as voucher, sum(if(total_bayar = 0 ,0,a.round)) as rounding, a.id_lokasi, 
+        SUM(a.total_orderan) AS rp, d.unit, a.no_order, sum(a.dp) as dp, sum(a.gosen) as gosend, sum(a.service) as ser, sum(a.tax) as tax,f.qty_void, f.void,
+        SUM(a.cash) as cash, SUM(a.d_bca) as d_bca, SUM(a.k_bca) as k_bca, SUM(a.d_mandiri) as d_mandiri, SUM(a.k_mandiri) as k_mandiri, SUM(total_bayar) as total_bayar
+        
+        FROM tb_transaksi AS a
+        
+        LEFT JOIN(
+        SELECT SUM(b.qty) AS unit , b.no_order, b.id_lokasi
+        FROM tb_order AS b
+        WHERE b.tgl BETWEEN '$tgl1' AND '$tgl2' AND b.id_lokasi = '$loc' AND b.void = 0
+        GROUP BY b.id_lokasi
+        )AS d ON d.id_lokasi = a.id_lokasi
+        
+        LEFT JOIN(
+        SELECT SUM(e.void) AS void , COUNT(e.void) AS qty_void, e.no_order, e.id_lokasi
+        FROM tb_order AS e
+        WHERE e.tgl BETWEEN '$tgl1' AND '$tgl2' AND e.id_lokasi = '$loc' AND e.void != '0'
+        GROUP BY e.id_lokasi
+        )AS f ON f.id_lokasi = a.id_lokasi
+        
+        
+        where a.tgl_transaksi BETWEEN '$tgl1' AND '$tgl2' and a.id_lokasi = '$loc'
+        GROUP BY a.id_lokasi");
+    }
+
+    public function laporan_ibu(Request $r)
+    {
+        $tgl1 = $r->tgl1;
+        $tgl2 = $r->tgl2;
+        $tkmrTotal = $this->getQueryTransaksi($tgl1, $tgl2, 1)->dp + $this->getQueryTransaksi($tgl1, $tgl2, 1)->total_bayar;
+        $sdbTotal = $this->getQueryTransaksi($tgl1, $tgl2, 2)->dp + $this->getQueryTransaksi($tgl1, $tgl2, 2)->total_bayar;
+
+        $komisiTkm = Http::get("https://majoo-laravel.putrirembulan.com/api/laporan/takemori/$tgl1/$tgl2");
+        $laporanTkm = $komisiTkm['laporan'];
+        $tkmrMajo = 0;
+        foreach ($laporanTkm as $d) {
+            $tkmrMajo += $d['total'];
+        }
+
+        $komisiSdb = Http::get("https://majoo-laravel.putrirembulan.com/api/laporan/soondobu/$tgl1/$tgl2");
+        $laporanSdb = $komisiSdb['laporan'];
+        $sdbMajo = 0;
+        foreach ($laporanSdb as $d) {
+            $sdbMajo += $d['total'];
+        }
+
+        $takemori = $tkmrTotal + $tkmrMajo;
+        $soondobu = $sdbTotal + $sdbMajo;
+
+        $data = [
+            'takemori' => $takemori,
+            'soondobu' => $soondobu,
+            'tgl1' => $tgl1,
+            'tgl2' => $tgl2,
+        ];
+        return view('laporan.laporan_ibu', $data);
+    }
+
     public function summary(Request $request)
     {
         // $laporan = DB::select("")->result();
@@ -44,19 +105,19 @@ class LaporanController extends Controller
         $jml_telat = DB::selectOne("SELECT SUM(qty) AS jml_telat FROM view_koki_masak WHERE tgl >= '$tgl1' AND tgl <= '$tgl2' AND id_lokasi = $loc AND menit_bagi > 25");
         $jml_telat20 = DB::selectOne("SELECT SUM(qty) AS jml_telat FROM view_koki_masak WHERE tgl >= '$tgl1' AND tgl <= '$tgl2' AND id_lokasi = $loc AND menit_bagi > 20");
         $jml_ontime = DB::selectOne("SELECT SUM(qty) AS jml_ontime FROM view_koki_masak WHERE tgl >= '$tgl1' AND tgl <= '$tgl2' AND id_lokasi = $loc AND menit_bagi <= 25");
-    
+
         $majo = DB::selectOne("SELECT SUM(a.bayar) AS bayar_majo
         FROM tb_invoice AS a
         WHERE a.tgl_jam BETWEEN '$tgl1' AND '$tgl2' and a.lokasi = '$loc' and a.id_distribusi = '1'");
-        
+
         $majo_gojek = DB::selectOne("SELECT SUM(a.bayar) AS bayar_majo
         FROM tb_invoice AS a
         WHERE a.tgl_jam BETWEEN '$tgl1' AND '$tgl2' and a.lokasi = '$loc' and a.id_distribusi = '2'");
-        
+
         $dp = DB::selectOne("SELECT SUM(a.jumlah) AS jumlah_dp
         FROM tb_dp AS a
         WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' and a.id_lokasi = '$loc'");
-    
+
         $data = [
             'title'    => 'Summary',
             'tgl1' => $tgl1,
@@ -142,19 +203,19 @@ group by d.id_order) as e on e.id_order = a.id_order
         $jml_telat = DB::selectOne("SELECT SUM(qty) AS jml_telat FROM view_koki_masak WHERE tgl >= '$tgl1' AND tgl <= '$tgl2' AND id_lokasi = $loc AND menit_bagi > 25");
         $jml_telat20 = DB::selectOne("SELECT SUM(qty) AS jml_telat FROM view_koki_masak WHERE tgl >= '$tgl1' AND tgl <= '$tgl2' AND id_lokasi = $loc AND menit_bagi > 20");
         $jml_ontime = DB::selectOne("SELECT SUM(qty) AS jml_ontime FROM view_koki_masak WHERE tgl >= '$tgl1' AND tgl <= '$tgl2' AND id_lokasi = $loc AND menit_bagi <= 25");
-    
+
         $majo = DB::selectOne("SELECT SUM(a.bayar) AS bayar_majo
         FROM tb_invoice AS a
         WHERE a.tgl_jam BETWEEN '$tgl1' AND '$tgl2' and a.lokasi = '$loc' and a.id_distribusi = '1'");
-        
+
         $majo_gojek = DB::selectOne("SELECT SUM(a.bayar) AS bayar_majo
         FROM tb_invoice AS a
         WHERE a.tgl_jam BETWEEN '$tgl1' AND '$tgl2' and a.lokasi = '$loc' and a.id_distribusi = '2'");
-        
+
         $dp = DB::selectOne("SELECT SUM(a.jumlah) AS jumlah_dp
         FROM tb_dp AS a
         WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' and a.id_lokasi = '$loc'");
-    
+
         $data = [
             'title'    => 'Summary',
             'tgl1' => $tgl1,
@@ -264,7 +325,7 @@ group by d.id_order) as e on e.id_order = a.id_order
         $spreadsheet->getActiveSheet()->setCellValue('B1', 'Nama Menu');
         $spreadsheet->getActiveSheet()->setCellValue('C1', 'Qty');
         $spreadsheet->getActiveSheet()->setCellValue('D1', 'Subtotal');
-        
+
 
         $style = array(
             'font' => array(
@@ -290,7 +351,7 @@ group by d.id_order) as e on e.id_order = a.id_order
         $kolom = 2;
         $no = 1;
         foreach ($dt_item as $d) {
-            if($d->nm_menu == '') {
+            if ($d->nm_menu == '') {
                 continue;
             }
             $spreadsheet->setActiveSheetIndex(0);
@@ -315,7 +376,7 @@ group by d.id_order) as e on e.id_order = a.id_order
         $writer = new Xlsx($spreadsheet);
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename='.$lokasi);
+        header('Content-Disposition: attachment;filename=' . $lokasi);
         header('Cache-Control: max-age=0');
 
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
@@ -329,7 +390,7 @@ group by d.id_order) as e on e.id_order = a.id_order
     public function get_ontime(Request $request)
     {
     }
-    
+
     public function masak(Request $request)
     {
         $tgl1 = $request->tgl1;
@@ -419,7 +480,7 @@ group by d.id_order) as e on e.id_order = a.id_order
 
         return view('laporan.masak', $data);
     }
-    
+
     public function item_majo(Request $r)
     {
         $loc = $r->session()->get('id_lokasi');
