@@ -42,11 +42,11 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <label for="">Dari</label>
-                                            <input type="date" id="tgl1" class="form-control">
+                                            <input value="{{ date('Y-m-01') }}" type="date" id="tgl1" class="form-control">
                                         </div>
                                         <div class="col-lg-6">
                                             <label for="">Sampai</label>
-                                            <input type="date" id="tgl2" class="form-control">
+                                            <input value="{{ date('Y-m-d') }}" type="date" id="tgl2" class="form-control">
                                         </div>
                                         <div class="col-lg-12 mt-2">
                                             <label for="">Kategori</label>
