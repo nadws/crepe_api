@@ -125,7 +125,7 @@ foreach ($masak as $k) : ?>
                                                 <td style="text-align: right">
                                                     <?= number_format($gaji,0) ?>
                                                 </td>
-                                                <?php $kom1 = $point == '' ? '0' :  ($k->point_berhasil / $point) * $kom  ?>
+                                                <?php $kom1 = empty($point) ? '0' :  ($k->point_berhasil / $point) * $kom  ?>
 
                                                 <td style="text-align: right">
                                                     <?= number_format($k->point_berhasil,1) ?>
