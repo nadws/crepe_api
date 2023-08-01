@@ -136,11 +136,11 @@
                                                 ];
                                                 $warna = $statusColorMap[$data->status];
                                             @endphp
-                                            {{-- @if ($i < date('d') || $valBulan != (int) date('m'))
+                                            @if ($i < date('d') || $valBulan != (int) date('m'))
                                                 <button disabled class="btn btn-block btn-{{ $warna }}">
                                                     {{ $data->status }}
                                                 </button>
-                                            @else --}}
+                                            @else
                                                 <div class="dropdown">
                                                     <button
                                                         class="btn btn-block btn-{{ $warna }} dropdown-toggle"
@@ -168,13 +168,13 @@
                                                             class="btn text-center btn-info mb-3">OFF</button>
                                                     </div>
                                                 </div>
-                                            {{-- @endif --}}
+                                            @endif
 
                                         </td>
                                     @else
                                         <td class="text-center m">
                                             <button
-                                                
+                                                {{ $i < date('d') || $valBulan != (int) date('m') ? 'disabled' : '' }}
                                                 wire:click="clickOff({{ $d->id_karyawan }}, {{ $i }})"
                                                 class="btn btn-block btn-info">
                                                 OFF
