@@ -210,16 +210,16 @@ class Export_gaji_server extends Controller
             $sheet->setCellValue('S' . $kolom, $kom_ser + $gaji_h - $g->kasbon - $g->denda);
             $kolom++;
         }
-        $sheet->mergeCells('A' . $kolom . ':' . 'J' . $kolom);
+        $sheet->mergeCells('A' . $kolom . ':' . 'L' . $kolom);
         $sheet
             ->setCellValue('A' . $kolom, 'TOTAL')
             ->setCellValue('M' . $kolom, $ttl_gaji)
-            ->setCellValue('L' . $kolom, $ttl_kom)
-            ->setCellValue('M' . $kolom, $ttl_gaji + $ttl_kom)
-            ->setCellValue('N' . $kolom, '')
-            ->setCellValue('O' . $kolom, $ttl_kasbon)
-            ->setCellValue('P' . $kolom, $ttl_denda)
-            ->setCellValue('Q' . $kolom, $ttl_gaji + $ttl_kom - $ttl_kasbon - $ttl_denda);
+            ->setCellValue('N' . $kolom, $ttl_kom)
+            ->setCellValue('O' . $kolom, $ttl_gaji + $ttl_kom)
+            ->setCellValue('P' . $kolom, '')
+            ->setCellValue('Q' . $kolom, $ttl_kasbon)
+            ->setCellValue('R' . $kolom, $ttl_denda)
+            ->setCellValue('S' . $kolom, $ttl_gaji + $ttl_kom - $ttl_kasbon - $ttl_denda);
 
 
 
