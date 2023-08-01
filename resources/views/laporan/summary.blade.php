@@ -145,7 +145,7 @@ $total_total = $total_gojek->total + $total_not_gojek->total + $service_charge +
                 </td>
             </tr>
             <tr>
-                <td style="font-weight: bold;">subtotal gojek</td>
+                <td style="font-weight: bold;">subtotal gojek (dikurang pb1 gojek)</td>
                 <td style="font-weight: bold;" width="1%">:</td>
                 <td></td>
                 <td style="text-align: right;font-weight: bold;"><?= number_format(($total_gojek->total + $majo_gojek->bayar_majo) - $pb1_gojek, 0) ?></td>
