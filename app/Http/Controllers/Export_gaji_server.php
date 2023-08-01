@@ -210,7 +210,7 @@ class Export_gaji_server extends Controller
             $sheet->setCellValue('S' . $kolom, $kom_ser + $gaji_h - $g->kasbon - $g->denda);
             $kolom++;
         }
-        $sheet->mergeCells('A' . $kolom . ':' . 'L' . $kolom);
+        $sheet->mergeCells('A' . $kolom . ':' . 'J' . $kolom);
         $sheet
             ->setCellValue('A' . $kolom, 'TOTAL')
             ->setCellValue('M' . $kolom, $ttl_gaji)
