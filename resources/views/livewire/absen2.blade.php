@@ -174,7 +174,7 @@
                                     @else
                                         <td class="text-center m">
                                             <button
-                                                {{ $i < date('d') || $valBulan != (int) date('m') ? 'disabled' : '' }}
+                                                
                                                 wire:click="clickOff({{ $d->id_karyawan }}, {{ $i }})"
                                                 class="btn btn-block btn-info">
                                                 OFF
