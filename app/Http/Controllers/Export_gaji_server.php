@@ -95,7 +95,7 @@ class Export_gaji_server extends Controller
             ->setCellValue('K1', 'TTL Hari')
             ->setCellValue('L1', 'TTL Jam')
             ->setCellValue('M1', 'TOTAL GAJI')
-            ->setCellValue('N1', 'Penjualan , STK dan Majo')
+            ->setCellValue('N1', 'Komisi , STK dan Majo')
             ->setCellValue('O1', 'TOTAL KOM & GAJI')
             ->setCellValue('P1', 'TIPS')
             ->setCellValue('Q1', 'KASBON')
