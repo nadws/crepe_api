@@ -259,7 +259,7 @@ class Export_gaji_server extends Controller
         ];
         $batas = $gaji_server;
         $batas = count($batas) + 1;
-        $sheet->getStyle('A2:Q' . $batas)->applyFromArray($style);
+        $sheet->getStyle('A2:S' . $batas)->applyFromArray($style);
 
         $spreadsheet->createSheet();
         $spreadsheet->setActiveSheetIndex(1);
@@ -343,7 +343,7 @@ class Export_gaji_server extends Controller
         $spreadsheet->createSheet();
         $spreadsheet->setActiveSheetIndex(2);
         $sheet3 = $spreadsheet->getActiveSheet();
-        $sheet3->setTitle('Penjualan MAJO');
+        $sheet3->setTitle('Penjualan MAJO Bagi Komisi');
 
         $majo_takemori =  Http::get("https://majoo-laravel.putrirembulan.com/api/penjualn_server/TAKEMORI/$tgl1/$tgl2");
         $majo_tkmr = $majo_takemori['komisi'];
