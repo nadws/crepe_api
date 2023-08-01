@@ -131,7 +131,7 @@ class Export_gaji_server extends Controller
         $sheet->setCellValue("U$col_majo", $kom_majo);
 
 
-        $col = 11;
+        $col = $col_majo + 1;
         $kom_bagi = 0;
         foreach ($komstk as $k) {
             $kom_bagi += $k->komisi_bagi;
