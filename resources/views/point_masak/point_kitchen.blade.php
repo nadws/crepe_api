@@ -132,7 +132,7 @@ foreach ($masak as $k) : ?>
                                                     <?= $jumlah_orang->jumlah < $orang ? '' : '/' .  number_format($kom1,0) ?>
                                                     <!--({{$k->point_berhasil}}) ({{$point}}) ({{$kom}})-->
                                                 </td>
-                                                <?php $kom3 =  $point == '' ? '0' : ($k->point_gagal / $point) * $kom  ?>
+                                                <?php $kom3 =  empty($point) ? '0' : ($k->point_gagal / $point) * $kom  ?>
 
                                                 <td style="text-align: right">
                                                     <?= number_format($k->point_gagal,0) ?>
