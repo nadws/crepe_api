@@ -240,8 +240,8 @@ class Export_gaji_server extends Controller
                 'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
             ),
         );
-        $sheet->getStyle('A1:Q1')->applyFromArray($style_header);
-        $sheet->getStyle('A' . $kolom . ':' . 'Q' . $kolom)->applyFromArray($style_header);
+        $sheet->getStyle('A1:S1')->applyFromArray($style_header);
+        $sheet->getStyle('A' . $kolom . ':' . 'S' . $kolom)->applyFromArray($style_header);
 
         $style = [
             'font' => array(
