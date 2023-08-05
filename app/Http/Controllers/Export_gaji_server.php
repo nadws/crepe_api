@@ -90,29 +90,31 @@ class Export_gaji_server extends Controller
             ->setCellValue('F1', 'M')
             ->setCellValue('G1', 'E')
             ->setCellValue('H1', 'SP')
-            ->setCellValue('I1', 'TTL Hari')
-            ->setCellValue('J1', 'TTL Jam')
-            ->setCellValue('K1', 'TOTAL GAJI')
-            ->setCellValue('L1', 'Penjualan , STK dan Majo')
-            ->setCellValue('M1', 'TOTAL KOM & GAJI')
-            ->setCellValue('N1', 'TIPS')
-            ->setCellValue('O1', 'KASBON')
-            ->setCellValue('P1', 'DENDA')
-            ->setCellValue('Q1', 'SISA GAJI')
+            ->setCellValue('I1', 'Gaji Harian')
+            ->setCellValue('J1', 'Gaji SP')
+            ->setCellValue('K1', 'TTL Hari')
+            ->setCellValue('L1', 'TTL Jam')
+            ->setCellValue('M1', 'TOTAL GAJI')
+            ->setCellValue('N1', 'Komisi , STK dan Majo')
+            ->setCellValue('O1', 'TOTAL KOM & GAJI')
+            ->setCellValue('P1', 'TIPS')
+            ->setCellValue('Q1', 'KASBON')
+            ->setCellValue('R1', 'DENDA')
+            ->setCellValue('S1', 'SISA GAJI')
 
 
-            ->setCellValue('S1', 'SC TKM')
-            ->setCellValue('U1', (($service_charge_tkm->total * 0.07) / 7) * $persen->jumlah_persen)
-            ->setCellValue('S2', 'SC SDB')
-            ->setCellValue('U2', (($service_charge_sdb->total * 0.07) / 7) * $persen->jumlah_persen)
-            ->setCellValue('S4', 'Total SC')
-            ->setCellValue('U4', $total_service)
-            ->setCellValue('S5', 'P')
-            ->setCellValue('U5', $jumlah_orang->jumlah)
-            ->setCellValue('S6', 'R')
-            ->setCellValue('U6', $orang)
-            ->setCellValue('S7', 'Sc Dibagi')
-            ->setCellValue('U7', ($total_service / $jumlah_orang->jumlah) * $orang);
+            ->setCellValue('U1', 'SC TKM')
+            ->setCellValue('W1', (($service_charge_tkm->total * 0.07) / 7) * $persen->jumlah_persen)
+            ->setCellValue('U2', 'SC SDB')
+            ->setCellValue('W2', (($service_charge_sdb->total * 0.07) / 7) * $persen->jumlah_persen)
+            ->setCellValue('U4', 'Total SC')
+            ->setCellValue('W4', $total_service)
+            ->setCellValue('U5', 'P')
+            ->setCellValue('W5', $jumlah_orang->jumlah)
+            ->setCellValue('U6', 'R')
+            ->setCellValue('W6', $orang)
+            ->setCellValue('U7', 'Sc Dibagi')
+            ->setCellValue('W7', ($total_service / $jumlah_orang->jumlah) * $orang);
         $sc_dibagi = ($total_service / $jumlah_orang->jumlah) * $orang;
 
         $col_majo = 8;
@@ -120,47 +122,47 @@ class Export_gaji_server extends Controller
         foreach ($laporanMajo as $l) {
             $kom_majo += $l['komisi_bagi'];
             $sheet
-                ->setCellValue('S' . $col_majo, $l['lokasi'] == 'SOONDOBU' ? 'MAJO SDB' : 'MAJO TKM')
-                ->setCellValue('T' . $col_majo, $l['komisi'] . '%')
-                ->setCellValue('U' . $col_majo, $l['total'] * ($l['komisi'] / 100));
+                ->setCellValue('U' . $col_majo, $l['lokasi'] == 'SOONDOBU' ? 'MAJO SDB' : 'MAJO TKM')
+                ->setCellValue('V' . $col_majo, $l['komisi'] . '%')
+                ->setCellValue('W' . $col_majo, $l['total'] * ($l['komisi'] / 100));
             $col_majo++;
         }
-        $sheet->getStyle('S' . $col_majo)->getFont()->setBold(true);
         $sheet->getStyle('U' . $col_majo)->getFont()->setBold(true);
-        $sheet->setCellValue("S$col_majo", "MAJO TKM + SDB");
-        $sheet->setCellValue("U$col_majo", $kom_majo);
+        $sheet->getStyle('W' . $col_majo)->getFont()->setBold(true);
+        $sheet->setCellValue("U$col_majo", "MAJO TKM + SDB");
+        $sheet->setCellValue("W$col_majo", $kom_majo);
 
 
         $col = $col_majo + 1;
         $kom_bagi = 0;
         foreach ($komstk as $k) {
             $kom_bagi += $k->komisi_bagi;
-            $sheet->setCellValue('S' . $col, $k->lokasi == '2' ? 'STK SDB' : 'STK TKM');
-            $sheet->setCellValue('T' . $col, $k->komisi . '%');
-            $sheet->setCellValue('U' . $col, $k->total * ($k->komisi / 100));
+            $sheet->setCellValue('U' . $col, $k->lokasi == '2' ? 'STK SDB' : 'STK TKM');
+            $sheet->setCellValue('V' . $col, $k->komisi . '%');
+            $sheet->setCellValue('W' . $col, $k->total * ($k->komisi / 100));
             $col++;
         }
-        $sheet->getStyle('S' . $col)->getFont()->setBold(true);
         $sheet->getStyle('U' . $col)->getFont()->setBold(true);
+        $sheet->getStyle('W' . $col)->getFont()->setBold(true);
         $sheet
-            ->setCellValue('S' . $col, 'STK TKM + SDB')
-            ->setCellValue('U' . $col, $kom_bagi);
+            ->setCellValue('U' . $col, 'STK TKM + SDB')
+            ->setCellValue('W' . $col, $kom_bagi);
 
-        $sheet->getStyle('S' . $col + 1)->getFont()->setBold(true);
         $sheet->getStyle('U' . $col + 1)->getFont()->setBold(true);
+        $sheet->getStyle('W' . $col + 1)->getFont()->setBold(true);
         $sheet
-            ->setCellValue('S' . $col + 1, 'Total Komisi')
-            ->setCellValue('U' . $col + 1, $sc_dibagi + $kom_majo + $kom_bagi);
+            ->setCellValue('U' . $col + 1, 'Total Komisi')
+            ->setCellValue('W' . $col + 1, $sc_dibagi + $kom_majo + $kom_bagi);
 
         $sheet
-            ->setCellValue('S' . $col + 2, 'Jam Dibagi')
-            ->setCellValue('U' . $col + 2, $total_jam);
+            ->setCellValue('U' . $col + 2, 'Jam Dibagi')
+            ->setCellValue('W' . $col + 2, $total_jam);
 
-        $sheet->getStyle('S' . $col + 3)->getFont()->setBold(true);
         $sheet->getStyle('U' . $col + 3)->getFont()->setBold(true);
+        $sheet->getStyle('W' . $col + 3)->getFont()->setBold(true);
         $sheet
-            ->setCellValue('S' . $col + 3, 'Kom/Jam')
-            ->setCellValue('U' . $col + 3, ($sc_dibagi + $kom_majo + $kom_bagi) / $total_jam);
+            ->setCellValue('U' . $col + 3, 'Kom/Jam')
+            ->setCellValue('W' . $col + 3, ($sc_dibagi + $kom_majo + $kom_bagi) / $total_jam);
         $kom_jam = ($sc_dibagi + $kom_majo + $kom_bagi) / $total_jam;
 
 
@@ -190,32 +192,34 @@ class Export_gaji_server extends Controller
             $sheet->setCellValue('F' . $kolom, $g->m);
             $sheet->setCellValue('G' . $kolom, $g->e);
             $sheet->setCellValue('H' . $kolom, $g->sp);
-            $sheet->setCellValue('I' . $kolom, $g->m + $g->e + $g->sp);
-            $sheet->setCellValue('J' . $kolom, (($g->m + $g->e) * 8) + ($g->sp * 13));
+            $sheet->setCellValue('I' . $kolom, $g->rp_e);
+            $sheet->setCellValue('J' . $kolom, $g->rp_sp);
+            $sheet->setCellValue('K' . $kolom, $g->m + $g->e + $g->sp);
+            $sheet->setCellValue('L' . $kolom, (($g->m + $g->e) * 8) + ($g->sp * 13));
             $jam = (($g->m + $g->e) * 8) + ($g->sp * 13);
             // $sheet->setCellValue('K' . $kolom, (($g->m + $g->e) * $g->rp_e));
             // $sheet->setCellValue('L' . $kolom, $g->rp_sp * $g->sp );
-            $sheet->setCellValue('K' . $kolom, ($g->rp_sp * $g->sp) +  (($g->m + $g->e) * $g->rp_e) + $g->g_bulanan);
+            $sheet->setCellValue('M' . $kolom, ($g->rp_sp * $g->sp) +  (($g->m + $g->e) * $g->rp_e) + $g->g_bulanan);
             $gaji_h = ($g->rp_sp * $g->sp) +  (($g->m + $g->e) * $g->rp_e) + $g->g_bulanan;
-            $sheet->setCellValue('L' . $kolom, $jam * $point * $kom_jam);
+            $sheet->setCellValue('N' . $kolom, $jam * $point * $kom_jam);
             $kom_ser = $jam * $point * $kom_jam;
-            $sheet->setCellValue('M' . $kolom, $kom_ser + $gaji_h);
-            $sheet->setCellValue('N' . $kolom, '');
-            $sheet->setCellValue('O' . $kolom, $g->kasbon);
-            $sheet->setCellValue('P' . $kolom, $g->denda);
-            $sheet->setCellValue('Q' . $kolom, $kom_ser + $gaji_h - $g->kasbon - $g->denda);
+            $sheet->setCellValue('O' . $kolom, $kom_ser + $gaji_h);
+            $sheet->setCellValue('P' . $kolom, '');
+            $sheet->setCellValue('Q' . $kolom, $g->kasbon);
+            $sheet->setCellValue('R' . $kolom, $g->denda);
+            $sheet->setCellValue('S' . $kolom, $kom_ser + $gaji_h - $g->kasbon - $g->denda);
             $kolom++;
         }
-        $sheet->mergeCells('A' . $kolom . ':' . 'J' . $kolom);
+        $sheet->mergeCells('A' . $kolom . ':' . 'L' . $kolom);
         $sheet
             ->setCellValue('A' . $kolom, 'TOTAL')
-            ->setCellValue('K' . $kolom, $ttl_gaji)
-            ->setCellValue('L' . $kolom, $ttl_kom)
-            ->setCellValue('M' . $kolom, $ttl_gaji + $ttl_kom)
-            ->setCellValue('N' . $kolom, '')
-            ->setCellValue('O' . $kolom, $ttl_kasbon)
-            ->setCellValue('P' . $kolom, $ttl_denda)
-            ->setCellValue('Q' . $kolom, $ttl_gaji + $ttl_kom - $ttl_kasbon - $ttl_denda);
+            ->setCellValue('M' . $kolom, $ttl_gaji)
+            ->setCellValue('N' . $kolom, $ttl_kom)
+            ->setCellValue('O' . $kolom, $ttl_gaji + $ttl_kom)
+            ->setCellValue('P' . $kolom, '')
+            ->setCellValue('Q' . $kolom, $ttl_kasbon)
+            ->setCellValue('R' . $kolom, $ttl_denda)
+            ->setCellValue('S' . $kolom, $ttl_gaji + $ttl_kom - $ttl_kasbon - $ttl_denda);
 
 
 
@@ -236,8 +240,8 @@ class Export_gaji_server extends Controller
                 'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
             ),
         );
-        $sheet->getStyle('A1:Q1')->applyFromArray($style_header);
-        $sheet->getStyle('A' . $kolom . ':' . 'Q' . $kolom)->applyFromArray($style_header);
+        $sheet->getStyle('A1:S1')->applyFromArray($style_header);
+        $sheet->getStyle('A' . $kolom . ':' . 'S' . $kolom)->applyFromArray($style_header);
 
         $style = [
             'font' => array(
@@ -255,7 +259,7 @@ class Export_gaji_server extends Controller
         ];
         $batas = $gaji_server;
         $batas = count($batas) + 1;
-        $sheet->getStyle('A2:Q' . $batas)->applyFromArray($style);
+        $sheet->getStyle('A2:S' . $batas)->applyFromArray($style);
 
         $spreadsheet->createSheet();
         $spreadsheet->setActiveSheetIndex(1);
@@ -339,7 +343,7 @@ class Export_gaji_server extends Controller
         $spreadsheet->createSheet();
         $spreadsheet->setActiveSheetIndex(2);
         $sheet3 = $spreadsheet->getActiveSheet();
-        $sheet3->setTitle('Penjualan MAJO');
+        $sheet3->setTitle('Penjualan MAJO Bagi Komisi');
 
         $majo_takemori =  Http::get("https://majoo-laravel.putrirembulan.com/api/penjualn_server/TAKEMORI/$tgl1/$tgl2");
         $majo_tkmr = $majo_takemori['komisi'];
