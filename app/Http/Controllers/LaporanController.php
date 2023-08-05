@@ -311,9 +311,11 @@ group by d.id_order) as e on e.id_order = a.id_order
         $tgl1 = $request->tgl1;
         $tgl2 = $request->tgl2;
 
-        $dt_item = DB::select("SELECT b.id_distribusi, b.nm_menu, a.harga, sum(a.qty) AS qty
+        $dt_item = DB::select("SELECT b.id_distribusi,d.nm_station, b.nm_menu, a.harga, sum(a.qty) AS qty
         FROM tb_order AS a 
         LEFT JOIN view_menu AS b ON b.id_harga = a.id_harga
+        LEFT JOIN tb_menu as c ON b.id_menu = c.id_menu
+        LEFT JOIN tb_station as d ON d.id_station = c.id_station
         WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' and a.id_lokasi = '$loc'
         GROUP BY a.id_harga");
 
@@ -322,9 +324,10 @@ group by d.id_order) as e on e.id_order = a.id_order
         $spreadsheet->setActiveSheetIndex(0);
 
         $spreadsheet->getActiveSheet()->setCellValue('A1', '#');
-        $spreadsheet->getActiveSheet()->setCellValue('B1', 'Nama Menu');
-        $spreadsheet->getActiveSheet()->setCellValue('C1', 'Qty');
-        $spreadsheet->getActiveSheet()->setCellValue('D1', 'Subtotal');
+        $spreadsheet->getActiveSheet()->setCellValue('B1', 'Station');
+        $spreadsheet->getActiveSheet()->setCellValue('C1', 'Nama Menu');
+        $spreadsheet->getActiveSheet()->setCellValue('D1', 'Qty');
+        $spreadsheet->getActiveSheet()->setCellValue('E1', 'Subtotal');
 
 
         $style = array(
@@ -356,9 +359,10 @@ group by d.id_order) as e on e.id_order = a.id_order
             }
             $spreadsheet->setActiveSheetIndex(0);
             $spreadsheet->getActiveSheet()->setCellValue('A' . $kolom, $no++);
-            $spreadsheet->getActiveSheet()->setCellValue('B' . $kolom, $d->id_distribusi == 2 ? $d->nm_menu . ' Gojek' : $d->nm_menu);
-            $spreadsheet->getActiveSheet()->setCellValue('C' . $kolom, $d->qty);
-            $spreadsheet->getActiveSheet()->setCellValue('D' . $kolom, $d->qty * $d->harga);
+            $spreadsheet->getActiveSheet()->setCellValue('B' . $kolom, $d->nm_station);
+            $spreadsheet->getActiveSheet()->setCellValue('C' . $kolom, $d->id_distribusi == 2 ? $d->nm_menu . ' Gojek' : $d->nm_menu);
+            $spreadsheet->getActiveSheet()->setCellValue('D' . $kolom, $d->qty);
+            $spreadsheet->getActiveSheet()->setCellValue('E' . $kolom, $d->qty * $d->harga);
             $kolom++;
         }
 
@@ -371,7 +375,7 @@ group by d.id_order) as e on e.id_order = a.id_order
         );
 
         $batas = $kolom - 1;
-        $spreadsheet->getActiveSheet()->getStyle('A1:D' . $batas)->applyFromArray($style);
+        $spreadsheet->getActiveSheet()->getStyle('A1:E' . $batas)->applyFromArray($style);
 
         $writer = new Xlsx($spreadsheet);
 
