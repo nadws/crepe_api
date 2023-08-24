@@ -455,6 +455,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <input type="hidden" name="id_lokasi" value="{{ $id_lokasi }}">
+                            <input type="hidden" name="keywordTambah" id="keywordTambah">
                             <div class="col-sm-4 ol-md-6 col-xs-12 mb-2">
                                 <label for="">Masukkan Gambar</label>
                                 <input type="file" class="dropify" data-height="150" name="image"
@@ -787,6 +788,8 @@
                 $('#search_field').on('input', function() {
                     var keyword = $(this).val();
                     var id_lokasi = "{{ request()->get('id_lokasi') }}"
+
+                    $("#keywordTambah").val(keyword);
                     if (keyword != '') {
                         $('#tbl2').show();
                         $('#tbl').hide();

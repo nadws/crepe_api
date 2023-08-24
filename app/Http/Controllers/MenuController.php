@@ -342,7 +342,7 @@ WHERE a.lokasi = '$request->id_lokasi' AND a.nm_menu LIKE '%$keyword%' OR a.kd_m
             Harga::create($data2);
         }
 
-        return redirect()->route('menu', ['id_lokasi' => $request->id_lokasi])->with('sukses', 'Berhasiil tambah Menu');
+        return redirect()->route('menu', ['id_lokasi' => $request->id_lokasi, 'keyword' => $request->keywordTambah])->with('sukses', 'Berhasiil tambah Menu');
     }
 
     public function deleteMenu(Request $request)
