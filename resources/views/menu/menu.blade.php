@@ -797,6 +797,9 @@
 
                         load_data(keyword);
                     } else {
+                        var newUrl = window.location.href.split('?')[0] + '?keyword=' + encodeURIComponent(
+                            keyword) + '&id_lokasi=' + id_lokasi;
+                        history.pushState(null, null, newUrl);
                         $('#tbl2').hide();
                         $('#tbl').show();
                     }
