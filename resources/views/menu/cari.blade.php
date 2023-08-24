@@ -84,7 +84,7 @@
                         style="background-color: #F7F7F7;"><i style="color: #B0BEC5;"><i
                                 class="fas fa-edit"></i></a>
                     <a onclick="return confirm('Apakah ingin hapus ?')"
-                        href="{{ route('deleteMenu', ['id_menu' => $m->id_menu, 'id_lokasi' => $id_lokasi]) }}"
+                        href="{{ route('deleteMenu', ['id_menu' => $m->id_menu, 'id_lokasi' => $id_lokasi, 'keyword' => $keyword]) }}"
                         class="btn  btn-new" style="background-color: #F7F7F7;"><i
                             style="color: #B0BEC5;"><i class="fas fa-trash-alt"></i></a>
     

@@ -23,7 +23,7 @@
                             <div class="card-header">
 
 
-                                <input type="hidden" id="id_lokasi" value="{{$id_lokasi}}">
+                                <input type="hidden" id="id_lokasi" value="{{ $id_lokasi }}">
                                 <h5 class="float-left">Data Menu {{ $id_lokasi == 1 ? 'Takemori' : 'Soondobu' }}</h5>
                                 <!--<a href="" data-toggle="modal" data-target="#tambah" class="btn btn-info float-right"><i-->
                                 <!--        class="fas fa-plus"></i> Menu</a>-->
@@ -33,36 +33,43 @@
                                 <!--    class="mr-2 btn btn-info float-right"><i class="fas fa-plus"></i> Level Point</a>-->
                                 <!--<a href="" data-toggle="modal" id="stationC" data-target="#station" class="mr-2 btn btn-info float-right"><i-->
                                 <!--            class="fas fa-plus"></i> Station</a>-->
-                                
+
                                 <a href="" data-toggle="modal" data-target="#import"
-                                    class="mr-2 btn btn-info btn-sm float-right"><i class="fas fa-file-import"></i> Import / Export</a>
-                    
+                                    class="mr-2 btn btn-info btn-sm float-right"><i class="fas fa-file-import"></i> Import /
+                                    Export</a>
+
                                 <!--<a href="{{ route('exportMenuLevel', ['lokasi' => $id_lokasi]) }}"-->
                                 <!--    class="mr-2 btn btn-info btn-sm float-right"><i class="fas fa-file-excel"></i> Export Level</a>-->
                                 <div class="btn-group float-right mr-2" role="group">
-                                <button id="btnGroupDrop1" type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  Tambah Data
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                  <a class="dropdown-item" data-toggle="modal" data-target="#tambah"><i class="fas fa-plus"></i> Menu</a>
-                                  <a class="dropdown-item" data-toggle="modal" data-target="#tbhKategori"><i class="fas fa-plus"></i> Kategori</a>
-                                  <a class="dropdown-item" data-toggle="modal" id="stationC" data-target="#station"><i class="fas fa-plus"></i> Station</a>
-                                  <a class="dropdown-item" data-toggle="modal" data-target="#tbhHandicap"><i class="fas fa-plus"></i> Level Point</a>
+                                    <button id="btnGroupDrop1" type="button" class="btn btn-info btn-sm dropdown-toggle"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Tambah Data
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#tambah"><i
+                                                class="fas fa-plus"></i> Menu</a>
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#tbhKategori"><i
+                                                class="fas fa-plus"></i> Kategori</a>
+                                        <a class="dropdown-item" data-toggle="modal" id="stationC"
+                                            data-target="#station"><i class="fas fa-plus"></i> Station</a>
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#tbhHandicap"><i
+                                                class="fas fa-plus"></i> Level Point</a>
+                                    </div>
                                 </div>
-                              </div>
-                                
+
                             </div>
                             @include('flash.flash')
                             <div class="card-body">
-                              
 
-                                <input type="text" placeholder="Cari Menu..." class="form-control" id="search_field" name="keyword" autofocus><br>
+
+                                <input type="text" value="{{ request()->get('keyword') }}" placeholder="Cari Menu..."
+                                    class="form-control" id="search_field" name="keyword" autofocus><br>
                                 {{-- @livewire('tbl-menu', ['id_lokasi' => $id_lokasi]) --}}
                                 <div id="tbl"></div>
                                 <div id="tbl2"></div>
                                 <div id="pagin"></div>
-                                
-                                
+
+
                             </div>
                         </div>
 
@@ -83,64 +90,62 @@
         .modal-lg-max {
             max-width: 900px;
         }
-
     </style>
     {{-- update menu --}}
-    
+
     <form action="{{ route('updateMenu') }}" enctype="multipart/form-data" method="post" accept-charset="utf-8">
-            @csrf
-            <div class="modal fade" id="edit_data" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-lg-max" role="document">
-                    <div class="modal-content ">
-                        <div class="modal-header btn-costume">
-                            <h5 class="modal-title text-light" id="exampleModalLabel">Edit Menu</h5>
-                            <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div id="menu"></div>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-info">Edit/Save</button>
-                        </div>
+        @csrf
+        <div class="modal fade" id="edit_data" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg-max" role="document">
+                <div class="modal-content ">
+                    <div class="modal-header btn-costume">
+                        <h5 class="modal-title text-light" id="exampleModalLabel">Edit Menu</h5>
+                        <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="menu"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-info">Edit/Save</button>
                     </div>
                 </div>
             </div>
-        </form>
-  
+        </div>
+    </form>
+
     {{-- tambah station --}}
     <form id="addStation">
-    @csrf
-    <div class="modal fade" id="station" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content ">
-                <div class="modal-header btn-costume">
-                    <h5 class="modal-title text-light" id="exampleModalLabel">Tambah Station</h5>
-                    <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body form-group">
-                    <input type="hidden" name="id_lokasi" id="id_lokasiS" value="{{ Request::get('id_lokasi') }}">
-                    <label for="">Nama Station</label>
-                    <input autofocus type="text" id="nm_station" name="nm_station" class="form-control">
-                    <br>
-                    <div id="stationK"></div>
-               
-                    
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-costume" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-costume">Save</button>
+        @csrf
+        <div class="modal fade" id="station" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content ">
+                    <div class="modal-header btn-costume">
+                        <h5 class="modal-title text-light" id="exampleModalLabel">Tambah Station</h5>
+                        <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body form-group">
+                        <input type="hidden" name="id_lokasi" id="id_lokasiS" value="{{ Request::get('id_lokasi') }}">
+                        <label for="">Nama Station</label>
+                        <input autofocus type="text" id="nm_station" name="nm_station" class="form-control">
+                        <br>
+                        <div id="stationK"></div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-costume" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-costume">Save</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </form>
     {{-- ---------------------------- --}}
-    
+
     <!--tambah kategori-->
     <form action="{{ route('tbhKategori') }}" enctype="multipart/form-data" method="post">
         @csrf
@@ -157,16 +162,17 @@
                         <input type="hidden" name="lokasi" value="{{ $id_lokasi }}">
                         <div class="row">
                             @php
-                                $lokasi = $id_lokasi == 1 ? 'TAKEMORI' : 'SOONDOBU';            
+                                $lokasi = $id_lokasi == 1 ? 'TAKEMORI' : 'SOONDOBU';
                                 $kategoriKd = DB::table('tb_kategori')
-                                ->orderBy('kd_kategori', 'desc')
-                                ->where('lokasi', $lokasi)
-                                ->first();
+                                    ->orderBy('kd_kategori', 'desc')
+                                    ->where('lokasi', $lokasi)
+                                    ->first();
                                 
                             @endphp
                             <div class="col-lg-3">
                                 <label>Kode</label>
-                                <input type="number" readonly class="form-control" value="{{$kategoriKd->kd_kategori + 1}}" name="kd_kategori">
+                                <input type="number" readonly class="form-control"
+                                    value="{{ $kategoriKd->kd_kategori + 1 }}" name="kd_kategori">
                             </div>
                             <div class="col-lg-9">
                                 <label>Kategori</label>
@@ -219,10 +225,10 @@
         .modal-lg-max {
             max-width: 900px;
         }
+
         .modal-mds {
             max-width: 700px;
         }
-
     </style>
     {{-- import --}}
     <form action="{{ route('importMenuLevel') }}" enctype="multipart/form-data" method="post">
@@ -242,40 +248,42 @@
                         <div class="row">
                             <table>
                                 <tr>
-                                <td width="100" class="pl-2">
-                                    <img width="80px" src="{{ asset('assets') }}/img/1.png" alt="">
-                                </td>
-                                <td>
-                                    <span style="font-size: 20px;"><b> Download Excel template</b></span><br>
-                                    File ini memiliki kolom header dan isi yang sesuai dengan data menu
-                                </td>
-                                <td>
-                                    <a href={{ route('exportMenuLevel', ['lokasi' => $id_lokasi]) }}" class="btn btn-primary btn-sm"><i class="fa fa-download"></i> DOWNLOAD TEMPLATE</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <hr>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="100" class="pl-2">
-                                    <img width="80px" src="{{ asset('assets') }}/img/2.png" alt="">
-                                </td>
-                                <td>
-                                    <span style="font-size: 20px;"><b> Upload Excel template</b></span><br>
-                                    Setelah mengubah, silahkan upload file.
-                                </td>
-                                <td>
-                                    <input type="file" name="file" class="form-control">
-                                </td>
-                            </tr>
+                                    <td width="100" class="pl-2">
+                                        <img width="80px" src="{{ asset('assets') }}/img/1.png" alt="">
+                                    </td>
+                                    <td>
+                                        <span style="font-size: 20px;"><b> Download Excel template</b></span><br>
+                                        File ini memiliki kolom header dan isi yang sesuai dengan data menu
+                                    </td>
+                                    <td>
+                                        <a href={{ route('exportMenuLevel', ['lokasi' => $id_lokasi]) }}"
+                                            class="btn btn-primary btn-sm"><i class="fa fa-download"></i> DOWNLOAD
+                                            TEMPLATE</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <hr>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100" class="pl-2">
+                                        <img width="80px" src="{{ asset('assets') }}/img/2.png" alt="">
+                                    </td>
+                                    <td>
+                                        <span style="font-size: 20px;"><b> Upload Excel template</b></span><br>
+                                        Setelah mengubah, silahkan upload file.
+                                    </td>
+                                    <td>
+                                        <input type="file" name="file" class="form-control">
+                                    </td>
+                                </tr>
                             </table>
-                            
+
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                
+
                             </div>
                         </div>
                     </div>
@@ -319,80 +327,79 @@
     <!--        </div>-->
     <!--    </div>-->
     <!--</form>-->
-    
-    <!-- tambah handicap -->
-    <form action="{{route('tbhHenKategori')}}" method="post" accept-charset="utf-8">
-    @csrf
-    <div class="modal fade" id="tbhHandicap" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content ">
-                <div class="modal-header btn-costume">
-                    <h5 class="modal-title text-light" id="exampleModalLabel">Tambah data</h5>
-                    <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <input type="hidden" name="id_lokasi" value="{{ $id_lokasi }}">
-                        <div class="col-lg-3">
-                            <label for="">Level</label>
-                           <input type="text" class="form-control" name="handicap">
-                            
-                        </div>
-                        <div class="col-lg-6">
-                            <label for="">Keterangan</label>
-                           <input type="text" class="form-control" name="ket">
-                            
-                        </div>
-                        <div class="col-lg-3">
-                            <label for="">Point</label>
-                            <input required type="number" name="point" class="form-control">
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-lg-12">
-                        <table id="example1" class="table">
-                            <thead>
-                                <tr>
-                                    <td>#</td>
-                                    <td>Level</td>
-                                    <td>Keterangan</td>
-                                    <td>Point</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                $no = 1;
-                                @endphp
-                                @foreach($handicap as $h)
-                                <tr>
-                                    <td>{{$no++}}</td>
-                                    <td>{{$h->handicap}}</td>
-                                    <td>{{$h->ket}}</td>
-                                    <td>{{$h->point}}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
 
-                    <button type="submit" class="btn btn-success">Save</button>
+    <!-- tambah handicap -->
+    <form action="{{ route('tbhHenKategori') }}" method="post" accept-charset="utf-8">
+        @csrf
+        <div class="modal fade" id="tbhHandicap" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content ">
+                    <div class="modal-header btn-costume">
+                        <h5 class="modal-title text-light" id="exampleModalLabel">Tambah data</h5>
+                        <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <input type="hidden" name="id_lokasi" value="{{ $id_lokasi }}">
+                            <div class="col-lg-3">
+                                <label for="">Level</label>
+                                <input type="text" class="form-control" name="handicap">
+
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="">Keterangan</label>
+                                <input type="text" class="form-control" name="ket">
+
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="">Point</label>
+                                <input required type="number" name="point" class="form-control">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <table id="example1" class="table">
+                                    <thead>
+                                        <tr>
+                                            <td>#</td>
+                                            <td>Level</td>
+                                            <td>Keterangan</td>
+                                            <td>Point</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $no = 1;
+                                        @endphp
+                                        @foreach ($handicap as $h)
+                                            <tr>
+                                                <td>{{ $no++ }}</td>
+                                                <td>{{ $h->handicap }}</td>
+                                                <td>{{ $h->ket }}</td>
+                                                <td>{{ $h->point }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
     <!-- --------------------------- -->
     {{-- tambah distribusi --}}
     <form action="{{ route('plusDistribusi') }}" method="post">
         @csrf
-        <div class="modal fade" id="distribusi" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="distribusi" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content ">
                     <div class="modal-header btn-costume">
@@ -473,7 +480,9 @@
                                         <select name="id_handicap" id="" class="form-control select">
                                             <option value="">-Pilih Level-</option>
                                             @foreach ($handicap as $m)
-                                                <option value="{{ $m->id_handicap }}">{{ $m->handicap }} ({{$m->point}} Point)</option>
+                                                <option value="{{ $m->id_handicap }}">{{ $m->handicap }}
+                                                    ({{ $m->point }} Point)
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -494,7 +503,8 @@
                                         <label for="">
                                             <dt>Nama Menu</dt>
                                         </label>
-                                        <input type="text" name="nm_menu" class="form-control" placeholder="Nama Menu">
+                                        <input type="text" name="nm_menu" class="form-control"
+                                            placeholder="Nama Menu">
                                     </div>
                                     <div class="col-lg-2 mb-2">
                                         <label for="">
@@ -513,7 +523,10 @@
                                         <Select class="form-control select" name="id_station">
                                             <option value="">-Pilih station-</option>
                                             @php
-                                                $st = DB::table('tb_station')->where('id_lokasi', Request::get('id_lokasi'))->orderBy('id_station', 'ASC')->get();
+                                                $st = DB::table('tb_station')
+                                                    ->where('id_lokasi', Request::get('id_lokasi'))
+                                                    ->orderBy('id_station', 'ASC')
+                                                    ->get();
                                             @endphp
                                             @foreach ($st as $s)
                                                 <option value="{{ $s->id_station }}">{{ $s->nm_station }}</option>
@@ -567,17 +580,22 @@
     @section('script')
         <script>
             $(document).ready(function() {
-                $(document).on('click', '.editMenu', function(){
+                // Fungsi untuk mendapatkan nilai parameter dari URL
+
+                $(document).on('click', '.editMenu', function() {
                     var id_menu = $(this).attr("id_menu");
                     var id_lokasi = $(this).attr("id_lokasi");
+                    var keyword = $('#search_field').val();
+                    // var keyword = "{{ request()->get('keyword') }}";
                     $('#edit_data').modal('show')
 
                     $.ajax({
-                        url: "{{route('editMenu')}}",
+                        url: "{{ route('editMenu') }}",
                         method: "GET",
-                        data:{
+                        data: {
                             id_menu: id_menu,
                             id_lokasi: id_lokasi,
+                            keyword: keyword,
                         },
                         success: function(data) {
                             $('#menu').html(data);
@@ -610,70 +628,70 @@
                     $('.select').select2()
                 });
 
-                function station(){
+                function station() {
                     var id_lokasi = $("#id_lokasi").val()
                     $.ajax({
                         method: "GET",
-                        url: "{{route('station')}}?id_lokasi="+id_lokasi,
-                        success: function (data) {
+                        url: "{{ route('station') }}?id_lokasi=" + id_lokasi,
+                        success: function(data) {
                             $("#stationK").html(data)
                         }
                     });
                 }
-                $("#stationC").click(function (e) { 
+                $("#stationC").click(function(e) {
                     station()
                 });
 
-                $("#addStation").submit(function (e) { 
+                $("#addStation").submit(function(e) {
                     e.preventDefault();
                     var nm_station = $("#nm_station").val()
                     var id_lokasi = $("#id_lokasiS").val()
                     $.ajax({
                         type: "post",
-                        url: "{{route('addStation')}}",
+                        url: "{{ route('addStation') }}",
                         data: {
-                            nm_station : nm_station,
-                            id_lokasi : id_lokasi,
+                            nm_station: nm_station,
+                            id_lokasi: id_lokasi,
                             "_token": "{{ csrf_token() }}",
                         },
-                        success: function (data) {
+                        success: function(data) {
                             Swal.fire({
-                                    toast: true,
-                                    position: 'top-end',
-                                    showConfirmButton: false,
-                                    timer: 3000,
-                                    icon: 'success',
-                                    title: 'Tambah Station berhasil'
-                                });
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                icon: 'success',
+                                title: 'Tambah Station berhasil'
+                            });
                             station()
                         }
                     });
                 });
 
-                $(document).on('click', '.delStation', function(){
+                $(document).on('click', '.delStation', function() {
                     var id_station = $(this).attr('id_station')
                     var hasil = confirm('Yakin ingin dihapus ?')
-                    if(hasil) {
+                    if (hasil) {
                         $.ajax({
-                                    type: "GET",
-                                    url: "{{route('delStation')}}?id_station="+id_station,
-                                    success: function (data) {
-                                        Swal.fire({
-                                                toast: true,
-                                                position: 'top-end',
-                                                showConfirmButton: false,
-                                                timer: 3000,
-                                                icon: 'error',
-                                                title: 'Hapus Station berhasil'
-                                            });
-                                            station()
-                                    }
-                                }); 
+                            type: "GET",
+                            url: "{{ route('delStation') }}?id_station=" + id_station,
+                            success: function(data) {
+                                Swal.fire({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    icon: 'error',
+                                    title: 'Hapus Station berhasil'
+                                });
+                                station()
+                            }
+                        });
                     }
 
-                    
+
                 })
-                
+
 
                 $(document).on('click', '.remove_stk', function() {
                     var delete_row = $(this).data("row");
@@ -683,7 +701,7 @@
         </script>
         <script type="text/javascript">
             $(document).ready(function() {
-                
+
 
                 $(document).on('click', '.edit_menu', function() {
                     var id_menu = $(this).attr("id_menu");
@@ -705,19 +723,20 @@
                     var page = $(this).attr('href').split('page=')[1];
                     loadMenu(page);
                 });
-                function switchBox(){
-                    $('.form-checkbox1').click(function() {
-                    
 
-                    var id_checkbox = $(this).attr("id_checkbox");
-                    // alert(id_checkbox)
-                    if ($(this).is(':checked')) {
-                        var nilai1 = 'on';
-                        $('.nilai' + id_checkbox).val(nilai1);
-                    } else {
-                        var nilai1 = 'off';
-                        $('.nilai' + id_checkbox).val(nilai1);
-                    }
+                function switchBox() {
+                    $('.form-checkbox1').click(function() {
+
+
+                        var id_checkbox = $(this).attr("id_checkbox");
+                        // alert(id_checkbox)
+                        if ($(this).is(':checked')) {
+                            var nilai1 = 'on';
+                            $('.nilai' + id_checkbox).val(nilai1);
+                        } else {
+                            var nilai1 = 'off';
+                            $('.nilai' + id_checkbox).val(nilai1);
+                        }
                         $.ajax({
                             method: "POST",
                             url: "{{ route('editMenuCheck') }}",
@@ -754,51 +773,74 @@
 
                 function loadMenu(page) {
                     var id_lokasi = $("#id_lokasi").val()
-                
-                    $("#tbl").load("{{ route('tblMenu') }}?id_lokasi="+id_lokasi+"&page="+page, "data", function (response, status, request) {
-                        this; // dom element
+                    var keyword = "{{ request()->get('keyword') }}"
+                    $("#tbl").load("{{ route('tblMenu') }}?id_lokasi=" + id_lokasi + "&page=" + page + "&keyword=" +
+                        keyword, "data",
+                        function(
+                            response, status, request) {
+                            this; // dom element
 
-                        switchBox()
-                        
-                    });
+                            switchBox()
+
+                        });
                 }
-                $('#search_field').keyup(function() {
-                    // alert(1)
-                    var keyword = $("#search_field").val();
-                    
+                $('#search_field').on('input', function() {
+                    var keyword = $(this).val();
+                    var id_lokasi = "{{ request()->get('id_lokasi') }}"
                     if (keyword != '') {
                         $('#tbl2').show();
                         $('#tbl').hide();
+
+                        var newUrl = window.location.href.split('?')[0] + '?keyword=' + encodeURIComponent(
+                            keyword) + '&id_lokasi=' + id_lokasi;
+                        history.pushState(null, null, newUrl);
+
                         load_data(keyword);
-                        
                     } else {
                         $('#tbl2').hide();
                         $('#tbl').show();
                     }
+                });
+                $(document).ready(function() {
+                    $('#search_field').trigger('input');
+                });
+                // $('#search_field').keyup(function() {
+                //     // alert(1)
+                //     var keyword = $("#search_field").val();
 
-                });
+                //     if (keyword != '') {
+                //         $('#tbl2').show();
+                //         $('#tbl').hide();
+                //         load_data(keyword);
+
+                //     } else {
+                //         $('#tbl2').hide();
+                //         $('#tbl').show();
+                //     }
+
+                // });
                 function load_data(keyword) {
-                var id_lokasi = $("#id_lokasi").val()
-                $.ajax({
-                    method: "GET",
-                    url: "{{ route('cariMenu') }}",
-                    data: {
-                        keyword: keyword,
-                        id_lokasi: id_lokasi
-                    },
-                    success: function(hasil) {
-                        $('#tbl2').html(hasil);
-                        switchBox()
-                    }
-                });
-            }
-            $(document).on('click', '.btnPlusDistribusi', function(e){
+                    var id_lokasi = $("#id_lokasi").val()
+                    $.ajax({
+                        method: "GET",
+                        url: "{{ route('cariMenu') }}",
+                        data: {
+                            keyword: keyword,
+                            id_lokasi: id_lokasi
+                        },
+                        success: function(hasil) {
+                            $('#tbl2').html(hasil);
+                            switchBox()
+                        }
+                    });
+                }
+                $(document).on('click', '.btnPlusDistribusi', function(e) {
                     e.preventDefault()
                     var id_menu = $(this).attr('id_menu')
                     $('#distribusiIdMenu').val(id_menu)
                     $("#distribusi").modal('show')
                 })
 
-            });                 
+            });
         </script>
     @endsection

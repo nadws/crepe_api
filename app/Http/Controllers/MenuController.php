@@ -61,7 +61,6 @@ class MenuController extends Controller
 
     public function tblMenu(Request $request)
     {
-      
         $data = [
 //             'menu' => DB::select("SELECT * FROM `mHandicap` as a
 // LEFT JOIN tb_station as b on a.id_station = b.id_station
@@ -69,7 +68,7 @@ class MenuController extends Controller
             'menu' => DB::table('mHandicap')->join('tb_station', 'tb_station.id_station', 'mHandicap.id_station')->where('mHandicap.lokasiMenu', $request->id_lokasi)->paginate(10),
             'menu1' => DB::table('tb_menu')->select('tb_menu.*', 'tb_kategori.*')->join('tb_kategori', 'tb_menu.id_kategori', '=', 'tb_kategori.kd_kategori')->where('tb_menu.lokasi', $request->id_lokasi)->orderBy('tb_menu.id_menu', 'DESC')->paginate(10),
             'id_lokasi' => $request->id_lokasi,
-            
+            'keyword' => $request->keyword,
         ];
         return view('menu.table',['page' => 1],$data);
     }
@@ -84,6 +83,7 @@ LEFT JOIN tb_station as c ON a.id_station = c.id_station
 LEFT JOIN tb_handicap as d ON a.id_handicap = d.id_handicap
 WHERE a.lokasi = '$request->id_lokasi' AND a.nm_menu LIKE '%$keyword%' OR a.kd_menu LIKE '%$keyword%'"),
             'id_lokasi' => $request->id_lokasi,
+            'keyword' => $keyword,
             
         ];
         return view('menu.cari',$data);
@@ -347,14 +347,15 @@ WHERE a.lokasi = '$request->id_lokasi' AND a.nm_menu LIKE '%$keyword%' OR a.kd_m
 
     public function deleteMenu(Request $request)
     {
-        Menu::where('id_menu', $request->id_menu)->delete();
+        $getMenu = Menu::where('id_menu', $request->id_menu);
+        $nm_menu = $getMenu->first()->nm_menu;
+        $getMenu->delete();
         Harga::where('id_menu', $request->id_menu)->delete();
-        return redirect()->route('menu', ['id_lokasi' => $request->id_lokasi])->with('error', 'Berhasiil Hapus Menu');
+        return redirect()->route('menu', ['id_lokasi' => $request->id_lokasi, 'keyword' => $request->keyword])->with('error', 'Berhasiil Hapus Menu');
     }
 
     public function updateMenu(Request $request)
     {
-        
         $data1 = [
             'id_kategori' => $request->id_kategori,
             'kd_menu' => $request->kd_menu,
@@ -382,7 +383,7 @@ WHERE a.lokasi = '$request->id_lokasi' AND a.nm_menu LIKE '%$keyword%' OR a.kd_m
             Harga::where('id_harga', $request->id_harga[$i])->update($data2);
         }
 
-        return redirect()->route('menu', ['id_lokasi' => $request->id_lokasi])->with('sukses', 'Berhasiil ubah Menu');
+        return redirect()->route('menu', ['id_lokasi' => $request->id_lokasi, 'keyword' => $request->keyword])->with('sukses', 'Berhasiil ubah Menu');
     }
 
     public function editMenuCheck(Request $request)
@@ -461,6 +462,7 @@ WHERE a.lokasi = '$request->id_lokasi' AND a.nm_menu LIKE '%$keyword%' OR a.kd_m
                     'distribusi' => Distribusi::all(),
                     'lokasi' => $r->id_lokasi,
                     'id_lokasi' => $r->id_lokasi,
+                    'keyword' => $r->keyword,
    
                     'handicap' => Handicap::where('id_lokasi',$r->id_lokasi)->get(),
                     // 'bahan' => DB::table('tb_list_bahan')->where([['id_lokasi', $r->id_lokasi],['jenis',1]])->get(),
