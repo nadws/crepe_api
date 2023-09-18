@@ -149,26 +149,26 @@ class LaporanController extends Controller
             GROUP BY a.id_lokasi"),
 
             'kategori' => DB::select("SELECT b.nm_menu, c.kategori ,sum(e.harga2) as hargaT, sum(a.qty) AS qty
-FROM tb_order AS a 
-LEFT JOIN view_menu2 AS b ON b.id_harga = a.id_harga
-left join tb_kategori as c on c.kd_kategori = b.id_kategori
+                FROM tb_order AS a 
+                LEFT JOIN view_menu2 AS b ON b.id_harga = a.id_harga
+                left join tb_kategori as c on c.kd_kategori = b.id_kategori
 
-left join(select d.id_harga, d.id_order, (d.harga * d.qty) as harga2 from tb_order as d 
-WHERE d.tgl BETWEEN '$tgl1' AND '$tgl2' and d.id_lokasi = '$loc' and d.id_distribusi = '1'
-group by d.id_order) as e on e.id_order = a.id_order           
-           
-WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' and a.id_lokasi = '$loc' and a.id_distribusi = '1' 
- GROUP BY b.id_kategori"),
+                left join(select d.id_harga, d.id_order, (d.harga * d.qty) as harga2 from tb_order as d 
+                WHERE d.tgl BETWEEN '$tgl1' AND '$tgl2' and d.id_lokasi = '$loc' and d.id_distribusi = '1'
+                group by d.id_order) as e on e.id_order = a.id_order           
+                        
+                WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' and a.id_lokasi = '$loc' and a.id_distribusi = '1' 
+                GROUP BY b.id_kategori"),
 
             'gojek' => DB::select("SELECT b.nm_menu, c.kategori, sum(e.harga2) as harga, sum(a.qty) AS qty
             FROM tb_order AS a 
             LEFT JOIN view_menu2 AS b ON b.id_harga = a.id_harga
             left join tb_kategori as c on c.kd_kategori = b.id_kategori
             left join(select d.id_harga, d.id_order, (d.harga * d.qty) as harga2 from tb_order as d 
-WHERE d.tgl BETWEEN '$tgl1' AND '$tgl2' and d.id_lokasi = '$loc' and d.id_distribusi = '2'
-group by d.id_order) as e on e.id_order = a.id_order  
-            WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' and a.id_lokasi = '$loc' and a.id_distribusi = '2'
-            GROUP BY b.id_kategori"),
+            WHERE d.tgl BETWEEN '$tgl1' AND '$tgl2' and d.id_lokasi = '$loc' and d.id_distribusi = '2'
+            group by d.id_order) as e on e.id_order = a.id_order  
+                        WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' and a.id_lokasi = '$loc' and a.id_distribusi = '2'
+                        GROUP BY b.id_kategori"),
 
             'total_gojek' => $total_gojek,
             'total_not_gojek' => $total_not_gojek,
@@ -247,26 +247,26 @@ group by d.id_order) as e on e.id_order = a.id_order
             GROUP BY a.id_lokasi"),
 
             'kategori' => DB::select("SELECT b.nm_menu, c.kategori ,sum(e.harga2) as hargaT, sum(a.qty) AS qty
-FROM tb_order AS a 
-LEFT JOIN view_menu2 AS b ON b.id_harga = a.id_harga
-left join tb_kategori as c on c.kd_kategori = b.id_kategori
+        FROM tb_order AS a 
+        LEFT JOIN view_menu2 AS b ON b.id_harga = a.id_harga
+        left join tb_kategori as c on c.kd_kategori = b.id_kategori
 
-left join(select d.id_harga, d.id_order, (d.harga * d.qty) as harga2 from tb_order as d 
-WHERE d.tgl BETWEEN '$tgl1' AND '$tgl2' and d.id_lokasi = '$loc' and d.id_distribusi = '1'
-group by d.id_order) as e on e.id_order = a.id_order           
-           
-WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' and a.id_lokasi = '$loc' and a.id_distribusi = '1' 
- GROUP BY b.id_kategori"),
+        left join(select d.id_harga, d.id_order, (d.harga * d.qty) as harga2 from tb_order as d 
+        WHERE d.tgl BETWEEN '$tgl1' AND '$tgl2' and d.id_lokasi = '$loc' and d.id_distribusi = '1'
+        group by d.id_order) as e on e.id_order = a.id_order           
+                
+        WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' and a.id_lokasi = '$loc' and a.id_distribusi = '1' 
+        GROUP BY b.id_kategori"),
 
             'gojek' => DB::select("SELECT b.nm_menu, c.kategori, sum(e.harga2) as harga, sum(a.qty) AS qty
             FROM tb_order AS a 
             LEFT JOIN view_menu2 AS b ON b.id_harga = a.id_harga
             left join tb_kategori as c on c.kd_kategori = b.id_kategori
             left join(select d.id_harga, d.id_order, (d.harga * d.qty) as harga2 from tb_order as d 
-WHERE d.tgl BETWEEN '$tgl1' AND '$tgl2' and d.id_lokasi = '$loc' and d.id_distribusi = '2'
-group by d.id_order) as e on e.id_order = a.id_order  
-            WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' and a.id_lokasi = '$loc' and a.id_distribusi = '2'
-            GROUP BY b.id_kategori"),
+        WHERE d.tgl BETWEEN '$tgl1' AND '$tgl2' and d.id_lokasi = '$loc' and d.id_distribusi = '2'
+        group by d.id_order) as e on e.id_order = a.id_order  
+                    WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' and a.id_lokasi = '$loc' and a.id_distribusi = '2'
+                    GROUP BY b.id_kategori"),
 
             'total_gojek' => $total_gojek,
             'total_not_gojek' => $total_not_gojek,
@@ -495,7 +495,7 @@ group by d.id_order) as e on e.id_order = a.id_order
             'tgl1' => $tgl1,
             'tgl2' => $tgl2,
 
-            'kategori' => DB::select("SELECT b.nm_produk, b.harga, SUM(a.jumlah) as qty FROM `tb_pembelian` as a
+            'kategori' => DB::select("SELECT b.nm_produk, a.harga, SUM(a.jumlah) as qty FROM `tb_pembelian` as a
             LEFT JOIN tb_produk as b ON a.id_produk = b.id_produk
             WHERE a.tanggal BETWEEN '$tgl1' AND '$tgl2' AND a.lokasi = '$loc' GROUP BY a.id_produk;")
         ];
