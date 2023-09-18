@@ -18,6 +18,7 @@
                 <tr>
                     <th>#</th>
                     <th>Nama Menu</th>
+                    <th>harga Satuan</th>
                     <th>Qty</th>
                     <th>Subtotal <br>
                     <?= number_format($total,0) ?>
@@ -30,6 +31,7 @@
                 <tr>
                     <td><?= $i++ ?></td>
                     <td><?= $k->nm_produk ?></td>
+                    <td><?= $k->harga ?></td>
                     <td><?= $k->qty ?></td>
                     <td><?= number_format($k->qty * $k->harga, 0) ?></td>
                 </tr>
