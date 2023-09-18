@@ -31,7 +31,7 @@
                 <tr>
                     <td><?= $i++ ?></td>
                     <td><?= $k->nm_produk ?></td>
-                    <td><?= $k->harga ?></td>
+                    <td><?= number_format($k->harga,0) ?></td>
                     <td><?= $k->qty ?></td>
                     <td><?= number_format($k->qty * $k->harga, 0) ?></td>
                 </tr>
