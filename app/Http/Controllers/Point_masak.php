@@ -906,12 +906,14 @@ class Point_masak extends Controller
             ->setCellValue('E21', 'BCA Kredit')
             ->setCellValue('E22', 'Mandiri Debit')
             ->setCellValue('E23', 'Mandiri Kredit')
-            ->setCellValue('E24', 'Total Total')
-            ->setCellValue('E25', 'Discount')
-            ->setCellValue('E26', 'Voucher')
-            ->setCellValue('E27', 'Rounding')
-            ->setCellValue('E28', 'Dp')
-            ->setCellValue('E29', 'Total Total + DP');
+            ->setCellValue('E24', 'Bri Debit')
+            ->setCellValue('E25', 'Bri Kredit')
+            ->setCellValue('E26', 'Total Total')
+            ->setCellValue('E27', 'Discount')
+            ->setCellValue('E28', 'Voucher')
+            ->setCellValue('E29', 'Rounding')
+            ->setCellValue('E30', 'Dp')
+            ->setCellValue('E31', 'Total Total + DP');
 
         $sheet3
             ->setCellValue('B2', $transaksiTkm->ttl_invoice)
@@ -937,12 +939,14 @@ class Point_masak extends Controller
             ->setCellValue('B21', $transaksiTkm->k_bca)
             ->setCellValue('B22', $transaksiTkm->d_mandiri)
             ->setCellValue('B23', $transaksiTkm->k_mandiri)
-            ->setCellValue('B24', $transaksiTkm->total_bayar)
-            ->setCellValue('B25', $transaksiTkm->discount)
-            ->setCellValue('B26', $transaksiTkm->voucher)
-            ->setCellValue('B27', $transaksiTkm->rounding)
-            ->setCellValue('B28', $transaksiTkm->dp)
-            ->setCellValue('B29', $transaksiTkm->dp  + $transaksiTkm->total_bayar);
+            ->setCellValue('B24', $transaksiTkm->d_bri)
+            ->setCellValue('B25', $transaksiTkm->k_bri)
+            ->setCellValue('B26', $transaksiTkm->total_bayar)
+            ->setCellValue('B27', $transaksiTkm->discount)
+            ->setCellValue('B28', $transaksiTkm->voucher)
+            ->setCellValue('B29', $transaksiTkm->rounding)
+            ->setCellValue('B30', $transaksiTkm->dp)
+            ->setCellValue('B31', $transaksiTkm->dp  + $transaksiTkm->total_bayar);
 
         // soondobu
         $sheet3
@@ -969,12 +973,14 @@ class Point_masak extends Controller
             ->setCellValue('F21', $transaksiSdb->k_bca)
             ->setCellValue('F22', $transaksiSdb->d_mandiri)
             ->setCellValue('F23', $transaksiSdb->k_mandiri)
-            ->setCellValue('F24', $transaksiSdb->total_bayar)
-            ->setCellValue('F25', $transaksiSdb->discount)
-            ->setCellValue('F26', $transaksiSdb->voucher)
-            ->setCellValue('F27', $transaksiSdb->rounding)
-            ->setCellValue('F28', $transaksiSdb->dp)
-            ->setCellValue('F29', $transaksiSdb->dp  + $transaksiSdb->total_bayar);
+            ->setCellValue('F24', $transaksiSdb->d_bri)
+            ->setCellValue('F25', $transaksiSdb->k_bri)
+            ->setCellValue('F26', $transaksiSdb->total_bayar)
+            ->setCellValue('F27', $transaksiSdb->discount)
+            ->setCellValue('F28', $transaksiSdb->voucher)
+            ->setCellValue('F29', $transaksiSdb->rounding)
+            ->setCellValue('F30', $transaksiSdb->dp)
+            ->setCellValue('F31', $transaksiSdb->dp  + $transaksiSdb->total_bayar);
         $sheet3->getStyle('A2:B29')->applyFromArray($style);
         $sheet3->getStyle('E2:F29')->applyFromArray($style);
 

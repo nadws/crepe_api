@@ -18,7 +18,7 @@
                 <tr>
                     <th>#</th>
                     <th>Nama Menu</th>
-                    <th>harga Satuan</th>
+                    <th>harga Rata - rata</th>
                     <th>Qty</th>
                     <th>Subtotal <br>
                     <?= number_format($total,0) ?>

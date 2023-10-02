@@ -237,6 +237,19 @@ $total_total = $total_gojek->total + $total_not_gojek->total + $service_charge +
                 <td style="text-align: right;"><?= number_format($transaksi->k_mandiri, 0) ?></td>
             </tr>
             <tr>
+                <td>Bri Debit</td>
+                <td width="1%">:</td>
+                <td></td>
+                <td style="text-align: right;"><?= number_format($transaksi->d_bri, 0) ?></td>
+            </tr>
+
+            <tr>
+                <td>Bri Kredit</td>
+                <td width="1%">:</td>
+                <td></td>
+                <td style="text-align: right;"><?= number_format($transaksi->k_bri, 0) ?></td>
+            </tr>
+            <tr>
                 <td style="font-weight: bold;">Total total</td>
                 <td style="font-weight: bold;" width="1%">:</td>
                 <td></td>
