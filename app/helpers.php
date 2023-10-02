@@ -311,7 +311,7 @@ class PointQuery
 
   public static function transaksi($loc, $tgl1, $tgl2)
   {
-    return DB::selectOne("SELECT COUNT(a.no_order) AS ttl_invoice, SUM(a.discount) as discount, SUM(a.voucher) as voucher, sum(if(total_bayar = 0 ,0,a.round)) as rounding, a.id_lokasi, 
+    return DB::selectOne("SELECT COUNT(a.no_order) AS ttl_invoice,g.orang, SUM(a.discount) as discount, SUM(a.voucher) as voucher, sum(if(total_bayar = 0 ,0,a.round)) as rounding, a.id_lokasi, 
             SUM(a.total_orderan) AS rp, d.unit, a.no_order, sum(a.dp) as dp, sum(a.gosen) as gosend, sum(a.service) as ser, sum(a.tax) as tax,f.qty_void, f.void,
             SUM(a.cash) as cash, SUM(a.d_bca) as d_bca, SUM(a.k_bca) as k_bca, SUM(a.d_mandiri) as d_mandiri, SUM(a.k_mandiri) as k_mandiri,SUM(a.d_bri) as d_bri,SUM(a.k_bri) as k_bri, SUM(total_bayar) as total_bayar
         
@@ -330,6 +330,18 @@ class PointQuery
             WHERE e.tgl BETWEEN '$tgl1' AND '$tgl2' AND e.id_lokasi = '$loc' AND e.void != '0'
             GROUP BY e.id_lokasi
             )AS f ON f.id_lokasi = a.id_lokasi
+
+            LEFT JOIN(
+              SELECT no_order, id_lokasi, SUM(total_orang) AS orang
+              FROM (
+                  SELECT no_order, id_lokasi, orang AS total_orang
+                  FROM `tb_order`
+                  WHERE tgl BETWEEN '$tgl1' AND '$tgl2'
+                  AND id_lokasi = $loc
+                  GROUP BY no_order, id_lokasi, orang
+              ) AS subquery
+              GROUP BY id_lokasi
+            ) as g ON a.id_lokasi = g.id_lokasi
         
         
             where a.tgl_transaksi BETWEEN '$tgl1' AND '$tgl2' and a.id_lokasi = '$loc'

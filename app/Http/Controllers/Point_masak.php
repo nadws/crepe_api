@@ -852,7 +852,7 @@ class Point_masak extends Controller
 
         $sheet3
             ->setCellValue('A1', 'TAKEMORI ' . date('M d, Y', strtotime($tgl1)) . ' - ' . date('M d, Y', strtotime($tgl2)))
-            ->setCellValue('A2', 'Total Invoice')
+            ->setCellValue('A2', 'Total Invoice (Total Org)')
             ->setCellValue('A3', 'Rp/Invoice')
             ->setCellValue('A4', 'Unit Food')
             ->setCellValue('A5', 'Rp/Unit')
@@ -874,17 +874,19 @@ class Point_masak extends Controller
             ->setCellValue('A21', 'BCA Kredit')
             ->setCellValue('A22', 'Mandiri Debit')
             ->setCellValue('A23', 'Mandiri Kredit')
-            ->setCellValue('A24', 'Total Total')
-            ->setCellValue('A25', 'Discount')
-            ->setCellValue('A26', 'Voucher')
-            ->setCellValue('A27', 'Rounding')
-            ->setCellValue('A28', 'Dp')
-            ->setCellValue('A29', 'Total Total + DP');
+            ->setCellValue('A24', 'Bri Debit')
+            ->setCellValue('A25', 'Bri Kredit')
+            ->setCellValue('A26', 'Total Total')
+            ->setCellValue('A27', 'Discount')
+            ->setCellValue('A28', 'Voucher')
+            ->setCellValue('A29', 'Rounding')
+            ->setCellValue('A30', 'Dp')
+            ->setCellValue('A31', 'Total Total + DP');
 
         // soondobu
         $sheet3
             ->setCellValue('E1', 'SOONDOBU ' . date('M d, Y', strtotime($tgl1)) . ' - ' . date('M d, Y', strtotime($tgl2)))
-            ->setCellValue('E2', 'Total Invoice')
+            ->setCellValue('E2', 'Total Invoice (Total Org)')
             ->setCellValue('E3', 'Rp/Invoice')
             ->setCellValue('E4', 'Unit Food')
             ->setCellValue('E5', 'Rp/Unit')
@@ -916,7 +918,7 @@ class Point_masak extends Controller
             ->setCellValue('E31', 'Total Total + DP');
 
         $sheet3
-            ->setCellValue('B2', $transaksiTkm->ttl_invoice)
+            ->setCellValue('B2', $transaksiTkm->ttl_invoice . "($transaksiTkm->orang)")
             ->setCellValue('B3', round($total_totalTkm / $transaksiTkm->ttl_invoice, 0))
             ->setCellValue('B4', $transaksiTkm->unit)
             ->setCellValue('B5', round($total_totalTkm / $transaksiTkm->unit, 0));
@@ -950,7 +952,7 @@ class Point_masak extends Controller
 
         // soondobu
         $sheet3
-            ->setCellValue('F2', $transaksiSdb->ttl_invoice)
+            ->setCellValue('F2', $transaksiSdb->ttl_invoice . "($transaksiSdb->orang)")
             ->setCellValue('F3', round($total_totalSdb / $transaksiSdb->ttl_invoice, 0))
             ->setCellValue('F4', $transaksiSdb->unit)
             ->setCellValue('F5', round($total_totalSdb / $transaksiSdb->unit, 0));
