@@ -6,8 +6,8 @@
                     $navbar = DB::table('tb_navbar')->get();
                     $sub_navbar = DB::table('tb_sub_navbar')->get();
                     $id_user = Auth::user()->id;
-                    $arr = [97,1,2,3,4];
-                    
+                    $arr = [97, 1, 2, 3, 4];
+
                     $cek = DB::table('tb_permission')
                         ->join('tb_sub_navbar', 'tb_permission.id_menu', '=', 'tb_sub_navbar.id_navbar')
                         ->join('tb_navbar', 'tb_sub_navbar.id_navbar', '=', 'tb_navbar.id_navbar')
@@ -27,8 +27,8 @@
                 @foreach ($cekadm as $c)
                     <?php if($c->jenis == 'navbar'){ ?>
                     @php
-                        if(!in_array($id_user, $arr)) {
-                            if($c->sub_navbar == 'Kom Server' || $c->sub_navbar == 'Point Kitchen') {
+                        if (!in_array($id_user, $arr)) {
+                            if ($c->sub_navbar == 'Kom Server' || $c->sub_navbar == 'Point Kitchen') {
                                 continue;
                             }
                         }
@@ -41,10 +41,10 @@
                     <?php } ?>
                 @endforeach
                 <li>
-                        <a href="{{ route('stok_adm') }}"><img
-                                src="{{ asset('assets') }}/img_menu/stock.png"><span>Stok</span>
-                        </a>
-                    </li>
+                    <a href="{{ route('stok_adm') }}"><img
+                            src="{{ asset('assets') }}/img_menu/stock.png"><span>Stok</span>
+                    </a>
+                </li>
                 <li class="dropdown"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <img
                             src="{{ asset('assets') }}/img_menu/server.png"><span>Database</span> <b
                             class="caret"></b></a>

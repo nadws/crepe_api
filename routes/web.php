@@ -53,6 +53,7 @@ use App\Http\Controllers\Export_gaji_server;
 
 use App\Http\Controllers\KpiController;
 use App\Http\Controllers\viewKomServerController;
+use App\Http\Controllers\KlasifikasiPembayaranController;
 
 /*
 |--------------------------------------------------------------------------
@@ -602,4 +603,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/save_sub_kategori', [KpiController::class, 'save_sub_kategori'])->name('save_sub_kategori');
     Route::get('/save_tambah_sub_kategori', [KpiController::class, 'save_tambah_sub_kategori'])->name('save_tambah_sub_kategori');
     Route::get('/delete_subkategori', [KpiController::class, 'delete_subkategori'])->name('delete_subkategori');
+
+
+
+    Route::get('/klasifikasi_pembayaran', [KlasifikasiPembayaranController::class, 'index'])->name('klasifikasi_pembayaran');
+    Route::get('/sub_klasifikasi', [KlasifikasiPembayaranController::class, 'sub_klasifikasi'])->name('sub_klasifikasi');
+    Route::get('/save_akun_klasifikasi', [KlasifikasiPembayaranController::class, 'save_akun_klasifikasi'])->name('save_akun_klasifikasi');
+    Route::post('/save_klasifikasi', [KlasifikasiPembayaranController::class, 'save_klasifikasi'])->name('save_klasifikasi');
+    Route::get('/delete_klasifikasi', [KlasifikasiPembayaranController::class, 'delete_klasifikasi'])->name('delete_klasifikasi');
 });

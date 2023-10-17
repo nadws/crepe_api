@@ -21,32 +21,31 @@ class KaryawanController extends Controller
     public function index(Request $request)
     {
         $id_user = Auth::user()->id;
-        $id_menu = DB::table('tb_permission')->select('id_menu')->where('id_user',$id_user)
-        ->where('id_menu', 12)->first();
-        if(empty($id_menu)) {
+        $id_menu = DB::table('tb_permission')->select('id_menu')->where('id_user', $id_user)
+            ->where('id_menu', 12)->first();
+        if (empty($id_menu)) {
             return back();
         } else {
-            if(Auth::user()->jenis == 'adm') {
+            if (Auth::user()->jenis == 'adm') {
                 $data = [
                     'title' => 'Karyawan',
                     'logout' => $request->session()->get('logout'),
-                    'karyawan' => 
-                    Karyawan::select('tb_karyawan.*','tb_status.nm_status','tb_posisi.nm_posisi', 'tb_gaji.*')->join('tb_status', 'tb_karyawan.id_status', '=', 'tb_status.id_status')->join('tb_posisi', 'tb_karyawan.id_posisi', '=', 'tb_posisi.id_posisi')->join('tb_gaji', 'tb_karyawan.id_karyawan', 'tb_gaji.id_karyawan')->orderBy('tgl_masuk', 'desc')->get(),
+                    'karyawan' =>
+                    Karyawan::select('tb_karyawan.*', 'tb_status.nm_status', 'tb_posisi.nm_posisi', 'tb_gaji.*')->join('tb_status', 'tb_karyawan.id_status', '=', 'tb_status.id_status')->join('tb_posisi', 'tb_karyawan.id_posisi', '=', 'tb_posisi.id_posisi')->join('tb_gaji', 'tb_karyawan.id_karyawan', 'tb_gaji.id_karyawan')->orderBy('tgl_masuk', 'desc')->get(),
                     'status' => DB::table('tb_status')->get(),
                     'posisi' => DB::table('tb_posisi')->get(),
                 ];
-                return view("karyawan.karyawan",$data);
+                return view("karyawan.karyawan", $data);
             } else {
                 return back();
             }
-            
         }
     }
 
     public function addKaryawan(Request $r)
-    {   
+    {
         $cek = Karyawan::where('nama', $r->nama)->first();
-        if($cek) {
+        if ($cek) {
             return redirect()->route('karyawan')->with('error', 'Gagal! Nama sudah ada');
         } else {
             $data = [
@@ -55,12 +54,12 @@ class KaryawanController extends Controller
                 'id_posisi' => $r->posisi,
                 'tgl_masuk' => $r->tgl_masuk,
             ];
-    
-            $kr = Karyawan::create($data);
-            $nm_karyawan = $r->status == '1' ? 'K-'.$r->nama : $r->nama;
 
-            
-            
+            $kr = Karyawan::create($data);
+            $nm_karyawan = $r->status == '1' ? 'K-' . $r->nama : $r->nama;
+
+
+
             $data2 = [
                 'id_karyawan' => $kr->id,
                 'rp_m' => $r->rp_m,
@@ -69,7 +68,7 @@ class KaryawanController extends Controller
                 'g_bulanan' => $r->g_bulanan,
             ];
             Gaji::create($data2);
-            
+
             $data3 = [
                 'id_karyawan' => $kr->id,
                 'nm_karyawan' => $nm_karyawan,
@@ -80,14 +79,9 @@ class KaryawanController extends Controller
             Http::withHeaders([
                 'X-API-KEY' => '@Takemor.'
             ])->get("https://majoo-laravel.putrirembulan.com/api/add_karyawan/$nm_karyawan");
-    
+
             return redirect()->route('karyawan')->with('sukses', 'Berhasil tambah karyawan');
         }
-        
-
-        
-
-        
     }
 
     public function editKaryawan(Request $request)
@@ -98,8 +92,8 @@ class KaryawanController extends Controller
             'id_posisi' => $request->posisi,
             'tgl_masuk' => $request->tgl_masuk
         ];
-    
-        Karyawan::where('id_karyawan',$request->id_karyawan)->update($data);
+
+        Karyawan::where('id_karyawan', $request->id_karyawan)->update($data);
 
 
         $id_gaji = $request->id_gaji;
@@ -120,26 +114,25 @@ class KaryawanController extends Controller
                 'rp_sp' => $request->rp_sp,
                 'g_bulanan' => $request->g_bulanan,
             ];
-            
+
             Gaji::where('id_gaji', $id_gaji)->update($data);
         }
-      
+
         return redirect()->route('karyawan')->with('sukses', 'Berhasil Ubah Data Karyawan');
     }
 
     public function deleteKaryawan(Request $request)
     {
-        Karyawan::where('id_karyawan',$request->id_karyawan)->delete();
-        Gaji::where('id_karyawan',$request->id_karyawan)->delete();
-        DB::table('tb_karyawan_majo')->where('id_karyawan',$request->id_karyawan)->delete();
-        
+        Karyawan::where('id_karyawan', $request->id_karyawan)->delete();
+        Gaji::where('id_karyawan', $request->id_karyawan)->delete();
+        DB::table('tb_karyawan_majo')->where('id_karyawan', $request->id_karyawan)->delete();
+
         return redirect()->route('karyawan')->with('error', 'Berhasil hapus karyawan');
     }
-    
+
     public function addPoint(Request $request)
     {
-        Karyawan::where('id_karyawan',$request->id_karyawan)->update(['point' => $request->value]);
+        Karyawan::where('id_karyawan', $request->id_karyawan)->update(['point' => $request->value]);
         return redirect()->route('karyawan')->with('error', 'Berhasil add point karyawan');
     }
-
 }
