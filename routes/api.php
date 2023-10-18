@@ -102,6 +102,7 @@ Route::post('pembayaran', function (r $b) {
             'pengirim' => $t['pengirim'],
             'tgl' => $t['tgl'],
             'tgl_waktu' => $t['tgl_waktu'],
+            'id_lokasi' => $t['id_lokasi'],
         ];
         DB::table('pembayaran')->insert($data);
     }
