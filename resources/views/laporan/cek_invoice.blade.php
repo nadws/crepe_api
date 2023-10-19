@@ -51,6 +51,7 @@
     $("#tb-cek").DataTable({
         "lengthChange": false,
         "autoWidth": false,
-        "paging": true
+        "paging": true,
+        "bSort": true,
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 </script>
