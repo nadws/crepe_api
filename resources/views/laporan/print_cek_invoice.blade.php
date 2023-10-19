@@ -31,6 +31,7 @@
             <h5 class="text-center fw-bold mb-2">Laporan Closingan</h5>
             <h6 class="text-center fw-bold mb-2"> {{ date('d M Y', strtotime($tgl1)) }} ~
                 {{ date('d M Y', strtotime($tgl2)) }}</h6>
+            <h6>{{ $lokasi }}</h6>
             <br>
             <table width="100%" class="table table-bordered">
                 <thead>

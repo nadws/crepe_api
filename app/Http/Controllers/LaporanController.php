@@ -620,7 +620,8 @@ class LaporanController extends Controller
             ) as d on d.no_order2 = a.no_nota
             where a.tgl BETWEEN '$r->tgl1' and '$r->tgl2' and a.id_lokasi = '$loc';"),
             'tgl1' => $r->tgl1,
-            'tgl2' => $r->tgl2
+            'tgl2' => $r->tgl2,
+            'lokasi' => $loc == '1' ? 'TAKEMORI' : 'SOONDOBU'
         ];
 
         return view('laporan.print_cek_invoice', $data);
@@ -640,7 +641,8 @@ class LaporanController extends Controller
             ) as d on d.no_order2 = a.no_nota
             where a.tgl BETWEEN '$r->tgl1' and '$r->tgl2' and a.id_lokasi = '$loc';"),
             'tgl1' => $r->tgl1,
-            'tgl2' => $r->tgl2
+            'tgl2' => $r->tgl2,
+            'lokasi' => $loc == '1' ? 'TAKEMORI' : 'SOONDOBU'
         ];
 
         return view('laporan.excel_cek_invoice', $data);
