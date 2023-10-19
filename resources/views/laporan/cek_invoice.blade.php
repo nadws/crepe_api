@@ -6,7 +6,7 @@
             class="btn btn-sm btn-info float-right mr-2"><i class="fas fa-print"></i> Print</a>
     </div>
     <div class="card-body">
-        <table width="100%" class="table table-bordered" id="tb-cek">
+        <table width="100%" class="table table-bordered" id="table_cek">
             <thead>
                 <tr>
                     <th>#</th>
@@ -48,10 +48,12 @@
 <script src="{{ asset('assets') }}/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
 
 <script>
-    $("#tb-cek").DataTable({
-        "lengthChange": false,
-        "autoWidth": false,
-        "paging": true,
+    $('#table_cek').DataTable({
+
         "bSort": true,
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        // "scrollX": true,
+        "paging": true,
+        "stateSave": true,
+        "scrollCollapse": true
+    });
 </script>
