@@ -2,9 +2,9 @@
 @section('content')
     <style>
         /* .icon-menu:hover{
-                    background: #C8BED8;
-                    border-radius: 50px;
-                } */
+                                                                                                                                                                                                background: #C8BED8;
+                                                                                                                                                                                                border-radius: 50px;
+                                                                                                                                                                                            } */
 
         h6 {
             color: #155592;
@@ -42,11 +42,11 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <label for="">Dari</label>
-                                            <input value="{{ date('Y-m-01') }}" type="date" id="tgl1" class="form-control">
+                                            <input type="date" id="tgl1" class="form-control">
                                         </div>
                                         <div class="col-lg-6">
                                             <label for="">Sampai</label>
-                                            <input value="{{ date('Y-m-d') }}" type="date" id="tgl2" class="form-control">
+                                            <input type="date" id="tgl2" class="form-control">
                                         </div>
                                         <div class="col-lg-12 mt-2">
                                             <label for="">Kategori</label>
@@ -54,20 +54,17 @@
                                                 <option value="1">SUMMARY</option>
                                                 <option value="2">PER-ITEM</option>
                                                 <option value="3">PER-ITEM MAJO</option>
+                                                <option value="4">CLOSING</option>
                                             </select>
                                         </div>
 
                                     </div>
-
 
                                 </div>
                                 <div class="card-footer">
                                     <button class="btn bg-gradient btn-block">Lanjutkan</button>
                                 </div>
                             </div>
-
-                            <div id="loadLaporan"></div>
-
 
                         </form>
                     </div>
@@ -79,6 +76,12 @@
 
                         </div>
                         <div id="data-server">
+
+                        </div>
+
+                    </div>
+                    <div class="col-lg-12">
+                        <div id="cek-nota">
 
                         </div>
                     </div>
@@ -113,9 +116,9 @@
 
                 </div>
                 <!-- <div class="modal-footer">
-                                    <button type="button" class="btn btn-costume" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-costume">Edit/Save</button>
-                                </div> -->
+                                                                                                                                                                                                                <button type="button" class="btn btn-costume" data-dismiss="modal">Close</button>
+                                                                                                                                                                                                                <button type="submit" class="btn btn-costume">Edit/Save</button>
+                                                                                                                                                                                                            </div> -->
             </div>
         </div>
     </div>
@@ -134,39 +137,35 @@
                 console.log(kat);
 
                 if (kat == '1') {
-
-                    $.ajax({
-                        type: "GET",
-                        url: "{{ route('laporan_ibu') }}",
-                        data: {
-                            tgl1: tgl1,
-                            tgl2: tgl2,
-                            kat: kat,
-                        },
-                        success: function(r) {
-                            $("#loadLaporan").html(r);
-                        }
-                    });
-
-
                     var url = "<?= route('summary') ?>?tgl1=" + tgl1 + '&tgl2=' + tgl2;
                     $('#data-laporan').show();
                     $('#data-laporan').load(url);
                     $('#data-item').hide();
                     $('#data-server').hide();
+                    $('#cek-nota').hide();
                 } else if (kat == 2) {
                     var url = "<?= route('item') ?>?tgl1=" + tgl1 + '&tgl2=' + tgl2;
                     $('#data-item').show();
                     $('#data-item').load(url);
                     $('#data-laporan').hide();
                     $('#data-server').hide();
+                    $('#cek-nota').hide();
                 } else if (kat == 3) {
                     var url = "<?= route('item_majo') ?>?tgl1=" + tgl1 + '&tgl2=' + tgl2;
                     $('#data-server').show();
                     $('#data-server').load(url);
                     $('#data-laporan').hide();
                     $('#data-item').hide();
+                    $('#cek-nota').hide();
+                } else if (kat == 4) {
+                    var url = "<?= route('cek_invoice') ?>?tgl1=" + tgl1 + '&tgl2=' + tgl2;
+                    $('#cek-nota').show();
+                    $('#cek-nota').load(url);
+                    $('#data-server').hide();
+                    $('#data-laporan').hide();
+                    $('#data-item').hide();
                 }
+
 
             });
 

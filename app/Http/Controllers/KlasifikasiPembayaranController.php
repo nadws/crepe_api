@@ -22,15 +22,9 @@ class KlasifikasiPembayaranController extends Controller
                 $data = [
                     'title' => 'Data Pembayaran',
                     'logout' => $r->session()->get('logout'),
-                    'klasifikasi' => DB::table('klasifikasi_pembayaran')->get(),
-                    'akun_pembayaran' => DB::table('akun_pembayaran')->where('aktif', 'T')->get(),
+                    'klasifikasi' => DB::table('klasifikasi_pembayaran')->where('aktif', 'T')->get(),
+                    'akun_pembayaran' => DB::table('akun_pembayaran')->get(),
                 ];
-                $groupedAkunPembayaran = [];
-                foreach ($data['akun_pembayaran'] as $akun) {
-                    $groupedAkunPembayaran[$akun->id_klasifikasi][] = $akun;
-                }
-
-                $data['groupedAkunPembayaran'] = $groupedAkunPembayaran;
                 return view("pembayaran.index", $data);
             } else {
                 return back();
@@ -40,7 +34,9 @@ class KlasifikasiPembayaranController extends Controller
 
     function sub_klasifikasi(Request $r)
     {
-        $data = ['akun_pembayaran' => DB::table('akun_pembayaran')->where('id_klasifikasi', $r->id_klasifikasi)->get(),];
+        $data = [
+            'akun_pembayaran' => DB::table('akun_pembayaran')->where('id_klasifikasi', $r->id_klasifikasi)->where('aktif', 'T')->get(),
+        ];
         return view('pembayaran.sub_klasifikasi', $data);
     }
 
@@ -65,6 +61,11 @@ class KlasifikasiPembayaranController extends Controller
     function delete_klasifikasi(Request $r)
     {
         DB::table('klasifikasi_pembayaran')->where('id_klasifikasi_pembayaran', $r->id_klasifikasi)->update(['aktif' => 'Y']);
+        DB::table('akun_pembayaran')->where('id_klasifikasi', $r->id_klasifikasi)->update(['aktif' => 'Y']);
         return back();
+    }
+    function delete_akun_pembayaran(Request $r)
+    {
+        DB::table('akun_pembayaran')->where('id_akun_pembayaran', $r->id_akun_pembayaran)->update(['aktif' => 'Y']);
     }
 }

@@ -171,6 +171,36 @@
             $("#id_klasifikasi").val(id_klasifikasi)
 
         });
+        $(document).on('click', '.delete_akun', function() {
+            var id_akun_pembayaran = $(this).attr('id_akun_pembayaran');
+            var id_klasifikasi = $(this).attr('id_klasifikasi');
+            if (confirm('Apakah anda yakin ingin menghapus data?') == true) {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('delete_akun_pembayaran') }}",
+                    data: {
+                        id_akun_pembayaran: id_akun_pembayaran
+                    },
+                    success: function(r) {
+                        $('#tambah').modal('hide');
+                        sub_menu(id_klasifikasi);
+                        $('.load_sub' + id_klasifikasi).show();
+                        Swal.fire({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            icon: 'success',
+                            title: 'Data berhasil dihapus'
+                        });
+                    }
+                });
+            } else {
+                return false;
+            }
+
+
+        });
 
         $(document).on('submit', '#save_akun_pembayaran', function(e) {
             e.preventDefault()
