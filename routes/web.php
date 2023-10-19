@@ -452,6 +452,9 @@ Route::get('/export_itemMajo', [LaporanController::class, 'export_itemMajo'])->n
 Route::get('/get_telat', [LaporanController::class, 'get_telat'])->name('get_telat');
 Route::get('/get_ontime', [LaporanController::class, 'get_ontime'])->name('get_ontime');
 Route::get('/export_item', [LaporanController::class, 'export_item'])->name('export_item');
+Route::get('/cek_invoice', [LaporanController::class, 'cek_invoice'])->name('cek_invoice');
+Route::get('/print_cek_invoice', [LaporanController::class, 'print_cek_invoice'])->name('print_cek_invoice');
+Route::get('/excel_cek_invoice', [LaporanController::class, 'excel_cek_invoice'])->name('excel_cek_invoice');
 
 Route::get('/head', [HeadController::class, 'index'])->name('head');
 
@@ -611,4 +614,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/save_akun_klasifikasi', [KlasifikasiPembayaranController::class, 'save_akun_klasifikasi'])->name('save_akun_klasifikasi');
     Route::post('/save_klasifikasi', [KlasifikasiPembayaranController::class, 'save_klasifikasi'])->name('save_klasifikasi');
     Route::get('/delete_klasifikasi', [KlasifikasiPembayaranController::class, 'delete_klasifikasi'])->name('delete_klasifikasi');
+    Route::get('/delete_akun_pembayaran', [KlasifikasiPembayaranController::class, 'delete_akun_pembayaran'])->name('delete_akun_pembayaran');
 });
