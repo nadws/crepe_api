@@ -95,7 +95,6 @@ Route::post('tb_order', function (r $b) {
 Route::post('pembayaran', function (r $b) {
     foreach ($b->all() as $t) {
         $data = [
-            'id_pembayaran' => $t['id_pembayaran'],
             'id_akun_pembayaran' => $t['id_akun_pembayaran'],
             'no_nota' => $t['no_nota'],
             'nominal' => $t['nominal'],
