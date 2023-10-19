@@ -586,6 +586,7 @@ class LaporanController extends Controller
 
     function cek_invoice(Request $r)
     {
+        $loc = $r->session()->get('id_lokasi');
         $data = [
             'invoice' => DB::select("SELECT a.tgl, a.id_akun_pembayaran, a.no_nota, b.nm_akun, c.nm_klasifikasi, a.nominal, d.id_distribusi, d.id_lokasi, a.pengirim
             FROM pembayaran as a
@@ -596,7 +597,7 @@ class LaporanController extends Controller
                 FROM tb_order2 as d
                 GROUP by d.no_order2
             ) as d on d.no_order2 = a.no_nota
-            where a.tgl BETWEEN '$r->tgl1' and '$r->tgl2';"),
+            where a.tgl BETWEEN '$r->tgl1' and '$r->tgl2' and a.id_lokasi = '$loc' ;"),
             'tgl1' => $r->tgl1,
             'tgl2' => $r->tgl2
         ];
@@ -606,6 +607,7 @@ class LaporanController extends Controller
 
     function print_cek_invoice(Request $r)
     {
+        $loc = $r->session()->get('id_lokasi');
         $data = [
             'invoice' => DB::select("SELECT a.tgl, a.id_akun_pembayaran, a.no_nota, b.nm_akun, c.nm_klasifikasi, a.nominal, d.id_distribusi, d.id_lokasi
             FROM pembayaran as a
@@ -616,7 +618,7 @@ class LaporanController extends Controller
                 FROM tb_order2 as d
                 GROUP by d.no_order2
             ) as d on d.no_order2 = a.no_nota
-            where a.tgl BETWEEN '$r->tgl1' and '$r->tgl2';"),
+            where a.tgl BETWEEN '$r->tgl1' and '$r->tgl2' and a.id_lokasi = '$loc';"),
             'tgl1' => $r->tgl1,
             'tgl2' => $r->tgl2
         ];
@@ -625,6 +627,7 @@ class LaporanController extends Controller
     }
     function excel_cek_invoice(Request $r)
     {
+        $loc = $r->session()->get('id_lokasi');
         $data = [
             'invoice' => DB::select("SELECT a.tgl, a.id_akun_pembayaran, a.no_nota, b.nm_akun, c.nm_klasifikasi, a.nominal, d.id_distribusi, d.id_lokasi
             FROM pembayaran as a
@@ -635,7 +638,7 @@ class LaporanController extends Controller
                 FROM tb_order2 as d
                 GROUP by d.no_order2
             ) as d on d.no_order2 = a.no_nota
-            where a.tgl BETWEEN '$r->tgl1' and '$r->tgl2';"),
+            where a.tgl BETWEEN '$r->tgl1' and '$r->tgl2' and a.id_lokasi = '$loc';"),
             'tgl1' => $r->tgl1,
             'tgl2' => $r->tgl2
         ];
