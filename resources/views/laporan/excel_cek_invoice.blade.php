@@ -26,7 +26,7 @@ header("Content-Disposition: attachment; filename=$file");
             <h2 style="text-align: center;">Laporan Closingan</h2>
             <h3 style="text-align: center;"> {{ date('d M Y', strtotime($tgl1)) }} ~
                 {{ date('d M Y', strtotime($tgl2)) }}</h3>
-            <h3>{{ $lokasi }}</h3>
+            <h3 style="text-align: center;">{{ $lokasi }}</h3>
             <table width="100%" border="1">
                 <thead>
                     <tr>
