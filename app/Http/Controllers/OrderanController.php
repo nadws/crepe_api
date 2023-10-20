@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\DB;
 class OrderanController extends Controller
 {
     public function index(Request $request)
-    {   
+    {
         $tgl = date('Y-m-d');
         $id_lokasi = $request->session()->get('id_lokasi');
         $id = $request->id;
@@ -46,7 +46,7 @@ class OrderanController extends Controller
             where a.id_distribusi = '1' AND b.lokasi ='$id_lokasi'
             GROUP BY a.id_harga"),
         ];
-        return view('orderan.orderan',$data);
+        return view('orderan.orderan', $data);
     }
     public function check_pembayaran(Request $request)
     {
@@ -61,11 +61,11 @@ class OrderanController extends Controller
         left join tb_karyawan as e ON e.id_karyawan = a.id_koki3
         LEFT JOIN tb_order2 AS f ON f.id_order1 = a.id_order
         where   a.no_order = '$no' AND (a.qty - if(f.qty IS NULL ,0,f.qty)) != '0' AND a.selesai = 'selesai'");
-    
-        if($order){
-            echo'ada';
-        }else{
-            echo'kosong';
+
+        if ($order) {
+            echo 'ada';
+        } else {
+            echo 'kosong';
         }
     }
 
@@ -119,7 +119,7 @@ class OrderanController extends Controller
             'no' => $no,
             'id_distribusi' => $request->id_distribusi,
             'transaksi' => $transaksi,
-            'dp' => DB::table('tb_dp')->where('id_lokasi',$id_lokasi)->where('status', 0)->get(),
+            'dp' => DB::table('tb_dp')->where('id_lokasi', $id_lokasi)->where('status', 0)->get(),
             'nav' => '2',
             'ongkir_bayar' => DB::select("SELECT SUM(a.rupiah) AS rupiah
             FROM tb_ongkir AS a"),
@@ -171,7 +171,7 @@ class OrderanController extends Controller
             'no_invoice' => $hasil,
             'tanggal' => date('Y-m-d'),
         ];
- 
+
         Invoice2::create($data);
 
         for ($x = 0; $x < sizeof($id_order); $x++) {
@@ -197,7 +197,7 @@ class OrderanController extends Controller
         $data = [
             'tgl_transaksi' => date('Y-m-d'),
             'no_order' => $hasil,
-            'voucher' =>  ($request->voucher == '' ? 0 : $request->voucher),
+            'voucher' => ($request->voucher == '' ? 0 : $request->voucher),
             'discount' => $request->discount == '' ? 0 : $request->discount,
             'dp' => ($request->dp == '' ? 0 : $request->dp),
             'gosen' => $request->gosen,
@@ -226,7 +226,7 @@ class OrderanController extends Controller
         $data3 = [
             'status' => '1'
         ];
-        Dp::where('id_dp',$request->id_dp)->update($data3);
+        Dp::where('id_dp', $request->id_dp)->update($data3);
 
         $order = DB::table('tb_order')->select('pengantar')->where('no_order', $no_order)->groupBy('no_order')->first();
         $ongkir = DB::table('tb_ongkir')->select('rupiah')->where('id_ongkir', '1')->first();
@@ -239,7 +239,6 @@ class OrderanController extends Controller
                 'admin' => Auth::user()->nama
             ];
             Ctt_driver::create($data4);
-            
         }
         return redirect()->route('pembayaran2', ['no' => $hasil]);
     }
@@ -253,12 +252,12 @@ class OrderanController extends Controller
         where   a.no_order2 = '$no' 
         GROUP BY a.id_harga
         ");
-    
+
         $meja = DB::table('tb_order2')->where('no_order2', $no)->first();
-       
+
         $dis = Order2::where('no_order2', $no)->first();
-        
-      
+
+
         $data = [
             'title' => 'Pembayaran',
             'logout' => $request->session()->get('logout'),
@@ -287,7 +286,7 @@ class OrderanController extends Controller
         where   a.no_order2 = '$no'
         GROUP BY a.id_harga
         ");
-    
+
         $majo = DB::select("SELECT a.id_pembelian, a.tanggal, a.no_nota, c.nm_meja,
         a.nm_karyawan, b.nm_produk, a.id_karyawan, a.jumlah, a.harga, a.total
         FROM tb_pembelian AS a
@@ -309,6 +308,11 @@ class OrderanController extends Controller
             LEFT JOIN tb_order AS c ON c.id_order = a.id_order1
             where a.no_order2 = '$no' 
             group by a.no_order2"),
+            'pembayaran' => DB::select("SELECT b.nm_akun, c.nm_klasifikasi, a.nominal, a.pengirim
+            FROM pembayaran as a 
+            left join akun_pembayaran as b on b.id_akun_pembayaran = a.id_akun_pembayaran
+            left join klasifikasi_pembayaran as c on c.id_klasifikasi_pembayaran = b.id_klasifikasi
+            where a.no_nota ='$no';"),
         ];
 
         return view('orderan.print_nota', $data);
@@ -334,12 +338,11 @@ class OrderanController extends Controller
             'no_order' => $id,
             'pesan_2'    => DB::select("SELECT a.*, sum(a.qty) as sum_qty ,  b.nm_meja FROM tb_order as a left join tb_meja as b on a.id_meja = b.id_meja where a.no_order = '$id' group by a.no_order"),
         ];
-        return view('orderan.checker',$data);
+        return view('orderan.checker', $data);
     }
 
     public function voucher(Request $request)
     {
-        
     }
 
     public function get_dp(Request $request)

@@ -4,7 +4,6 @@
         width: 87mm;
         background: #FFF;
     }
-
 </style>
 <div class="invoice">
     <center>
@@ -65,7 +64,7 @@
             </td>
         </tr>
         <?php endforeach ?>
-        
+
         <?php
         $s_total_majo = 0;
         foreach ($majo as $m):
@@ -87,7 +86,7 @@
             </td>
         </tr>
         <?php endforeach ?>
-        
+
         <?php $tb_dis = DB::table('tb_distribusi')
             ->where('id_distribusi', $dis)
             ->first(); ?>
@@ -256,44 +255,27 @@
                 <?php else : ?>
                 Cash <div style="margin-top: 5px;"></div>
                 <?php endif ?>
-                <?php if (empty($transaksi->d_bca)) : ?>
-                <?php else : ?>
-                Debit BCA <div style="margin-top: 5px;"></div>
-                <?php endif ?>
-                <?php if (empty($transaksi->k_bca)) : ?>
-                <?php else : ?>
-                Kredit BCA <div style="margin-top: 5px;"></div>
-                <?php endif ?>
-                <?php if (empty($transaksi->d_mandiri)) : ?>
-                <?php else : ?>
-                Debit MANDIRI <div style="margin-top: 5px;"></div>
-                <?php endif ?>
-                <?php if (empty($transaksi->k_mandiri)) : ?>
-                <?php else : ?>
-                Kredit MANDIRI <div style="margin-top: 5px;"></div>
-                <?php endif ?>
+                @foreach ($pembayaran as $p)
+                    {{ $p->nm_akun }} {{ $p->nm_klasifikasi }} <div style="margin-top: 5px;"></div>
+                @endforeach
+
             </td>
             <td width="22%" style="font-size: 20px;">
                 <?php if (empty($transaksi->cash)) : ?>
                 <?php else : ?>
-                <?= number_format($transaksi->cash) ?> <div style="margin-top: 5px;"></div>
+                <?= number_format($transaksi->cash) ?>
+                <div style="margin-top: 5px;"></div>
                 <?php endif ?>
-                <?php if (empty($transaksi->d_bca)) : ?>
-                <?php else : ?>
-                <?= number_format($transaksi->d_bca) ?> <div style="margin-top: 5px;"></div>
-                <?php endif ?>
-                <?php if (empty($transaksi->k_bca)) : ?>
-                <?php else : ?>
-                <?= number_format($transaksi->k_bca) ?><div style="margin-top: 5px;"></div>
-                <?php endif ?>
-                <?php if (empty($transaksi->d_mandiri)) : ?>
-                <?php else : ?>
-                <?= number_format($transaksi->d_mandiri) ?> <div style="margin-top: 5px;"></div>
-                <?php endif ?>
-                <?php if (empty($transaksi->k_mandiri)) : ?>
-                <?php else : ?>
-                <?= number_format($transaksi->k_mandiri) ?> <div style="margin-top: 5px;"></div>
-                <?php endif ?>
+
+                @php
+                    $total_p = 0;
+                @endphp
+                @foreach ($pembayaran as $p)
+                    {{ number_format($p->nominal, 0) }}<div style="margin-top: 5px;"></div>
+                    @php
+                        $total_p += $p->nominal;
+                    @endphp
+                @endforeach
             </td>
             <td width="15%" align="right">
 
@@ -333,8 +315,8 @@
     <p align="center">
         <?= $Weddingdate->format('h:i a') ?><br>
         Closed <?php
-date_default_timezone_set('Asia/Makassar');
-echo date('M j, Y h:i a'); ?>
+        date_default_timezone_set('Asia/Makassar');
+        echo date('M j, Y h:i a'); ?>
     </p>
     <hr>
     <p align="center"> ** Thank you. See you next time! **</p>
