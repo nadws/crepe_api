@@ -240,8 +240,11 @@
             <td style="font-size: 20px; font-weight: bold;">
                 TOTAL TAGIHAN
             </td>
+            @php
+                $total_tagihan = $transaksi->total_bayar - $transaksi->voucher - $transaksi->dp + $transaksi->gosen;
+            @endphp
             <td style="font-weight: bold; font-size: 20px;" width="22%">
-                <?= number_format($transaksi->total_bayar - $transaksi->voucher - $transaksi->dp + $transaksi->gosen, 0) ?>
+                <?= $total_tagihan < 0 ? '0' : number_format($total_tagihan, 0) ?>
             </td>
 
             <td width="15%" align="right">
@@ -287,7 +290,7 @@
                 TOTAL BAYAR
             </td>
             <td style="font-weight: bold; font-size: 20px" width="22%">
-                <?= number_format($transaksi->cash + $transaksi->d_bca + $transaksi->k_bca + $transaksi->d_mandiri + $transaksi->k_mandiri, 0) ?>
+                <?= number_format($transaksi->cash + $total_p, 0) ?>
             </td>
 
             <td width="15%" align="right">
@@ -302,7 +305,11 @@
                 Change
             </td>
             <td width="22%">
-                <?= number_format($transaksi->cash + $transaksi->d_bca + $transaksi->k_bca + $transaksi->d_mandiri + $transaksi->k_mandiri - $transaksi->total_bayar, 0) ?>
+                @if ($transaksi->kembalian > 0)
+                    <?= number_format($transaksi->kembalian, 0) ?>
+                @else
+                    <?= number_format($transaksi->cash + $total_p - $transaksi->total_bayar, 0) ?>
+                @endif
             </td>
 
             <td width="15%" align="right" style="font-size: 20px;">
