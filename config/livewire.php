@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'asset_url' => 'http://resto_laravel.test',
+    'asset_url' => 'https://ptagafood.com/public',
 
     /*
     |--------------------------------------------------------------------------
