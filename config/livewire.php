@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'asset_url' => 'https://ptagafood.com/public',
+    'asset_url' => 'https://ptagafood.com',
 
     /*
     |--------------------------------------------------------------------------
