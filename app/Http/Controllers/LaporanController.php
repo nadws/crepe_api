@@ -336,7 +336,8 @@ class LaporanController extends Controller
         $spreadsheet->getActiveSheet()->setCellValue('B1', 'Station');
         $spreadsheet->getActiveSheet()->setCellValue('C1', 'Nama Menu');
         $spreadsheet->getActiveSheet()->setCellValue('D1', 'Qty');
-        $spreadsheet->getActiveSheet()->setCellValue('E1', 'Subtotal');
+        $spreadsheet->getActiveSheet()->setCellValue('E1', 'Harga Satuan');
+        $spreadsheet->getActiveSheet()->setCellValue('F1', 'Subtotal');
 
 
         $style = array(
@@ -354,10 +355,10 @@ class LaporanController extends Controller
             ),
         );
 
-        $spreadsheet->getActiveSheet()->getStyle('A1:D1')->applyFromArray($style);
+        $spreadsheet->getActiveSheet()->getStyle('A1:F1')->applyFromArray($style);
 
 
-        $spreadsheet->getActiveSheet()->getStyle('A1:D1')->getAlignment()->setWrapText(true);
+        $spreadsheet->getActiveSheet()->getStyle('A1:F1')->getAlignment()->setWrapText(true);
 
 
         $kolom = 2;
@@ -371,7 +372,8 @@ class LaporanController extends Controller
             $spreadsheet->getActiveSheet()->setCellValue('B' . $kolom, $d->nm_station);
             $spreadsheet->getActiveSheet()->setCellValue('C' . $kolom, $d->id_distribusi == 2 ? $d->nm_menu . ' Gojek' : $d->nm_menu);
             $spreadsheet->getActiveSheet()->setCellValue('D' . $kolom, $d->qty);
-            $spreadsheet->getActiveSheet()->setCellValue('E' . $kolom, $d->qty * $d->harga);
+            $spreadsheet->getActiveSheet()->setCellValue('E' . $kolom, $d->harga);
+            $spreadsheet->getActiveSheet()->setCellValue('F' . $kolom, $d->qty * $d->harga);
             $kolom++;
         }
 
@@ -384,7 +386,7 @@ class LaporanController extends Controller
         );
 
         $batas = $kolom - 1;
-        $spreadsheet->getActiveSheet()->getStyle('A1:E' . $batas)->applyFromArray($style);
+        $spreadsheet->getActiveSheet()->getStyle('A1:F' . $batas)->applyFromArray($style);
 
         $writer = new Xlsx($spreadsheet);
 
