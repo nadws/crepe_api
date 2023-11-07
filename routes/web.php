@@ -54,6 +54,7 @@ use App\Http\Controllers\Export_gaji_server;
 use App\Http\Controllers\KpiController;
 use App\Http\Controllers\viewKomServerController;
 use App\Http\Controllers\KlasifikasiPembayaranController;
+use App\Http\Controllers\PenjualanPeritemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -459,6 +460,10 @@ Route::get('/excel_cek_invoice', [LaporanController::class, 'excel_cek_invoice']
 Route::get('/head', [HeadController::class, 'index'])->name('head');
 
 Route::get('/meja', [MejaController::class, 'index'])->name('meja');
+
+Route::get('/penjualan_per_item', [PenjualanPeritemController::class, 'index'])->name('penjualan_per_item');
+Route::get('/export_per_item', [PenjualanPeritemController::class, 'export_per_item'])->name('export_per_item');
+
 
 // Order -----------------------------------------------
 Route::get('/get_order', [OrderController::class, 'get'])->name('get_order');

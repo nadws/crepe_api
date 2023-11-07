@@ -40,14 +40,14 @@ class GajiController extends Controller
             }
         }
     }
-    
+
     public function stok_adm(Request $request)
     {
-         $data = [
-                  'title' => 'Gaji',
-                  'logout' => $request->session()->get('logout'),
-                ];
-        return view('gaji.stk_adm', $data);  
+        $data = [
+            'title' => 'Gaji',
+            'logout' => $request->session()->get('logout'),
+        ];
+        return view('gaji.stk_adm', $data);
     }
 
     public function editGaji(Request $request)
@@ -168,7 +168,7 @@ class GajiController extends Controller
         $sheet->getColumnDimension('H')->setWidth(13);
         $sheet->getColumnDimension('I')->setWidth(13);
         $sheet->getColumnDimension('J')->setWidth(13);
-        
+
         // posisi
         $sheet->getColumnDimension('K')->setWidth(20);
         $sheet->getColumnDimension('L')->setWidth(10);
@@ -181,7 +181,7 @@ class GajiController extends Controller
             ->setCellValue('M1', 'ID POSISI')
             ->setCellValue('N1', 'POSISI')
             ->setCellValue('O1', 'KETERANGAN')
-            
+
             ->setCellValue('A1', 'ID KARYAWAN')
             ->setCellValue('B1', 'NAMA')
             ->setCellValue('C1', 'TANGGAL MASUK')
@@ -276,14 +276,14 @@ class GajiController extends Controller
                 ];
                 Gaji::where('id_karyawan', $row['A'])->update($data);
                 $dataK = [
-                    'id_posisi' => $row['D'], 
+                    'id_posisi' => $row['D'],
                     'nama' => $row['B'],
                     'point' => $row['J'],
                 ];
                 Karyawan::where('id_karyawan', $row['A'])->update($dataK);
-                
+
                 Posisi::where('id_posisi', $row['M'])->update(['ket' => $row['O']]);
-                
+
                 // if ($row['C'] == '' && $row['D'] == '' && $row['E'] == '' && $row['F'] == '' ) {
                 //     $data = [
                 //         'id_karyawan' => $row['A'],
@@ -429,7 +429,7 @@ class GajiController extends Controller
         ];
         return view('gaji.excel', $data);
     }
-    
+
     // public function gaji_export_new(Request $r)
     // {
     //     $tgl1 = $r->dari;
@@ -438,22 +438,22 @@ class GajiController extends Controller
     //     $gaji = DB::select("SELECT a.nama, b.lama_cuci AS clear_up, c.lama_cuci AS mencuci , d.lama_cuci AS preper,
     //     e.lama_cuci AS checker, f.lama_cuci AS bar, g.lama_cuci AS chirashi
     //     FROM tb_karyawan AS a 
-        
+
     //     LEFT JOIN (SELECT b.nm_karyawan , b.id_ket , SUM(b.lama_cuci) AS lama_cuci
     //     FROM view_mencuci AS b WHERE b.id_ket = '1' AND b.tgl BETWEEN '$tgl1' AND '$tgl2' GROUP BY b.nm_karyawan ) AS b ON b.nm_karyawan = a.nama
-        
+
     //     LEFT JOIN (SELECT b.nm_karyawan , b.id_ket , SUM(b.lama_cuci) AS lama_cuci
     //     FROM view_mencuci AS b WHERE b.id_ket = '2' AND b.tgl BETWEEN '$tgl1' AND '$tgl2' GROUP BY b.nm_karyawan ) AS c ON c.nm_karyawan = a.nama
-        
+
     //     LEFT JOIN (SELECT b.nm_karyawan , b.id_ket , SUM(b.lama_cuci) AS lama_cuci
     //     FROM view_mencuci AS b WHERE b.id_ket = '4' AND b.tgl BETWEEN '$tgl1' AND '$tgl2' GROUP BY b.nm_karyawan ) AS d ON d.nm_karyawan = a.nama
-        
+
     //     LEFT JOIN (SELECT b.nm_karyawan , b.id_ket , SUM(b.lama_cuci) AS lama_cuci
     //     FROM view_mencuci AS b WHERE b.id_ket = '5' AND b.tgl BETWEEN '$tgl1' AND '$tgl2' GROUP BY b.nm_karyawan ) AS e ON e.nm_karyawan = a.nama
-        
+
     //     LEFT JOIN (SELECT b.nm_karyawan , b.id_ket , SUM(b.lama_cuci) AS lama_cuci
     //     FROM view_mencuci AS b WHERE b.id_ket = '6' AND b.tgl BETWEEN '$tgl1' AND '$tgl2' GROUP BY b.nm_karyawan ) AS f ON f.nm_karyawan = a.nama
-        
+
     //     LEFT JOIN (SELECT b.nm_karyawan , b.id_ket , SUM(b.lama_cuci) AS lama_cuci
     //     FROM view_mencuci AS b WHERE b.id_ket = '7' AND b.tgl BETWEEN '$tgl1' AND '$tgl2' GROUP BY b.nm_karyawan ) AS g ON g.nm_karyawan = a.nama");
 
@@ -516,7 +516,7 @@ class GajiController extends Controller
     //     $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
     //     $writer->save('php://output');
     // }
-    
+
     public function gaji_export_new(Request $r)
     {
         $tgl1 = $r->dari;
@@ -802,7 +802,7 @@ class GajiController extends Controller
         $batas = count($batas) + 1;
         $sheet2->getStyle('A1:N' . $batas)->applyFromArray($style);
         // end -----------------------------------------------------------------
-        
+
         // sheet absen ----------------------------------------------------------
         $spreadsheet->createSheet();
         $spreadsheet->setActiveSheetIndex(2);
@@ -815,9 +815,9 @@ class GajiController extends Controller
         // lebar kolom
         $sheet3->getColumnDimension('A')->setWidth(10);
         $sheet3->getColumnDimension('B')->setWidth(20);
-        
+
         $char = range('C', 'Z');
-        foreach($char as $h) {
+        foreach ($char as $h) {
             $sheet3->getColumnDimension("$h")->setWidth(10);
         }
         $charG = range('A', 'G');
@@ -825,17 +825,16 @@ class GajiController extends Controller
             $sheet3->getColumnDimension("A$h")->setWidth(10);
         }
 
-        $g= 1;
+        $g = 1;
         $sheet3->setCellValue('A1', 'NO');
         $sheet3->setCellValue('B1', 'NAMA');
-        foreach($char as $n) {
-            $sheet3->setCellValue("$n".'1',$g++);
-            
+        foreach ($char as $n) {
+            $sheet3->setCellValue("$n" . '1', $g++);
         }
-        $g1= $g;
+        $g1 = $g;
         $charG = range('A', 'G');
         foreach ($charG as $h) {
-            $sheet3->setCellValue("A$h".'1',$g1++);
+            $sheet3->setCellValue("A$h" . '1', $g1++);
         }
         // 
         $sheet3->getColumnDimension("AH")->setWidth(15);
@@ -846,7 +845,7 @@ class GajiController extends Controller
         $sheet3->setCellValue('Aj1', 'Total E');
         $sheet3->getColumnDimension("Ak")->setWidth(15);
         $sheet3->setCellValue('Ak1', 'Total Sp');
-        
+
         $abs = DB::select("SELECT  a.nama,b.status,b.tgl
                                 FROM tb_karyawan as a
                                 LEFT JOIN tb_absen AS b ON  a.id_karyawan = b.id_karyawan
@@ -854,74 +853,72 @@ class GajiController extends Controller
         $karyawan = Karyawan::all();
         $nom = 1;
         $kolom = 2;
-        
-        foreach($karyawan as $k){
+
+        foreach ($karyawan as $k) {
             $totalOff = 0;
             $totalM = 0;
             $totalE = 0;
             $totalSP = 0;
-                    
-            $sheet3->setCellValue("A".$kolom,$nom++);
-            $sheet3->setCellValue("B".$kolom,$k->nama);
+
+            $sheet3->setCellValue("A" . $kolom, $nom++);
+            $sheet3->setCellValue("B" . $kolom, $k->nama);
             $field = range('C', 'Z');
             $t = 1;
-            foreach($field as $n) {
+            foreach ($field as $n) {
                 $absen = DB::table('tb_absen')
-                                ->select('tb_absen.*')
-                                ->where('id_karyawan', '=', $k->id_karyawan)
-                                ->where('tgl', '=', Str::substr($tgl1,0,8).$t)
-                                ->first();
+                    ->select('tb_absen.*')
+                    ->where('id_karyawan', '=', $k->id_karyawan)
+                    ->where('tgl', '=', Str::substr($tgl1, 0, 8) . $t)
+                    ->first();
                 // dd($absen);
-                if($absen) {
-                    $sheet3->setCellValue("$n".$kolom,$absen->status);
-                    if($absen->status == 'M') {
+                if ($absen) {
+                    $sheet3->setCellValue("$n" . $kolom, $absen->status);
+                    if ($absen->status == 'M') {
                         $totalM++;
-                    } elseif($absen->status == 'E') {
+                    } elseif ($absen->status == 'E') {
                         $totalE++;
-                    } elseif($absen->status == 'SP') {
+                    } elseif ($absen->status == 'SP') {
                         $totalSP++;
                     } else {
                         $totalOff++;
                     }
                 } else {
-                    $sheet3->setCellValue("$n".$kolom,'');
+                    $sheet3->setCellValue("$n" . $kolom, '');
                 }
                 $t++;
-                
             }
-            $t1= $t;
+            $t1 = $t;
             $field2 = range('A', 'G');
             foreach ($field2 as $h) {
                 $absen = DB::table('tb_absen')
-                                ->select('tb_absen.*')
-                                ->where('id_karyawan', '=', $k->id_karyawan)
-                                ->where('tgl', '=', Str::substr($tgl1,0,8).$t1)
-                                ->first();
+                    ->select('tb_absen.*')
+                    ->where('id_karyawan', '=', $k->id_karyawan)
+                    ->where('tgl', '=', Str::substr($tgl1, 0, 8) . $t1)
+                    ->first();
                 // dd($t);
-                if($absen) {
-                    $sheet3->setCellValue("A$h".$kolom,$absen->status);
-                    if($absen->status == 'M') {
+                if ($absen) {
+                    $sheet3->setCellValue("A$h" . $kolom, $absen->status);
+                    if ($absen->status == 'M') {
                         $totalM++;
-                    } elseif($absen->status == 'E') {
+                    } elseif ($absen->status == 'E') {
                         $totalE++;
-                    } elseif($absen->status == 'SP') {
+                    } elseif ($absen->status == 'SP') {
                         $totalSP++;
                     } else {
                         $totalOff++;
                     }
                 } else {
-                    $sheet3->setCellValue("A$h".$kolom,'');
+                    $sheet3->setCellValue("A$h" . $kolom, '');
                 }
                 $t1++;
             }
-            
-            $sheet3->setCellValue("AH".$kolom,$totalOff);
-            $sheet3->setCellValue("AI".$kolom,$totalM);
-            $sheet3->setCellValue("AJ".$kolom,$totalE);
-            $sheet3->setCellValue("AK".$kolom,$totalSP);
-            
+
+            $sheet3->setCellValue("AH" . $kolom, $totalOff);
+            $sheet3->setCellValue("AI" . $kolom, $totalM);
+            $sheet3->setCellValue("AJ" . $kolom, $totalE);
+            $sheet3->setCellValue("AK" . $kolom, $totalSP);
+
             $kolom++;
-            
         }
         $style = [
             'borders' => [
@@ -937,7 +934,7 @@ class GajiController extends Controller
         $batas = $karyawan;
         $batas = count($batas) + 1;
         $sheet3->getStyle('A1:AK' . $batas)->applyFromArray($style);
-        $spreadsheet->getActiveSheet()->getStyle('A1:AK'.$batas)
+        $spreadsheet->getActiveSheet()->getStyle('A1:AK' . $batas)
             ->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="Gaji Resto TS.xlsx"');
@@ -946,6 +943,4 @@ class GajiController extends Controller
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save('php://output');
     }
-    
-    
 }

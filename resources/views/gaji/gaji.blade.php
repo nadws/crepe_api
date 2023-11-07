@@ -51,7 +51,7 @@
                                     <tbody>
                                         @php
                                             $no = 1;
-                                            
+
                                         @endphp
 
                                         @foreach ($gaji as $k)
@@ -96,7 +96,6 @@
         .modal-lg-max1 {
             max-width: 1100px;
         }
-
     </style>
     {{-- import --}}
     <form action="" method="post" enctype="multipart/form-data">
@@ -195,15 +194,18 @@
                             <div class="row">
                                 <div class="col-lg-3">
                                     <label for="">Rp M</label>
-                                    <input class="form-control" type="text" value="{{ $s->rp_m }}" name="rp_m">
+                                    <input class="form-control" type="text" value="{{ $s->rp_m }}"
+                                        name="rp_m">
                                 </div>
                                 <div class="col-lg-3">
                                     <label for="">Rp E</label>
-                                    <input class="form-control" type="text" value="{{ $s->rp_e }}" name="rp_e">
+                                    <input class="form-control" type="text" value="{{ $s->rp_e }}"
+                                        name="rp_e">
                                 </div>
                                 <div class="col-lg-3">
                                     <label for="">Rp SP</label>
-                                    <input class="form-control" type="text" value="{{ $s->rp_sp }}" name="rp_sp">
+                                    <input class="form-control" type="text" value="{{ $s->rp_sp }}"
+                                        name="rp_sp">
                                 </div>
                                 <div class="col-lg-3">
                                     <label for="">Bulanan</label>
@@ -230,7 +232,6 @@
         .modal-lg-max {
             max-width: 900px;
         }
-
     </style>
 
 

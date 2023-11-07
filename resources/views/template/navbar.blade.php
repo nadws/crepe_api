@@ -22,6 +22,7 @@
                         ->where('tb_sub_navbar.jen', 2)
                         ->orderBy('urutan')
                         ->get();
+
                 @endphp
                 <?php if(Session::get('logout') == 'Adm'){ ?>
                 @foreach ($cekadm as $c)
@@ -40,6 +41,11 @@
                     </li>
                     <?php } ?>
                 @endforeach
+                <li>
+                    <a href="{{ route('penjualan_per_item') }}"><img
+                            src="{{ asset('assets') }}/img_menu/cross-selling.png"><span>Per-Item</span>
+                    </a>
+                </li>
                 <li>
                     <a href="{{ route('stok_adm') }}"><img
                             src="{{ asset('assets') }}/img_menu/stock.png"><span>Stok</span>
