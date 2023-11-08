@@ -616,21 +616,22 @@ class Point_masak extends Controller
             ->setCellValue('B1', 'TAKEMORI')
             ->setCellValue('A2', 'NO')
             ->setCellValue('B2', 'Nama')
-            ->setCellValue('C2', 'M')
-            ->setCellValue('D2', 'E')
-            ->setCellValue('E2', 'SP')
-            ->setCellValue('F2', 'Total')
-            ->setCellValue('G2', 'Rp M')
-            ->setCellValue('H2', 'Rp E')
-            ->setCellValue('I2', 'Rp SP')
-            ->setCellValue('J2', 'Gaji')
-            ->setCellValue('K2', 'Kom Point Masak')
-            ->setCellValue('L2', 'Total Kom & Gaji')
-            ->setCellValue('M2', 'Denda')
-            ->setCellValue('N2', 'Kasbon')
-            ->setCellValue('O2', 'Sisa Gaji')
-            ->setCellValue('P2', 'Terima Point')
-            ->setCellValue('Q2', 'Lama Kerja');
+            ->setCellValue('C2', 'POSISI')
+            ->setCellValue('D2', 'M')
+            ->setCellValue('E2', 'E')
+            ->setCellValue('F2', 'SP')
+            ->setCellValue('G2', 'Total')
+            ->setCellValue('H2', 'Rp M')
+            ->setCellValue('I2', 'Rp E')
+            ->setCellValue('J2', 'Rp SP')
+            ->setCellValue('K2', 'Gaji')
+            ->setCellValue('L2', 'Kom Point Masak')
+            ->setCellValue('M2', 'Total Kom & Gaji')
+            ->setCellValue('N2', 'Denda')
+            ->setCellValue('O2', 'Kasbon')
+            ->setCellValue('P2', 'Sisa Gaji')
+            ->setCellValue('Q2', 'Terima Point')
+            ->setCellValue('R2', 'Lama Kerja');
 
         $kolomTkm = 3;
         $i = 1;
@@ -643,30 +644,31 @@ class Point_masak extends Controller
             $spreadsheet->setActiveSheetIndex(1);
             $sheet2->setCellValue('A' . $kolomTkm, $i++);
             $sheet2->setCellValue('B' . $kolomTkm, $k->nama);
-            $sheet2->setCellValue('C' . $kolomTkm, $k->qty_m);
-            $sheet2->setCellValue('D' . $kolomTkm, $k->qty_e);
-            $sheet2->setCellValue('E' . $kolomTkm, $k->qty_sp);
-            $sheet2->setCellValue('F' . $kolomTkm, $ttlAbsenTkm);
-            $sheet2->setCellValue('G' . $kolomTkm, $k->rp_m);
-            $sheet2->setCellValue('H' . $kolomTkm, $k->rp_e);
-            $sheet2->setCellValue('I' . $kolomTkm, $k->rp_sp);
+            $sheet2->setCellValue('C' . $kolomTkm, $k->nama);
+            $sheet2->setCellValue('D' . $kolomTkm, $k->qty_m);
+            $sheet2->setCellValue('E' . $kolomTkm, $k->qty_e);
+            $sheet2->setCellValue('F' . $kolomTkm, $k->qty_sp);
+            $sheet2->setCellValue('G' . $kolomTkm, $ttlAbsenTkm);
+            $sheet2->setCellValue('H' . $kolomTkm, $k->rp_m);
+            $sheet2->setCellValue('I' . $kolomTkm, $k->rp_e);
+            $sheet2->setCellValue('J' . $kolomTkm, $k->rp_sp);
             $gaji = ($k->rp_m * $k->qty_m) + ($k->rp_e * $k->qty_e) + ($k->rp_sp * $k->qty_sp);
             $kom1 =  round(($k->point_berhasil / $point) * $kom, 0);
-            $sheet2->setCellValue('J' . $kolomTkm, $gaji);
-            $sheet2->setCellValue('K' . $kolomTkm, $k->point == 'T' ? '0' : $kom1);
-            $sheet2->setCellValue('L' . $kolomTkm, $gaji + $kom1);
-            $sheet2->setCellValue('M' . $kolomTkm, $k->denda);
-            $sheet2->setCellValue('N' . $kolomTkm, $k->kasbon);
-            $sheet2->setCellValue('O' . $kolomTkm, ($gaji + $kom1) - $k->denda - $k->kasbon);
-            $sheet2->setCellValue('P' . $kolomTkm, $k->point == 'Y' ? 'Ya' : 'Tidak');
-            $sheet2->setCellValue('Q' . $kolomTkm, $tKerja->y . ' Tahun ' . $tKerja->m . ' Bulan');
+            $sheet2->setCellValue('K' . $kolomTkm, $gaji);
+            $sheet2->setCellValue('L' . $kolomTkm, $k->point == 'T' ? '0' : $kom1);
+            $sheet2->setCellValue('M' . $kolomTkm, $gaji + $kom1);
+            $sheet2->setCellValue('N' . $kolomTkm, $k->denda);
+            $sheet2->setCellValue('O' . $kolomTkm, $k->kasbon);
+            $sheet2->setCellValue('P' . $kolomTkm, ($gaji + $kom1) - $k->denda - $k->kasbon);
+            $sheet2->setCellValue('Q' . $kolomTkm, $k->point == 'Y' ? 'Ya' : 'Tidak');
+            $sheet2->setCellValue('R' . $kolomTkm, $tKerja->y . ' Tahun ' . $tKerja->m . ' Bulan');
             $kolomTkm++;
         }
 
 
         $batas = $absenTkm;
         $batasA = count($batas) + 2;
-        $sheet2->getStyle('A2:Q' . $batasA)->applyFromArray($style);
+        $sheet2->getStyle('A2:R' . $batasA)->applyFromArray($style);
 
         $rowSdba = $batasA + 2;
         $rSdba = $rowSdba + 1;
