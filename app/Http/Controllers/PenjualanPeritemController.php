@@ -134,7 +134,8 @@ class PenjualanPeritemController extends Controller
         LEFT JOIN tb_menu AS c ON b.id_menu = c.id_menu
         LEFT JOIN tb_station AS d ON d.id_station = c.id_station
         WHERE YEAR(a.tgl) = '$tahun' AND a.id_lokasi = '1' AND a.id_harga != 0
-        GROUP BY a.id_harga;");
+        GROUP BY a.id_harga
+        order by b.nm_menu ASC");
 
         $kolom = 2;
         foreach ($penjualan as $no => $p) {
