@@ -86,7 +86,8 @@
                                             <table class="table table-bordered" id="sortable-table">
                                                 <thead>
                                                     <tr>
-                                                        <th class="freeze-cell1_th">#</th>
+                                                        <th class="freeze-cell1_th" data-sort="no" data-sort-type="numeric">
+                                                            # <i class="fas fa-sort float-right" data-order="asc"></i></th>
                                                         <th class="freeze-cell1_th" data-sort="station"
                                                             data-sort-type="alphabetic">Station <i
                                                                 class="fas fa-sort float-right" data-order="asc"></i></th>
