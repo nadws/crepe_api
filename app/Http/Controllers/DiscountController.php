@@ -81,6 +81,7 @@ class DiscountController extends Controller
     public function deleteDiscountPeritem($id)
     {
         DB::table('tb_discount_peritem')->where('id_diskon', $id)->delete();
+        return redirect()->route('discount')->with('sukses', 'Data Berhasil dihapus');
     }
 
     public function addDiscount(Request $request)
