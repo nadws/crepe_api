@@ -445,6 +445,14 @@ Route::get('diskon_sdb', function () {
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
 
+Route::get('diskon_peritem', function () {
+    $data = [
+        'tkm' => DB::table('tb_discount_peritem')->where('id_lokasi', 1)->get(),
+        'sdb' => DB::table('tb_discount_peritem')->where('id_lokasi', 2)->get(),
+    ];
+    return response()->json($data, HttpFoundationResponse::HTTP_OK);
+});
+
 Route::get('menu_tb', function () {
     $data = [
         'menu' => Menu::all(),
