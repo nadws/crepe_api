@@ -311,6 +311,7 @@ Route::get('/addPoint', [KaryawanController::class, 'addPoint'])->name('addPoint
 
 Route::get('/discount', [DiscountController::class, 'index'])->name('discount')->middleware('auth');
 Route::post('/addDiscount', [DiscountController::class, 'addDiscount'])->name('addDiscount')->middleware('auth');
+Route::post('/addVoucherPeritem', [DiscountController::class, 'addVoucherPeritem'])->name('addVoucherPeritem')->middleware('auth');
 Route::get('/deleteDiscount', [DiscountController::class, 'deleteDiscount'])->name('deleteDiscount')->middleware('auth');
 Route::get('/in_discount', [DiscountController::class, 'in_discount'])->name('in_discount')->middleware('auth');
 Route::get('/un_discount', [DiscountController::class, 'un_discount'])->name('un_discount')->middleware('auth');

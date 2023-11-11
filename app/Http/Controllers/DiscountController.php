@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Discount;
+use App\Models\Distribusi;
+use App\Models\Menu;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,15 +28,55 @@ class DiscountController extends Controller
         if(empty($id_menu)) {
             return back();
         } else {
-
+            $id_lokasi = $request->session()->get('id_lokasi');
+            $tgl1 = date('y-m-01');
+            $tgl2 = date('y-m-d');
             $data = [
                 'title' => 'Discount',
                 'logout' => $request->session()->get('logout'),
-                'disc' => Discount::where('lokasi', $request->session()->get('id_lokasi'))->orderBy('id_discount', 'desc')->get(),
-                'voucher' => Voucher::where('lokasi', $request->session()->get('id_lokasi'))->orderBy('id_voucher', 'desc')->get()
+                'disc' => Discount::where('lokasi', $id_lokasi)->orderBy('id_discount', 'desc')->get(),
+                'voucher' => Voucher::where('lokasi', $id_lokasi)->whereBetween('expired', [$tgl1,$tgl2])->orderBy('id_voucher', 'desc')->get(),
+                'diskonPeritem' => DB::select("SELECT 
+                                        a.id_diskon,
+                                        a.jenis,
+                                        a.jumlah,
+                                        a.tgl_dari,
+                                        a.tgl_sampai,
+                                        a.ket,
+                                        a.admin,
+                                        b.nm_menu,
+                                        b.nm_distribusi,
+                                        b.harga 
+                                        FROM tb_discount_peritem as a
+                                        JOIN view_menu as b ON a.id_menu = b.id_menu AND a.id_distribusi = b.id_distribusi
+                                        WHERE a.tgl_dari BETWEEN '$tgl1' AND '$tgl2'
+                                        order BY a.id_diskon DESC"),
+                'menu' => Menu::where('lokasi', $id_lokasi)->get(),
+                'distribusi' => Distribusi::all(),
             ];
             return view("discount.discount",$data);
         }
+    }
+
+    public function addVoucherPeritem(Request $r)
+    {
+        $id_lokasi = $r->session()->get('id_lokasi');
+        $jumlah = str_replace(',','', $r->jumlah);
+        foreach($r->menu as $d)  {
+            DB::table('tb_discount_peritem')->insert([
+                'id_menu' => $d,
+                'id_distribusi' => $r->id_distribusi,
+                'id_lokasi' => $id_lokasi,
+                'jenis' => $r->jenis,
+                'jumlah' => $jumlah,
+                'tgl_dari' => $r->tgl_dari,
+                'tgl_sampai' => $r->tgl_sampai,
+                'ket' => $r->ket,
+                'admin' => auth()->user()->nama,
+            ]);
+        }
+        return redirect()->route('discount')->with('sukses', 'Data Berhasil ditambahkan');
+        
     }
 
     public function addDiscount(Request $request)

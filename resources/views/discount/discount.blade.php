@@ -21,7 +21,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5>Database Discount</h5>
+                                <h5>Data Discount</h5>
                             </div>
                             <div class="card-body">
                                 <table class="table  " id="table">
@@ -51,13 +51,15 @@
                                                         placeholder="jumlah Discount" required="">
                                                 </td>
                                                 <td>
-                                                    <input type="date" class="form-control" name="dari" required="">
+                                                    <input type="date" class="form-control" name="dari"
+                                                        required="">
                                                 </td>
                                                 <td>
-                                                    <input type="date" class="form-control" name="expired" required="">
+                                                    <input type="date" class="form-control" name="expired"
+                                                        required="">
                                                 </td>
                                                 <td style="white-space: nowrap;">
-                                                    <input value="Simpan" type="submit" class="btn btn-primary">
+                                                    <input value="Simpan" type="submit" class="btn btn-primary btn-sm">
                                                 </td>
                                             </form>
                                         </tr>
@@ -91,10 +93,12 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <h5>Database Voucher</h5>
+                                        <h5>Data Voucher Perinvoice</h5>
                                     </div>
                                     <div class="col-lg-6">
-                                        <a class="btn btn-secondary btn-md float-right" href="{{ route('exportVoucher', ['id_lokasi' => Session::get('id_lokasi')]) }}" target="_blank"><i class="fa fa-file-excel"></i> Export</a>
+                                        <a class="btn btn-secondary btn-md float-right"
+                                            href="{{ route('exportVoucher', ['id_lokasi' => Session::get('id_lokasi')]) }}"
+                                            target="_blank"><i class="fa fa-file-excel"></i> Export</a>
                                     </div>
                                 </div>
                             </div>
@@ -125,17 +129,19 @@
                                                 <td><input type="text" class="form-control" name="ket"
                                                         placeholder="keterangan" required=""></td>
                                                 <td>
-                                                    <input type="date" class="form-control" name="expired" required="">
+                                                    <input type="date" class="form-control" name="expired"
+                                                        required="">
                                                 </td>
                                                 <td>
-                                                    <select name="status" id="" class="form-control" required="">
+                                                    <select name="status" id="" class="form-control"
+                                                        required="">
                                                         <option value="">- Pilih -</option>
                                                         <option value="1">Aktif</option>
                                                         <option value="0">Non-Aktif</option>
                                                     </select>
                                                 </td>
                                                 <td style="white-space: nowrap;">
-                                                    <input type="submit" value="Simpan" class="btn btn-primary">
+                                                    <input type="submit" value="Simpan" class="btn btn-primary btn-sm">
                                                 </td>
                                             </form>
                                         </tr>
@@ -160,7 +166,7 @@
                                                     <div id="console-event<?= $v->id_voucher ?>"></div>
                                                     <?php } ?>
                                                 </td>
-      
+
                                                 <td>
                                                     <a href="#edit{{ $v->id_voucher }}" data-toggle="modal"
                                                         class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
@@ -179,13 +185,121 @@
                                 </table>
                             </div>
                         </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <h5>Data Diskon Peritem</h5>
+                                    </div>
+                                    {{-- <div class="col-lg-6">
+                                    <a class="btn btn-secondary btn-md float-right"
+                                        href="{{ route('exportVoucher', ['id_lokasi' => Session::get('id_lokasi')]) }}"
+                                target="_blank"><i class="fa fa-file-excel"></i> Export</a> --}}
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table class="table " id="table10">
+                                    <thead>
+                                        <tr>
+                                            <th>NO</th>
+                                            <th>Distribusi</th>
+                                            <th>Menu</th>
+                                            <th>Jenis</th>
+                                            <th class="text-right">Potongan</th>
+                                            <th>Dari</th>
+                                            <th>Sampai</th>
+                                            <th>Ket</th>
+                                            <th>AKSI</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody x-data="{ jenis: 'rp' }">
+                                        <tr>
+                                            <td></td>
+                                            <form action="{{ route('addVoucherPeritem') }}" method="post">
+                                                @csrf
+                                                <td>
+                                                    <select name="id_distribusi" id=""
+                                                        class="select2 form-control">
+                                                        @foreach ($distribusi as $d)
+                                                            <option {{ $d->id_distribusi == 2 ? 'selected' : '' }}
+                                                                value="{{ $d->id_distribusi }}">{{ $d->nm_distribusi }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select required multiple name="menu[]" class="form-control select2"
+                                                        id="">
+                                                        @foreach ($menu as $m)
+                                                            <option value="{{ $m->id_menu }}">
+                                                                {{ ucwords($m->nm_menu) }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select x-model="jenis" name="jenis" id=""
+                                                        class="form-control changeJenis">
+                                                        <option value="rp">Rp</option>
+                                                        <option value="persen">Persen</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input :max="jenis === 'persen' ? '100' : ''"
+                                                        :type="jenis === 'rp' ? 'text' : 'number'"
+                                                        x-mask:dynamic="jenis === 'rp' ? $money($input) : ''"
+                                                        class="form-control text-right" name="jumlah">
 
+                                                </td>
+                                                <td>
+                                                    <input type="date" value="{{ date('Y-m-d') }}"
+                                                        class="form-control" name="tgl_dari">
+
+                                                </td>
+                                                <td>
+                                                    <input type="date" value="{{ date('Y-m-d') }}"
+                                                        class="form-control" name="tgl_sampai">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="ket" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <input type="submit" value="Simpan" class="btn btn-primary btn-sm">
+                                                </td>
+                                            </form>
+                                        </tr>
+                                        @foreach ($diskonPeritem as $i => $d)
+                                            @php
+                                                $tglDari = \Carbon\Carbon::parse($d->tgl_dari)->startOfDay();
+                                                $tglSampai = \Carbon\Carbon::parse($d->tgl_sampai)->endOfDay();
+                                                $tglHariIni = \Carbon\Carbon::now();
+                                            @endphp
+                                            <tr>
+                                                <td>{{ $i + 1 }}</td>
+                                                <td>{{ $d->nm_distribusi }}</td>
+                                                <td>{{ $d->nm_menu }} ({{ number_format($d->harga, 0) }})</td>
+                                                <td>{{ $d->jenis }}</td>
+                                                <td align="right">{{ number_format($d->jumlah, 0) }}</td>
+                                                <td>
+                                                    {{ $d->tgl_dari }}
+                                                </td>
+                                                <td>{{ $d->tgl_sampai }}</td>
+                                                <td>{{ $d->ket }}</td>
+                                                <td>
+                                                    {{ $tglHariIni->between($tglDari, $tglSampai) ? 'Aktif' : 'Non-aktif'}}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content -->
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
     {{-- modal edit --}}
@@ -210,7 +324,8 @@
                             <div class="form-group ">
                                 <label>Keterangan</label>
                                 <div>
-                                    <input type="text" name="ket" class="form-control" value="{{ $m->ket }}">
+                                    <input type="text" name="ket" class="form-control"
+                                        value="{{ $m->ket }}">
                                 </div>
                             </div>
 
@@ -226,7 +341,8 @@
                             <div class="form-group ">
                                 <label>Jumlah Diskon</label>
                                 <div>
-                                    <input type="number" name="jumlah" class="form-control" value="{{ $m->disc }}">
+                                    <input type="number" name="jumlah" class="form-control"
+                                        value="{{ $m->disc }}">
                                 </div>
                                 <small class="text-warning">Jika jenis rp (cth: 70000)</small>
                                 <small class="text-warning">Jika jenis persen (cth: 10)</small>
@@ -235,20 +351,22 @@
                             <div class="form-group ">
                                 <label>Dari</label>
                                 <div>
-                                    <input type="date" name="dari" class="form-control" value="{{ $m->dari }}">
+                                    <input type="date" name="dari" class="form-control"
+                                        value="{{ $m->dari }}">
                                 </div>
                             </div>
                             <div class="form-group ">
                                 <label>Sampai</label>
                                 <div>
-                                    <input type="date" name="expired" class="form-control" value="{{ $m->expired }}">
+                                    <input type="date" name="expired" class="form-control"
+                                        value="{{ $m->expired }}">
                                 </div>
                             </div>
 
                         </div>
                         <div class="modal-footer">
 
-                            <button type="submit" class="btn btn-primary">Edit / Save</button>
+                            <button type="submit" class="btn btn-primary btn-sm">Edit / Save</button>
                         </div>
                     </div>
                 </div>
@@ -256,7 +374,7 @@
         </form>
     @endforeach
     {{-- ---------- --}}
-    
+
     {{-- modal edit --}}
     @foreach ($voucher as $m)
         <form action="{{ route('editVoucher') }}" method="post" accept-charset="utf-8">
@@ -274,31 +392,34 @@
                         </div>
                         <div class="modal-body">
 
-                            <input type="hidden" name="id_voucher" value="{{$m->id_voucher}}">
+                            <input type="hidden" name="id_voucher" value="{{ $m->id_voucher }}">
 
                             <div class="form-group ">
                                 <label>Jumlah</label>
                                 <div>
-                                    <input type="text" name="jumlah" class="form-control" value="{{ $m->jumlah }}">
+                                    <input type="text" name="jumlah" class="form-control"
+                                        value="{{ $m->jumlah }}">
                                 </div>
                             </div>
                             <div class="form-group ">
                                 <label>Keterangan</label>
                                 <div>
-                                    <input type="text" name="ket" class="form-control" value="{{ $m->ket }}">
+                                    <input type="text" name="ket" class="form-control"
+                                        value="{{ $m->ket }}">
                                 </div>
                             </div>
                             <div class="form-group ">
                                 <label>Tanggal Expired</label>
                                 <div>
-                                    <input type="date" name="expired" class="form-control" value="{{ $m->expired }}">
+                                    <input type="date" name="expired" class="form-control"
+                                        value="{{ $m->expired }}">
                                 </div>
                             </div>
 
                         </div>
                         <div class="modal-footer">
 
-                            <button type="submit" class="btn btn-primary">Edit / Save</button>
+                            <button type="submit" class="btn btn-primary btn-sm">Edit / Save</button>
                         </div>
                     </div>
                 </div>
@@ -314,12 +435,12 @@
         .modal-lg-max {
             max-width: 900px;
         }
-
     </style>
 @endsection
 @section('script')
     <script>
         $(document).ready(function() {
+            $('.select2').select2()
 
             $('.in-discount').change(function() {
                 var id = $(this).attr('id');
