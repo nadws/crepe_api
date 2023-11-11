@@ -278,7 +278,7 @@
                                                 <td>{{ $d->nm_distribusi }}</td>
                                                 <td>{{ $d->nm_menu }} ({{ number_format($d->harga, 0) }})</td>
                                                 <td>{{ $d->jenis }}</td>
-                                                <td align="right">{{ number_format($d->jumlah, 0) }}</td>
+                                                <td align="right">{{ number_format($d->jumlah, 0) }} {{ $d->jenis == 'rp' ? '' : '%' }}</td>
                                                 <td>
                                                     {{ $d->tgl_dari }}
                                                 </td>
