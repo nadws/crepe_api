@@ -65,7 +65,7 @@
                                     <button class="btn bg-gradient btn-block">Lanjutkan</button>
                                 </div>
                             </div>
-
+                            <div id="laporanIbu"></div>
                         </form>
                     </div>
                     <div class="col-lg-6">
@@ -135,7 +135,17 @@
                 console.log(tgl1);
                 console.log(tgl2);
                 console.log(kat);
-
+                $.ajax({
+                    type: "GET",
+                    url: "{{route('laporan_ibu')}}",
+                    data: {
+                        tgl1:tgl1,
+                        tgl2:tgl2,
+                    },
+                    success: function (r) {
+                        $("#laporanIbu").html(r);
+                    }
+                });
                 if (kat == '1') {
                     var url = "<?= route('summary') ?>?tgl1=" + tgl1 + '&tgl2=' + tgl2;
                     $('#data-laporan').show();
