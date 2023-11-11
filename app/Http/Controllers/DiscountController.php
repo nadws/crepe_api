@@ -76,7 +76,11 @@ class DiscountController extends Controller
             ]);
         }
         return redirect()->route('discount')->with('sukses', 'Data Berhasil ditambahkan');
-        
+    }
+
+    public function deleteDiscountPeritem($id)
+    {
+        DB::table('tb_discount_peritem')->where('id_diskon', $id)->delete();
     }
 
     public function addDiscount(Request $request)

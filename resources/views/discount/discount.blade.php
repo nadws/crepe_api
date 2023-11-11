@@ -283,9 +283,9 @@
                                                     {{ $d->tgl_dari }}
                                                 </td>
                                                 <td>{{ $d->tgl_sampai }}</td>
-                                                <td>{{ $d->ket }}</td>
+                                                <td>{{ $d->ket }} {{ $tglHariIni->between($tglDari, $tglSampai) ? 'Aktif' : 'Non-aktif'}}</td>
                                                 <td>
-                                                    {{ $tglHariIni->between($tglDari, $tglSampai) ? 'Aktif' : 'Non-aktif'}}
+                                                    <a href="{{ route('') }}"></a>
                                                 </td>
                                             </tr>
                                         @endforeach
