@@ -1,12 +1,31 @@
 @extends('template.master')
 @section('content')
     <style>
+        .table-container {
+            overflow-x: auto;
+            max-height: 400px;
+        }
+
         .freeze-cell1_th {
             position: sticky;
             z-index: 30;
             background-color: #F2F7FF;
             top: 0;
+        }
+
+        .freeze-cell1_th2 {
+            position: sticky;
+            z-index: 36;
+            background-color: #F2F7FF;
+            top: 0;
             left: 0;
+        }
+
+        .freeze-samping {
+            position: sticky;
+            z-index: 35;
+            left: 0;
+            background-color: #FFFFFF;
         }
     </style>
     <div class="content-wrapper">
@@ -53,46 +72,68 @@
                             </div>
                             @include('flash.flash')
                             <div class="card-body">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th class="freeze-cell1_th">#</th>
-                                            <th class="freeze-cell1_th">Station</th>
-                                            <th class="freeze-cell1_th">Harga</th>
-                                            <th class="freeze-cell1_th">Nama Menu</th>
-                                            <th class="freeze-cell1_th">1</th>
-                                            <th class="freeze-cell1_th">2</th>
-                                            <th class="freeze-cell1_th">3</th>
-                                            <th class="freeze-cell1_th">4</th>
-                                            <th class="freeze-cell1_th">5</th>
-                                            <th class="freeze-cell1_th">6</th>
-                                            <th class="freeze-cell1_th">7</th>
-                                            <th class="freeze-cell1_th">8</th>
-                                            <th class="freeze-cell1_th">9</th>
-                                            <th class="freeze-cell1_th">10</th>
-                                            <th class="freeze-cell1_th">11</th>
-                                            <th class="freeze-cell1_th">12</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($penjualan as $no => $p)
-                                            <tr>
-                                                <td>{{ $no + 1 }}</td>
-                                                <td>{{ $p->Station }}</td>
-                                                <td>{{ number_format($p->Harga, 0) }}</td>
-                                                <td>{{ $p->Nama_Menu }}</td>
-                                                @for ($i = 1; $i < 13; $i++)
-                                                    @php
-                                                        $bulanIndex = 'bulan' . $i;
-                                                        $qty = $p->$bulanIndex;
-                                                    @endphp
-                                                    <td>{{ $qty }}</td>
-                                                @endfor
+                                <div class="row">
+                                    {{-- <div class="col-l-g-4 mb-2">
+                                        <select name="" id="" class="select">
+                                            <option value="">Pilih Station</option>
+                                            @foreach ($station as $s)
+                                                <option value="{{ $s->id_station }}">{{ $s->nm_station }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div> --}}
+                                    <div class="col-lg-12">
+                                        <div class="table-responsive table-container">
+                                            <table class="table table-bordered" id="sortable-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="freeze-cell1_th" data-sort="no" data-sort-type="numeric">
+                                                            # <i class="fas fa-sort float-right" data-order="asc"></i></th>
+                                                        <th class="freeze-cell1_th" data-sort="station"
+                                                            data-sort-type="alphabetic">Station <i
+                                                                class="fas fa-sort float-right" data-order="asc"></i></th>
+                                                        <th class="freeze-cell1_th text-right" data-sort="harga"
+                                                            data-sort-type="numeric">Harga <i
+                                                                class="fas fa-sort float-right" data-order="asc"></i></th>
+                                                        <th class="freeze-cell1_th2" data-sort="nm_menu"
+                                                            data-sort-type="alphabetic">Nama Menu <i
+                                                                class="fas fa-sort float-right" data-order="asc"></i></th>
+                                                        <th class="freeze-cell1_th">1</th>
+                                                        <th class="freeze-cell1_th">2</th>
+                                                        <th class="freeze-cell1_th">3</th>
+                                                        <th class="freeze-cell1_th">4</th>
+                                                        <th class="freeze-cell1_th">5</th>
+                                                        <th class="freeze-cell1_th">6</th>
+                                                        <th class="freeze-cell1_th">7</th>
+                                                        <th class="freeze-cell1_th">8</th>
+                                                        <th class="freeze-cell1_th">9</th>
+                                                        <th class="freeze-cell1_th">10</th>
+                                                        <th class="freeze-cell1_th">11</th>
+                                                        <th class="freeze-cell1_th">12</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($penjualan as $no => $p)
+                                                        <tr>
+                                                            <td>{{ $no + 1 }}</td>
+                                                            <td>{{ $p->Station }}</td>
+                                                            <td align="right">{{ number_format($p->Harga, 0) }}</td>
+                                                            <td class="freeze-samping">{{ $p->Nama_Menu }}</td>
+                                                            @for ($i = 1; $i < 13; $i++)
+                                                                @php
+                                                                    $bulanIndex = 'bulan' . $i;
+                                                                    $qty = $p->$bulanIndex;
+                                                                @endphp
+                                                                <td>{{ $qty }}</td>
+                                                            @endfor
 
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
 
@@ -161,7 +202,41 @@
 @section('script')
     <script>
         $(document).ready(function() {
+            $('#sortable-table th').click(function() {
+                const table = $(this).parents('table').eq(0);
+                const columnIndex = $(this).index();
+                const dataType = $(this).data('sort-type');
+                const rows = table.find('tr:gt(0)').toArray().sort(comparator(columnIndex, dataType));
+                this.asc = !this.asc;
+                if (!this.asc) {
+                    rows.reverse();
+                }
+                for (let i = 0; i < rows.length; i++) {
+                    table.append(rows[i]);
+                }
+            });
 
+            function comparator(index, dataType) {
+                return function(a, b) {
+                    const valA = getCellValue(a, index, dataType);
+                    const valB = getCellValue(b, index, dataType);
+
+                    if (dataType === 'numeric') {
+                        return valA - valB; // Perbandingan numerik
+                    } else if (dataType === 'alphabetic') {
+                        return valA.localeCompare(valB);
+                    }
+                }
+
+                function getCellValue(row, index, dataType) {
+                    const cellText = $(row).children('td').eq(index).text();
+                    if (dataType === 'numeric') {
+                        return parseFloat(cellText.replace(/[^0-9.-]+/g, '')); // Mengambil angka dari teks
+                    } else {
+                        return cellText;
+                    }
+                }
+            }
         })
     </script>
 @endsection

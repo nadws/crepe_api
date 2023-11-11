@@ -43,8 +43,9 @@ class PenjualanPeritemController extends Controller
     LEFT JOIN view_menu AS b ON b.id_harga = a.id_harga
     LEFT JOIN tb_menu AS c ON b.id_menu = c.id_menu
     LEFT JOIN tb_station AS d ON d.id_station = c.id_station
-    WHERE YEAR(a.tgl) = '$tahun' AND a.id_lokasi = '$lokasi' AND a.id_harga != 0
-    GROUP BY a.id_harga;");
+    WHERE YEAR(a.tgl) = '$tahun' AND a.id_lokasi = '$lokasi' AND a.id_harga != 0 and b.nm_menu is not null
+    GROUP BY a.id_harga
+    order by b.nm_menu ASC");
 
         $data = [
             'title' => 'Penjualan pertahun',
@@ -52,7 +53,8 @@ class PenjualanPeritemController extends Controller
             'tahun' => DB::select("SELECT YEAR(a.tgl) as tahun FROM tb_order as a where YEAR(a.tgl) != 0 group by YEAR(a.tgl);"),
             'logout' => $r->session()->get('logout'),
             'thn' => $tahun,
-            'id_lokasi' => $lokasi
+            'id_lokasi' => $lokasi,
+            'station' => DB::table('tb_station')->where('id_lokasi', $lokasi)->get()
 
         ];
 
@@ -132,7 +134,8 @@ class PenjualanPeritemController extends Controller
         LEFT JOIN tb_menu AS c ON b.id_menu = c.id_menu
         LEFT JOIN tb_station AS d ON d.id_station = c.id_station
         WHERE YEAR(a.tgl) = '$tahun' AND a.id_lokasi = '1' AND a.id_harga != 0
-        GROUP BY a.id_harga;");
+        GROUP BY a.id_harga
+        order by b.nm_menu ASC");
 
         $kolom = 2;
         foreach ($penjualan as $no => $p) {

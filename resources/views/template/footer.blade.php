@@ -1,7 +1,7 @@
 <!-- Main Footer -->
 <footer class="main-footer">
-    <strong>Copyright &copy; 2022 <a href="https://ptagafood.com"
-            class="text-white">www.ptagafood.com</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2022 <a href="https://ptagafood.com" class="text-white">www.ptagafood.com</a>.</strong> All
+    rights reserved.
 </footer>
 
 </div>
@@ -33,8 +33,7 @@
 <script src="{{ asset('assets') }}/plugins/select2/js/select2.full.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('assets') }}/dist/js/demo.js"></script>
-<script src="{{ asset('assets') }}/plugins/bootstrap/js/bootstrap-switch-button.min.js">
-</script>
+<script src="{{ asset('assets') }}/plugins/bootstrap/js/bootstrap-switch-button.min.js"></script>
 
 <script>
     function doubleClicked(element) {
@@ -85,8 +84,8 @@
             "stateSave": true,
             "scrollCollapse": true
         });
-        
-        
+
+
         $('#tableLvl').DataTable({
 
             "bSort": false,
@@ -143,14 +142,22 @@
             "stateSave": true,
             "autoWidth": true
         });
-        
+
         $('#tabelMajoo').DataTable({
 
-        "bSort": true,
-        "scrollY": true,
-        "paging": true,
-        "stateSave": true,
-        "scrollCollapse": true
+            "bSort": true,
+            "scrollY": true,
+            "paging": true,
+            "stateSave": true,
+            "scrollCollapse": true
+        });
+        $('#tabelItem').DataTable({
+            "bSort": true,
+            "scrollY": false,
+            "scrollX": true,
+            "paging": false,
+            "stateSave": true,
+            "scrollCollapse": false
         });
 
     });
