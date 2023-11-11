@@ -285,7 +285,7 @@
                                                 <td>{{ $d->tgl_sampai }}</td>
                                                 <td>{{ $d->ket }} {{ $tglHariIni->between($tglDari, $tglSampai) ? 'Aktif' : 'Non-aktif'}}</td>
                                                 <td>
-                                                    <a href="{{ route('') }}"></a>
+                                                    <a href="{{ route('deleteDiscountPeritem', $d->id_diskon) }}"></a>
                                                 </td>
                                             </tr>
                                         @endforeach
