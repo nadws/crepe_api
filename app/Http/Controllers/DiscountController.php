@@ -51,7 +51,7 @@ class DiscountController extends Controller
                                         JOIN view_menu as b ON a.id_menu = b.id_menu AND a.id_distribusi = b.id_distribusi
                                         WHERE a.tgl_dari BETWEEN '$tgl1' AND '$tgl2'
                                         order BY a.id_diskon DESC"),
-                'menu' => Menu::where([['lokasi', $id_lokasi],['akv', 'on']])->get(),
+                'menu' => Menu::where([['lokasi', $id_lokasi],['aktif', 'on']])->get(),
                 'distribusi' => Distribusi::all(),
             ];
             return view("discount.discount",$data);
