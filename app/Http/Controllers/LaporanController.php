@@ -519,9 +519,11 @@ class LaporanController extends Controller
         $tgl1 = $r->tgl1;
         $tgl2 = $r->tgl2;
 
-        $dt_item = DB::select("SELECT b.nm_produk, b.harga, SUM(a.jumlah) as qty FROM `tb_pembelian` as a
-        LEFT JOIN tb_produk as b ON a.id_produk = b.id_produk
-        WHERE a.tanggal BETWEEN '$tgl1' AND '$tgl2' AND a.lokasi = '$loc' GROUP BY a.id_produk");
+        // $dt_item = DB::select("SELECT b.nm_produk, b.harga, SUM(a.jumlah) as qty FROM `tb_pembelian` as a
+        // LEFT JOIN tb_produk as b ON a.id_produk = b.id_produk
+        // WHERE a.tanggal BETWEEN '$tgl1' AND '$tgl2' AND a.lokasi = '$loc' GROUP BY a.id_produk");
+
+        $dt_item = DB::select("SELECT a.nm_produk, b.qty, b.total from tb_produk as a left join ( SELECT b.id_produk, sum(b.jumlah) as qty , sum(b.total) as total FROM tb_pembelian as b where b.tanggal BETWEEN '$tgl1' and '$tgl2' and lokasi = '$loc' group by b.id_produk ) as b on b.id_produk = a.id_produk where a.id_lokasi ='$loc'");
 
         $spreadsheet = new Spreadsheet;
 
@@ -561,7 +563,7 @@ class LaporanController extends Controller
             $spreadsheet->getActiveSheet()->setCellValue('A' . $kolom, $no++);
             $spreadsheet->getActiveSheet()->setCellValue('B' . $kolom, $d->nm_produk);
             $spreadsheet->getActiveSheet()->setCellValue('C' . $kolom, $d->qty);
-            $spreadsheet->getActiveSheet()->setCellValue('D' . $kolom, $d->qty * $d->harga);
+            $spreadsheet->getActiveSheet()->setCellValue('D' . $kolom, $d->total);
             $kolom++;
         }
 
