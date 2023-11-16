@@ -1011,7 +1011,13 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
             'mandiriEdc' => $mandiriEdc,
             'mandiriQris' => $mandiriQris,
             'bcaTf' => $bcaTf,
-            'cash' => $cash,
+            'cash' => $cash + $transaksi->cash,
+
+            'cashLama' => $transaksi->cash ?? 0,
+            'bcaDebit' => $transaksi->d_bca ?? 0,
+            'bcaKredit' => $transaksi->k_bca ?? 0,
+            'mandiriDebit' => $transaksi->d_mandiri ?? 0,
+            'mandiriKredit' => $transaksi->k_mandiri ?? 0
         ]
 
     ];
