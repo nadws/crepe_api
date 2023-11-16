@@ -289,6 +289,13 @@ class LaporanController extends Controller
                         left join tb_kategori as c on b.id_kategori = c.kd_kategori
                         WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' AND a.void = 1 AND id_lokasi = '$loc'
                         GROUP BY c.kd_kategori"),
+            'pembayaran' => DB::select("SELECT b.nm_akun, c.nm_klasifikasi, sum(a.nominal) as nominal, a.pengirim
+                        FROM pembayaran as a 
+                        left join akun_pembayaran as b on b.id_akun_pembayaran = a.id_akun_pembayaran
+                        left join klasifikasi_pembayaran as c on c.id_klasifikasi_pembayaran = b.id_klasifikasi
+                        where a.tgl between '$tgl1' and '$tgl2' and a.id_lokasi = '$loc'
+                        group by a.id_akun_pembayaran
+                        "),
         ];
         return view('laporan.ex_summary', $data);
     }
