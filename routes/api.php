@@ -936,19 +936,76 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
 
     $pb1_gojek = ($total_gojek->total + $majo_gojek->bayar_majo * 0.8) / 11;
     $pb1_all = $pb1_gojek + $pb1_not_gojek + $majo->bayar_majo * 0.1;
-    $total_all = $total_gojek->total + $majo_gojek->bayar_majo - $pb1_gojek + ($total_not_gojek->total + $majo->bayar_majo);
-    $sub_all = $pb1_all + $total_all + $service_charge;
+    $totalSubtotal = $total_gojek->total + $majo_gojek->bayar_majo - $pb1_gojek + ($total_not_gojek->total + $majo->bayar_majo);
+    $sub_all = $pb1_all + $totalSubtotal + $service_charge;
     $rounding = $transaksi->dp + $transaksi->total_bayar - $sub_all;
 
 
-    $pnjlGojek = ($total_gojek->total + $majo_gojek->bayar_majo - $pb1_gojek) + $pb1_gojek ;
+    $pnjlGojek = ($total_gojek->total + $majo_gojek->bayar_majo - $pb1_gojek) + $pb1_gojek;
 
     $pnjlStk = $majo->bayar_majo + ($majo->bayar_majo * 0.1);
+
+    $dp = $transaksi->dp;
+    $totalPb1 = $pb1_gojek + $pb1_not_gojek + $majo->bayar_majo * 0.1;
+    $totalTotalTanpaDp = $transaksi->total_bayar;
+    $totalTotalTambahDp = $transaksi->total_bayar + $dp;
+
+    $grabOnline = 0;
+    $gojekOnline = 0;
+    $shopeOnline = 0;
+    $bcaEdc = 0;
+    $briEdc = 0;
+    $mandiriEdc = 0;
+    $mandiriQris = 0;
+    $bcaTf = 0;
+    $cash = 0;
+    dd($pembayaran);
+    foreach ($pembayaran as $p) {
+        $grabOnline = 0;
+        $gojekOnline = 0;
+        $shopeOnline = 0;
+        $bcaEdc = 0;
+        $briEdc = 0;
+        $mandiriEdc = 0;
+        $mandiriQris = 0;
+        $bcaTf = 0;
+        $cash = 0;
+    }
+
     $data = [
-        'penjualan' => $penjualan,
-        'rounding' => $rounding,
-        'penjualanGojek' => $pnjlGojek,
-        'penjualanStk' => $pnjlStk,
+        'penjualan' => [
+            'pnjl' => $penjualan,
+            'rounding' => $rounding,
+            'penjualanGojek' => $pnjlGojek,
+            'penjualanStk' => $pnjlStk,
+        ],
+        'biaya' => [
+            'pb1gojek' => $pb1_gojek,
+            'pb1stk' => $majo->bayar_majo * 0.1,
+            'pb1dinein' => $pb1_not_gojek,
+            'serviceCharge' => $service_charge,
+        ],
+        'hutang' => [
+            'dp' => $dp,
+        ],
+        'total' => [
+            'subtotal' => $totalSubtotal,
+            'totalPb1' => $totalPb1,
+            'totalTanpaDp' => $totalTotalTanpaDp,
+            'totalTambahDp' => $totalTotalTambahDp,
+        ],
+        'pembayaran' => [
+            'grabOnline' => $grabOnline,
+            'gojekOnline' => $gojekOnline,
+            'shopeOnline' => $shopeOnline,
+            'bcaEdc' => $bcaEdc,
+            'briEdc' => $briEdc,
+            'mandiriEdc' => $mandiriEdc,
+            'mandiriQris' => $mandiriQris,
+            'bcaTf' => $bcaTf,
+            'cash' => $cash,
+        ]
+
     ];
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
