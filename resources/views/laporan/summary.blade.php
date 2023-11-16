@@ -203,7 +203,7 @@ $total_total = $total_gojek->total + $total_not_gojek->total + $service_charge +
                     <hr style="border-top: 2px dashed black">
                 </td>
             </tr>
-            {{-- <tr>
+            <tr hidden>
                 <td>Cash</td>
                 <td width="1%">:</td>
                 <td></td>
@@ -251,7 +251,7 @@ $total_total = $total_gojek->total + $total_not_gojek->total + $service_charge +
                 <td width="1%">:</td>
                 <td></td>
                 <td style="text-align: right;"><?= number_format($transaksi->k_bri, 0) ?></td>
-            </tr> --}}
+            </tr>
             @foreach ($pembayaran as $p)
                 <tr>
                     <td>{{ $p->nm_akun }} {{ $p->nm_klasifikasi }}</td>
