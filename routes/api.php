@@ -930,12 +930,18 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
 
     // ];
 
-    $service = $total_not_gojek->total * 0.07;
-    $pb1_not_gojek = ($total_not_gojek->total + $service) * 0.1;
-    $penjualan = $total_not_gojek->total + $service + $pb1_not_gojek;
-    
+    $service_charge = $total_not_gojek->total * 0.07;
+    $pb1_not_gojek = ($total_not_gojek->total + $service_charge) * 0.1;
+    $penjualan = $total_not_gojek->total + $service_charge + $pb1_not_gojek;
+
+    $pb1_gojek = ($total_gojek->total + $majo_gojek->bayar_majo * 0.8) / 11;
+    $pb1_all = $pb1_gojek + $pb1_not_gojek + $majo->bayar_majo * 0.1;
+    $total_all = $total_gojek->total + $majo_gojek->bayar_majo - $pb1_gojek + ($total_not_gojek->total + $majo->bayar_majo);
+    $sub_all = $pb1_all + $total_all + $service_charge;
+    $rounding = $transaksi->dp + $transaksi->total_bayar - $sub_all;
     $data = [
-        'penjualan' => $penjualan
+        'penjualan' => $penjualan,
+        'rounding' => $rounding,
     ];
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
