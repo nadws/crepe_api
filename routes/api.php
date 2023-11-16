@@ -970,10 +970,10 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
             
             if (is_array($target)) {
                 foreach ($target as $t) {
-                    $$t = $p->nominal ?? 0;
+                    $$t = $p->nominal;
                 }
             } else {
-                $$target = $p->nominal ?? 0;
+                $$target = $p->nominal;
             }
         }
     }
@@ -1003,15 +1003,15 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
             'totalTambahDp' => $totalTotalTambahDp,
         ],
         'pembayaran' => [
-            'grabOnline' => $grabOnline,
-            'gojekOnline' => $gojekOnline,
-            'shopeOnline' => $shopeOnline,
-            'bcaEdc' => $bcaEdc,
-            'briEdc' => $briEdc,
-            'mandiriEdc' => $mandiriEdc,
-            'mandiriQris' => $mandiriQris,
-            'bcaTf' => $bcaTf,
-            'cash' => $cash + $transaksi->cash,
+            'grabOnline' => $grabOnline ?? 0,
+            'gojekOnline' => $gojekOnline ?? 0,
+            'shopeOnline' => $shopeOnline ?? 0,
+            'bcaEdc' => $bcaEdc ?? 0,
+            'briEdc' => $briEdc ?? 0,
+            'mandiriEdc' => $mandiriEdc ?? 0,
+            'mandiriQris' => $mandiriQris ?? 0,
+            'bcaTf' => $bcaTf ?? 0,
+            'cash' => $cash ?? 0,
 
             'cashLama' => $transaksi->cash ?? 0,
             'bcaDebit' => $transaksi->d_bca ?? 0,
