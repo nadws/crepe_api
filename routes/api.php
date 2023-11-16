@@ -945,10 +945,10 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
 
     $pnjlStk = $majo->bayar_majo + ($majo->bayar_majo * 0.1);
     $data = [
-        'penjualan' => $penjualan,
-        'rounding' => $rounding,
-        'penjualanGoje' => $pnjlGojek,
-        'penjualanStk' => $pnjlStk,
+        'penjualan' => number_format($penjualan,0),
+        'rounding' => number_format($rounding,0),
+        'penjualanGojek' => number_format($pnjlGojek,0),
+        'penjualanStk' => number_format($pnjlStk,0),
     ];
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
