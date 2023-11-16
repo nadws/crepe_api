@@ -970,10 +970,10 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
             
             if (is_array($target)) {
                 foreach ($target as $t) {
-                    $$t = $p->nominal;
+                    $$t = $p->nominal ?? 0;
                 }
             } else {
-                $$target = $p->nominal;
+                $$target = $p->nominal ?? 0;
             }
         }
     }
