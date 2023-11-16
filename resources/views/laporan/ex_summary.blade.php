@@ -214,55 +214,74 @@ header("Content-Disposition: attachment; filename=$file");
                         <hr style="border-top: 2px dashed black">
                     </td>
                 </tr>
-                <tr {{ $transaksi->cash == 0 ? 'hidden' : '' }}>
-                    <td>Cash</td>
-                    <td width="1%">:</td>
-                    <td></td>
-                    <td style="text-align: right;"><?= number_format($transaksi->cash, 0) ?>
-                        <!--/ <?= number_format($transaksi->cash - $transaksi->total_bayar, 0) ?>-->
-                    </td>
-                </tr>
+                @if ($transaksi->cash == 0)
+                @else
+                    <tr>
+                        <td>Cash</td>
+                        <td width="1%">:</td>
+                        <td></td>
+                        <td style="text-align: right;"><?= number_format($transaksi->cash, 0) ?>
+                            <!--/ <?= number_format($transaksi->cash - $transaksi->total_bayar, 0) ?>-->
+                        </td>
+                    </tr>
+                @endif
+                @if ($transaksi->d_bca == 0)
+                @else
+                    <tr>
+                        <td>BCA Debit</td>
+                        <td width="1%">:</td>
+                        <td></td>
+                        <td style="text-align: right;"><?= number_format($transaksi->d_bca, 0) ?></td>
+                    </tr>
+                @endif
 
-                <tr {{ $transaksi->d_bca == 0 ? 'hidden' : '' }}>
-                    <td>BCA Debit</td>
-                    <td width="1%">:</td>
-                    <td></td>
-                    <td style="text-align: right;"><?= number_format($transaksi->d_bca, 0) ?></td>
-                </tr>
+                @if ($transaksi->k_bca)
+                @else
+                    <tr>
+                        <td>BCA Kredit</td>
+                        <td width="1%">:</td>
+                        <td></td>
+                        <td style="text-align: right;"><?= number_format($transaksi->k_bca, 0) ?></td>
+                    </tr>
+                @endif
 
-                <tr {{ $transaksi->k_bca == 0 ? 'hidden' : '' }}>
-                    <td>BCA Kredit</td>
-                    <td width="1%">:</td>
-                    <td></td>
-                    <td style="text-align: right;"><?= number_format($transaksi->k_bca, 0) ?></td>
-                </tr>
+                @if ($transaksi->d_mandiri == 0)
+                @else
+                    <tr>
+                        <td>Mandiri Debit</td>
+                        <td width="1%">:</td>
+                        <td></td>
+                        <td style="text-align: right;"><?= number_format($transaksi->d_mandiri, 0) ?></td>
+                    </tr>
+                @endif
 
-                <tr {{ $transaksi->d_mandiri == 0 ? 'hidden' : '' }}>
-                    <td>Mandiri Debit</td>
-                    <td width="1%">:</td>
-                    <td></td>
-                    <td style="text-align: right;"><?= number_format($transaksi->d_mandiri, 0) ?></td>
-                </tr>
-
-                <tr {{ $transaksi->k_mandiri == 0 ? 'hidden' : '' }}>
-                    <td>Mandiri Kredit</td>
-                    <td width="1%">:</td>
-                    <td></td>
-                    <td style="text-align: right;"><?= number_format($transaksi->k_mandiri, 0) ?></td>
-                </tr>
-                <tr {{ $transaksi->d_bri == 0 ? 'hidden' : '' }}>
-                    <td>Bri Debit</td>
-                    <td width="1%">:</td>
-                    <td></td>
-                    <td style="text-align: right;"><?= number_format($transaksi->d_bri, 0) ?></td>
-                </tr>
-
-                <tr {{ $transaksi->k_bri == 0 ? 'hidden' : '' }}>
-                    <td>Bri Kredit</td>
-                    <td width="1%">:</td>
-                    <td></td>
-                    <td style="text-align: right;"><?= number_format($transaksi->k_bri, 0) ?></td>
-                </tr>
+                @if ($transaksi->k_mandiri == 0)
+                @else
+                    <tr>
+                        <td>Mandiri Kredit</td>
+                        <td width="1%">:</td>
+                        <td></td>
+                        <td style="text-align: right;"><?= number_format($transaksi->k_mandiri, 0) ?></td>
+                    </tr>
+                @endif
+                @if ($transaksi->d_bri == 0)
+                @else
+                    <tr>
+                        <td>Bri Debit</td>
+                        <td width="1%">:</td>
+                        <td></td>
+                        <td style="text-align: right;"><?= number_format($transaksi->d_bri, 0) ?></td>
+                    </tr>
+                @endif
+                @if ($transaksi->k_bri == 0)
+                @else
+                    <tr>
+                        <td>Bri Kredit</td>
+                        <td width="1%">:</td>
+                        <td></td>
+                        <td style="text-align: right;"><?= number_format($transaksi->k_bri, 0) ?></td>
+                    </tr>
+                @endif
                 @foreach ($pembayaran as $p)
                     <tr>
                         <td>{{ $p->nm_akun }} {{ $p->nm_klasifikasi }}</td>
