@@ -941,14 +941,14 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
     $rounding = $transaksi->dp + $transaksi->total_bayar - $sub_all;
 
 
-    $pnjlGojek = $total_gojek->total + $majo_gojek->bayar_majo + $pb1_gojek;
+    $pnjlGojek = ($total_gojek->total + $majo_gojek->bayar_majo - $pb1_gojek) + $pb1_gojek ;
 
     $pnjlStk = $majo->bayar_majo + ($majo->bayar_majo * 0.1);
     $data = [
-        'penjualan' => number_format($penjualan,0),
-        'rounding' => number_format($rounding,0),
-        'penjualanGojek' => number_format($pnjlGojek,0),
-        'penjualanStk' => number_format($pnjlStk,0),
+        'penjualan' => $penjualan,
+        'rounding' => $rounding,
+        'penjualanGojek' => $pnjlGojek,
+        'penjualanStk' => $pnjlStk,
     ];
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
