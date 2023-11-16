@@ -880,7 +880,7 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
             WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' AND a.void = 1 AND id_lokasi = '$loc'
             GROUP BY c.kd_kategori");
 
-    $pembayaran = DB::select("SELECT b.nm_akun, c.nm_klasifikasi, sum(a.nominal) as nominal, a.pengirim
+    $pembayaran = DB::select("SELECT b.id_akun_pembayaran as id_akun,b.nm_akun, c.nm_klasifikasi, sum(a.nominal) as nominal, a.pengirim
                 FROM pembayaran as a 
                 left join akun_pembayaran as b on b.id_akun_pembayaran = a.id_akun_pembayaran
                 left join klasifikasi_pembayaran as c on c.id_klasifikasi_pembayaran = b.id_klasifikasi
@@ -950,27 +950,31 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
     $totalTotalTanpaDp = $transaksi->total_bayar;
     $totalTotalTambahDp = $transaksi->total_bayar + $dp;
 
-    $grabOnline = 0;
-    $gojekOnline = 0;
-    $shopeOnline = 0;
-    $bcaEdc = 0;
-    $briEdc = 0;
-    $mandiriEdc = 0;
-    $mandiriQris = 0;
-    $bcaTf = 0;
-    $cash = 0;
-    dd($pembayaran);
+    $mapping = [
+        '1' => 'grabOnline',
+        '2' => 'gojekOnline',
+        '3' => 'shopeOnline',
+        '4' => 'bcaEdc',
+        '5' => 'briEdc',
+        '6' => 'mandiriEdc',
+        '10' => 'mandiriQris',
+        '12' => ['bcaTf', 'cash'],
+    ];
+    
     foreach ($pembayaran as $p) {
-        $grabOnline = 0;
-        $gojekOnline = 0;
-        $shopeOnline = 0;
-        $bcaEdc = 0;
-        $briEdc = 0;
-        $mandiriEdc = 0;
-        $mandiriQris = 0;
-        $bcaTf = 0;
-        $cash = 0;
+        $key = $p->id_akun;
+    
+        if (isset($mapping[$key])) {
+            if (is_array($mapping[$key])) {
+                foreach ($mapping[$key] as $target) {
+                    $target = $p->nominal;
+                }
+            } else {
+                $$mapping[$key] = $p->nominal;
+            }
+        }
     }
+    
 
     $data = [
         'penjualan' => [
