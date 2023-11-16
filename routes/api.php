@@ -855,93 +855,79 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
     $tgl2 = $tgl2;
 
     $total_gojek = DB::selectOne("SELECT SUM(tb_transaksi.total_orderan - discount - voucher) as total FROM `tb_transaksi`
-    LEFT JOIN(SELECT tb_order2.no_order2 as no_order, tb_order2.id_distribusi as id_distribusi FROM tb_order2 GROUP BY tb_order2.no_order2) dt_order ON tb_transaksi.no_order = dt_order.no_order
-    WHERE id_lokasi = $loc AND dt_order.id_distribusi = 2 AND tb_transaksi.tgl_transaksi >= '$tgl1' AND tb_transaksi.tgl_transaksi <= '$tgl2'");
+        LEFT JOIN(SELECT tb_order2.no_order2 as no_order, tb_order2.id_distribusi as id_distribusi FROM tb_order2 GROUP BY tb_order2.no_order2) dt_order ON tb_transaksi.no_order = dt_order.no_order
+        WHERE id_lokasi = $loc AND dt_order.id_distribusi = 2 AND tb_transaksi.tgl_transaksi >= '$tgl1' AND tb_transaksi.tgl_transaksi <= '$tgl2'");
 
     $total_not_gojek = DB::selectOne("SELECT SUM(if(tb_transaksi.total_orderan - discount - voucher < 0 ,0,tb_transaksi.total_orderan - discount - voucher)) as total FROM `tb_transaksi`
-    LEFT JOIN(SELECT tb_order2.no_order2 as no_order, tb_order2.id_distribusi as id_distribusi FROM tb_order2 GROUP BY tb_order2.no_order2) dt_order ON tb_transaksi.no_order = dt_order.no_order
-    WHERE id_lokasi = $loc AND dt_order.id_distribusi != 2 AND tb_transaksi.tgl_transaksi >= '$tgl1' AND tb_transaksi.tgl_transaksi <= '$tgl2'");
+        LEFT JOIN(SELECT tb_order2.no_order2 as no_order, tb_order2.id_distribusi as id_distribusi FROM tb_order2 GROUP BY tb_order2.no_order2) dt_order ON tb_transaksi.no_order = dt_order.no_order
+        WHERE id_lokasi = $loc AND dt_order.id_distribusi != 2 AND tb_transaksi.tgl_transaksi >= '$tgl1' AND tb_transaksi.tgl_transaksi <= '$tgl2'");
 
-    $jml_telat = DB::selectOne("SELECT SUM(qty) AS jml_telat FROM view_koki_masak WHERE tgl >= '$tgl1' AND tgl <= '$tgl2' AND id_lokasi = $loc AND menit_bagi > 25");
-    $jml_telat20 = DB::selectOne("SELECT SUM(qty) AS jml_telat FROM view_koki_masak WHERE tgl >= '$tgl1' AND tgl <= '$tgl2' AND id_lokasi = $loc AND menit_bagi > 20");
-    $jml_ontime = DB::selectOne("SELECT SUM(qty) AS jml_ontime FROM view_koki_masak WHERE tgl >= '$tgl1' AND tgl <= '$tgl2' AND id_lokasi = $loc AND menit_bagi <= 25");
 
     $majo = DB::selectOne("SELECT SUM(a.bayar) AS bayar_majo
-    FROM tb_invoice AS a
-    WHERE a.tgl_jam BETWEEN '$tgl1' AND '$tgl2' and a.lokasi = '$loc' and a.id_distribusi = '1'");
+        FROM tb_invoice AS a
+        WHERE a.tgl_jam BETWEEN '$tgl1' AND '$tgl2' and a.lokasi = '$loc' and a.id_distribusi = '1'");
 
     $majo_gojek = DB::selectOne("SELECT SUM(a.bayar) AS bayar_majo
-    FROM tb_invoice AS a
-    WHERE a.tgl_jam BETWEEN '$tgl1' AND '$tgl2' and a.lokasi = '$loc' and a.id_distribusi = '2'");
+        FROM tb_invoice AS a
+        WHERE a.tgl_jam BETWEEN '$tgl1' AND '$tgl2' and a.lokasi = '$loc' and a.id_distribusi = '2'");
 
     $dp = DB::selectOne("SELECT SUM(a.jumlah) AS jumlah_dp
-    FROM tb_dp AS a
-    WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' and a.id_lokasi = '$loc'");
+        FROM tb_dp AS a
+        WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' and a.id_lokasi = '$loc'");
+    $void = DB::select("SELECT c.kategori,b.nm_menu,sum(a.void) as void, sum(a.harga) as harga FROM `tb_order` as a 
+            LEFT JOIN view_menu2 as b on a.id_harga = b.id_harga
+            left join tb_kategori as c on b.id_kategori = c.kd_kategori
+            WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' AND a.void = 1 AND id_lokasi = '$loc'
+            GROUP BY c.kd_kategori");
+
+    $pembayaran = DB::select("SELECT b.nm_akun, c.nm_klasifikasi, sum(a.nominal) as nominal, a.pengirim
+                FROM pembayaran as a 
+                left join akun_pembayaran as b on b.id_akun_pembayaran = a.id_akun_pembayaran
+                left join klasifikasi_pembayaran as c on c.id_klasifikasi_pembayaran = b.id_klasifikasi
+                where a.tgl between '$tgl1' and '$tgl2' and a.id_lokasi = '$loc'
+                group by a.id_akun_pembayaran
+                ");
+
+                    $transaksi = DB::selectOne("SELECT COUNT(a.no_order) AS ttl_invoice, SUM(a.discount) as discount, SUM(a.voucher) as voucher, sum(if(total_bayar = 0 ,0,a.round)) as rounding, a.id_lokasi, 
+                    SUM(a.total_orderan) AS rp, d.unit, a.no_order, sum(a.dp) as dp, sum(a.gosen) as gosend, sum(a.service) as ser, sum(a.tax) as tax,f.qty_void, f.void,
+                    SUM(a.cash) as cash, SUM(a.d_bca) as d_bca, SUM(a.k_bca) as k_bca, SUM(a.d_mandiri) as d_mandiri, SUM(a.k_mandiri) as k_mandiri,SUM(a.d_bri) as d_bri, SUM(a.k_bri) as k_bri, SUM(total_bayar) as total_bayar
+                    
+                    FROM tb_transaksi AS a
+                    
+                    LEFT JOIN(
+                    SELECT SUM(b.qty) AS unit , b.no_order, b.id_lokasi
+                    FROM tb_order AS b
+                    WHERE b.tgl BETWEEN '$tgl1' AND '$tgl2' AND b.id_lokasi = '$loc' AND b.void = 0
+                    GROUP BY b.id_lokasi
+                    )AS d ON d.id_lokasi = a.id_lokasi
+                    
+                    LEFT JOIN(
+                    SELECT SUM(e.void) AS void , COUNT(e.void) AS qty_void, e.no_order, e.id_lokasi
+                    FROM tb_order AS e
+                    WHERE e.tgl BETWEEN '$tgl1' AND '$tgl2' AND e.id_lokasi = '$loc' AND e.void != '0'
+                    GROUP BY e.id_lokasi
+                    )AS f ON f.id_lokasi = a.id_lokasi
+                    
+                    
+                    where a.tgl_transaksi BETWEEN '$tgl1' AND '$tgl2' and a.id_lokasi = '$loc'
+                    GROUP BY a.id_lokasi");
+
 
     $data = [
         'title'    => 'Summary',
         'tgl1' => $tgl1,
         'tgl2' => $tgl2,
         'dp' => $dp,
-        'jml_telat20' => $jml_telat20,
-        'transaksi' => DB::selectOne("SELECT COUNT(a.no_order) AS ttl_invoice, SUM(a.discount) as discount, SUM(a.voucher) as voucher, sum(if(total_bayar = 0 ,0,a.round)) as rounding, a.id_lokasi, 
-        SUM(a.total_orderan) AS rp, d.unit, a.no_order, sum(a.dp) as dp, sum(a.gosen) as gosend, sum(a.service) as ser, sum(a.tax) as tax,f.qty_void, f.void,
-        SUM(a.cash) as cash, SUM(a.d_bca) as d_bca, SUM(a.k_bca) as k_bca, SUM(a.d_mandiri) as d_mandiri, SUM(a.k_mandiri) as k_mandiri,SUM(a.d_bri) as d_bri, SUM(a.k_bri) as k_bri, SUM(total_bayar) as total_bayar
-        
-        FROM tb_transaksi AS a
-        
-        LEFT JOIN(
-        SELECT SUM(b.qty) AS unit , b.no_order, b.id_lokasi
-        FROM tb_order AS b
-        WHERE b.tgl BETWEEN '$tgl1' AND '$tgl2' AND b.id_lokasi = '$loc' AND b.void = 0
-        GROUP BY b.id_lokasi
-        )AS d ON d.id_lokasi = a.id_lokasi
-        
-        LEFT JOIN(
-        SELECT SUM(e.void) AS void , COUNT(e.void) AS qty_void, e.no_order, e.id_lokasi
-        FROM tb_order AS e
-        WHERE e.tgl BETWEEN '$tgl1' AND '$tgl2' AND e.id_lokasi = '$loc' AND e.void != '0'
-        GROUP BY e.id_lokasi
-        )AS f ON f.id_lokasi = a.id_lokasi
-        
-        
-        where a.tgl_transaksi BETWEEN '$tgl1' AND '$tgl2' and a.id_lokasi = '$loc'
-        GROUP BY a.id_lokasi"),
-
-        'kategori' => DB::select("SELECT b.nm_menu, c.kategori ,sum(e.harga2) as hargaT, sum(a.qty) AS qty
-    FROM tb_order AS a 
-    LEFT JOIN view_menu2 AS b ON b.id_harga = a.id_harga
-    left join tb_kategori as c on c.kd_kategori = b.id_kategori
-
-    left join(select d.id_harga, d.id_order, (d.harga * d.qty) as harga2 from tb_order as d 
-    WHERE d.tgl BETWEEN '$tgl1' AND '$tgl2' and d.id_lokasi = '$loc' and d.id_distribusi = '1'
-    group by d.id_order) as e on e.id_order = a.id_order           
-            
-    WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' and a.id_lokasi = '$loc' and a.id_distribusi = '1' 
-    GROUP BY b.id_kategori"),
-
-        'gojek' => DB::select("SELECT b.nm_menu, c.kategori, sum(e.harga2) as harga, sum(a.qty) AS qty
-        FROM tb_order AS a 
-        LEFT JOIN view_menu2 AS b ON b.id_harga = a.id_harga
-        left join tb_kategori as c on c.kd_kategori = b.id_kategori
-        left join(select d.id_harga, d.id_order, (d.harga * d.qty) as harga2 from tb_order as d 
-    WHERE d.tgl BETWEEN '$tgl1' AND '$tgl2' and d.id_lokasi = '$loc' and d.id_distribusi = '2'
-    group by d.id_order) as e on e.id_order = a.id_order  
-                WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' and a.id_lokasi = '$loc' and a.id_distribusi = '2'
-                GROUP BY b.id_kategori"),
-
+        'transaksi' => $transaksi,
         'total_gojek' => $total_gojek,
         'total_not_gojek' => $total_not_gojek,
-        'jml_telat' => $jml_telat,
         'lokasi' => $loc,
-        'jml_ontime' => $jml_ontime,
         'majo' => $majo,
         'majo_gojek' => $majo_gojek,
-        'void' => DB::select("SELECT c.kategori,b.nm_menu,sum(a.void) as void, sum(a.harga) as harga FROM `tb_order` as a 
-                    LEFT JOIN view_menu2 as b on a.id_harga = b.id_harga
-                    left join tb_kategori as c on b.id_kategori = c.kd_kategori
-                    WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' AND a.void = 1 AND id_lokasi = '$loc'
-                    GROUP BY c.kd_kategori"),
+        'void' => $void,
+        'pembayaran' => $pembayaran,
+
+
     ];
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
