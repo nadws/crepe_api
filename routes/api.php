@@ -888,7 +888,7 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
                 group by a.id_akun_pembayaran
                 ");
 
-                    $transaksi = DB::selectOne("SELECT COUNT(a.no_order) AS ttl_invoice, SUM(a.discount) as discount, SUM(a.voucher) as voucher, sum(if(total_bayar = 0 ,0,a.round)) as rounding, a.id_lokasi, 
+    $transaksi = DB::selectOne("SELECT COUNT(a.no_order) AS ttl_invoice, SUM(a.discount) as discount, SUM(a.voucher) as voucher, sum(if(total_bayar = 0 ,0,a.round)) as rounding, a.id_lokasi, 
                     SUM(a.total_orderan) AS rp, d.unit, a.no_order, sum(a.dp) as dp, sum(a.gosen) as gosend, sum(a.service) as ser, sum(a.tax) as tax,f.qty_void, f.void,
                     SUM(a.cash) as cash, SUM(a.d_bca) as d_bca, SUM(a.k_bca) as k_bca, SUM(a.d_mandiri) as d_mandiri, SUM(a.k_mandiri) as k_mandiri,SUM(a.d_bri) as d_bri, SUM(a.k_bri) as k_bri, SUM(total_bayar) as total_bayar
                     
@@ -930,10 +930,12 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
 
     // ];
 
-    $pb1_gojek = ($total_gojek->total + $majo_gojek->bayar_majo * 0.8) / 11;
-    $totalSubtotal = $total_gojek->total + $majo_gojek->bayar_majo - $pb1_gojek + ($total_not_gojek->total + $majo->bayar_majo);
+    $service = $total_not_gojek->total * 0.07;
+    $pb1_not_gojek = ($total_not_gojek->total + $service) * 0.1;
+    $penjualan = $total_not_gojek->total + $service + $pb1_not_gojek;
+    
     $data = [
-        'totalSubtotal' => $totalSubtotal
+        'penjualan' => $penjualan
     ];
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
