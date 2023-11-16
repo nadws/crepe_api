@@ -950,6 +950,16 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
     $totalTotalTanpaDp = $transaksi->total_bayar;
     $totalTotalTambahDp = $transaksi->total_bayar + $dp;
 
+    $grabOnline = 0;
+    $gojekOnline = 0;
+    $shopeOnline = 0;
+    $bcaEdc = 0;
+    $briEdc = 0;
+    $mandiriEdc = 0;
+    $mandiriQris = 0;
+    $bcaTf = 0;
+    $cash = 0;
+
     $mapping = [
         '1' => 'grabOnline',
         '2' => 'gojekOnline',
@@ -961,13 +971,13 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
         '12' => 'bcaTf',
         '13' => 'cash',
     ];
-    
+
     foreach ($pembayaran as $p) {
         $key = $p->id_akun;
-    
+
         if (isset($mapping[$key])) {
             $target = $mapping[$key];
-            
+
             if (is_array($target)) {
                 foreach ($target as $t) {
                     $$t = $p->nominal;
@@ -977,8 +987,8 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
             }
         }
     }
-    
-    
+
+
 
     $data = [
         'penjualan' => [
@@ -1003,15 +1013,15 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
             'totalTambahDp' => $totalTotalTambahDp,
         ],
         'pembayaran' => [
-            'grabOnline' => $grabOnline ?? 0,
-            'gojekOnline' => $gojekOnline ?? 0,
-            'shopeOnline' => $shopeOnline ?? 0,
-            'bcaEdc' => $bcaEdc ?? 0,
-            'briEdc' => $briEdc ?? 0,
-            'mandiriEdc' => $mandiriEdc ?? 0,
-            'mandiriQris' => $mandiriQris ?? 0,
-            'bcaTf' => $bcaTf ?? 0,
-            'cash' => $cash ?? 0,
+            'grabOnline' => $grabOnline,
+            'gojekOnline' => $gojekOnline,
+            'shopeOnline' => $shopeOnline,
+            'bcaEdc' => $bcaEdc,
+            'briEdc' => $briEdc,
+            'mandiriEdc' => $mandiriEdc,
+            'mandiriQris' => $mandiriQris,
+            'bcaTf' => $bcaTf,
+            'cash' => $cash,
 
             'cashLama' => $transaksi->cash ?? 0,
             'bcaDebit' => $transaksi->d_bca ?? 0,
