@@ -203,7 +203,7 @@ $total_total = $total_gojek->total + $total_not_gojek->total + $service_charge +
                     <hr style="border-top: 2px dashed black">
                 </td>
             </tr>
-            <tr hidden>
+            <tr {{ $transaksi->cash == 0 ? 'hidden' : '' }}>
                 <td>Cash</td>
                 <td width="1%">:</td>
                 <td></td>
@@ -212,41 +212,41 @@ $total_total = $total_gojek->total + $total_not_gojek->total + $service_charge +
                 </td>
             </tr>
 
-            <tr>
+            <tr {{ $transaksi->d_bca == 0 ? 'hidden' : '' }}>
                 <td>BCA Debit</td>
                 <td width="1%">:</td>
                 <td></td>
                 <td style="text-align: right;"><?= number_format($transaksi->d_bca, 0) ?></td>
             </tr>
 
-            <tr>
+            <tr {{ $transaksi->k_bca == 0 ? 'hidden' : '' }}>
                 <td>BCA Kredit</td>
                 <td width="1%">:</td>
                 <td></td>
                 <td style="text-align: right;"><?= number_format($transaksi->k_bca, 0) ?></td>
             </tr>
 
-            <tr>
+            <tr {{ $transaksi->d_mandiri == 0 ? 'hidden' : '' }}>
                 <td>Mandiri Debit</td>
                 <td width="1%">:</td>
                 <td></td>
                 <td style="text-align: right;"><?= number_format($transaksi->d_mandiri, 0) ?></td>
             </tr>
 
-            <tr>
+            <tr {{ $transaksi->k_mandiri == 0 ? 'hidden' : '' }}>
                 <td>Mandiri Kredit</td>
                 <td width="1%">:</td>
                 <td></td>
                 <td style="text-align: right;"><?= number_format($transaksi->k_mandiri, 0) ?></td>
             </tr>
-            <tr>
+            <tr {{ $transaksi->d_bri == 0 ? 'hidden' : '' }}>
                 <td>Bri Debit</td>
                 <td width="1%">:</td>
                 <td></td>
                 <td style="text-align: right;"><?= number_format($transaksi->d_bri, 0) ?></td>
             </tr>
 
-            <tr>
+            <tr {{ $transaksi->k_bri == 0 ? 'hidden' : '' }}>
                 <td>Bri Kredit</td>
                 <td width="1%">:</td>
                 <td></td>
