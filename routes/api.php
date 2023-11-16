@@ -958,22 +958,26 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
         '5' => 'briEdc',
         '6' => 'mandiriEdc',
         '10' => 'mandiriQris',
-        '12' => ['bcaTf', 'cash'],
+        '12' => 'bcaTf',
+        '13' => 'cash',
     ];
     
     foreach ($pembayaran as $p) {
         $key = $p->id_akun;
     
         if (isset($mapping[$key])) {
-            if (is_array($mapping[$key])) {
-                foreach ($mapping[$key] as $target) {
-                    $target = $p->nominal;
+            $target = $mapping[$key];
+            
+            if (is_array($target)) {
+                foreach ($target as $t) {
+                    $$t = $p->nominal;
                 }
             } else {
-                $$mapping[$key] = $p->nominal;
+                $$target = $p->nominal;
             }
         }
     }
+    
     
 
     $data = [
