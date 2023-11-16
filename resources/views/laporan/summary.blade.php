@@ -165,6 +165,12 @@ $total_total = $total_gojek->total + $total_not_gojek->total + $service_charge +
                     <hr style="border-top: 2px dashed black">
                 </td>
             </tr>
+            @php
+                $pb1_all = $pb1_gojek + $pb1_not_gojek + $majo->bayar_majo * 0.1;
+                $total_all = $total_gojek->total + $majo_gojek->bayar_majo - $pb1_gojek + ($total_not_gojek->total + $majo->bayar_majo);
+
+                $sub_all = $pb1_all + $total_all + $service_charge;
+            @endphp
             <tr>
                 <td style="font-weight: bold;">total pb1</td>
                 <td style="font-weight: bold;" width="1%">:</td>
@@ -302,7 +308,8 @@ $total_total = $total_gojek->total + $total_not_gojek->total + $service_charge +
                 <td>rounding</td>
                 <td width="1%">:</td>
                 <td></td>
-                <td style="text-align: right;"><?= number_format($transaksi->rounding, 0) ?></td>
+                <td style="text-align: right;">
+                    <?= number_format($sub_all, 0) ?></td>
             </tr>
             <tr>
                 <td>dp</td>
