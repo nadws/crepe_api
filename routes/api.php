@@ -913,21 +913,27 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
                     GROUP BY a.id_lokasi");
 
 
+    // $data = [
+    //     'title'    => 'Summary',
+    //     'tgl1' => $tgl1,
+    //     'tgl2' => $tgl2,
+    //     'dp' => $dp,
+    //     'transaksi' => $transaksi,
+    //     'total_gojek' => $total_gojek,
+    //     'total_not_gojek' => $total_not_gojek,
+    //     'lokasi' => $loc,
+    //     'majo' => $majo,
+    //     'majo_gojek' => $majo_gojek,
+    //     'void' => $void,
+    //     'pembayaran' => $pembayaran,
+
+
+    // ];
+
+    $pb1_gojek = ($total_gojek->total + $majo_gojek->bayar_majo * 0.8) / 11;
+    $totalSubtotal = $total_gojek->total + $majo_gojek->bayar_majo - $pb1_gojek + ($total_not_gojek->total + $majo->bayar_majo);
     $data = [
-        'title'    => 'Summary',
-        'tgl1' => $tgl1,
-        'tgl2' => $tgl2,
-        'dp' => $dp,
-        'transaksi' => $transaksi,
-        'total_gojek' => $total_gojek,
-        'total_not_gojek' => $total_not_gojek,
-        'lokasi' => $loc,
-        'majo' => $majo,
-        'majo_gojek' => $majo_gojek,
-        'void' => $void,
-        'pembayaran' => $pembayaran,
-
-
+        'totalSubtotal' => $totalSubtotal
     ];
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
