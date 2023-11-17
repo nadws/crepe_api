@@ -908,6 +908,7 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
                     GROUP BY a.id_lokasi");
 
     $dp = $transaksi->dp ?? 0;
+    $total_bayar  = $transaksi->total_bayar ?? 0;
     $service_charge = $total_not_gojek->total * 0.07;
     $pb1_not_gojek = ($total_not_gojek->total + $service_charge) * 0.1;
     $penjualan = $total_not_gojek->total + $service_charge + $pb1_not_gojek;
@@ -916,7 +917,7 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
     $pb1_all = $pb1_gojek + $pb1_not_gojek + $majo->bayar_majo * 0.1;
     $totalSubtotal = $total_gojek->total + $majo_gojek->bayar_majo - $pb1_gojek + ($total_not_gojek->total + $majo->bayar_majo);
     $sub_all = $pb1_all + $totalSubtotal + $service_charge;
-    $rounding = $dp + $transaksi->total_bayar - $sub_all;
+    $rounding = $dp + $total_bayar - $sub_all;
 
 
     $pnjlGojek = ($total_gojek->total + $majo_gojek->bayar_majo - $pb1_gojek) + $pb1_gojek;
@@ -924,8 +925,8 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
     $pnjlStk = $majo->bayar_majo + ($majo->bayar_majo * 0.1);
 
     $totalPb1 = $pb1_gojek + $pb1_not_gojek + $majo->bayar_majo * 0.1;
-    $totalTotalTanpaDp = $transaksi->total_bayar;
-    $totalTotalTambahDp = $transaksi->total_bayar + $dp;
+    $totalTotalTanpaDp = $total_bayar;
+    $totalTotalTambahDp = $total_bayar + $dp;
 
     $grabOnline = 0;
     $gojekOnline = 0;
