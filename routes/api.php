@@ -874,11 +874,6 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
     $dp = DB::selectOne("SELECT SUM(a.jumlah) AS jumlah_dp
         FROM tb_dp AS a
         WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' and a.id_lokasi = '$loc'");
-    $void = DB::select("SELECT c.kategori,b.nm_menu,sum(a.void) as void, sum(a.harga) as harga FROM `tb_order` as a 
-            LEFT JOIN view_menu2 as b on a.id_harga = b.id_harga
-            left join tb_kategori as c on b.id_kategori = c.kd_kategori
-            WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' AND a.void = 1 AND id_lokasi = '$loc'
-            GROUP BY c.kd_kategori");
 
     $pembayaran = DB::select("SELECT b.id_akun_pembayaran as id_akun,b.nm_akun, c.nm_klasifikasi, sum(a.nominal) as nominal, a.pengirim
                 FROM pembayaran as a 
@@ -913,23 +908,6 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
                     GROUP BY a.id_lokasi");
 
 
-    // $data = [
-    //     'title'    => 'Summary',
-    //     'tgl1' => $tgl1,
-    //     'tgl2' => $tgl2,
-    //     'dp' => $dp,
-    //     'transaksi' => $transaksi,
-    //     'total_gojek' => $total_gojek,
-    //     'total_not_gojek' => $total_not_gojek,
-    //     'lokasi' => $loc,
-    //     'majo' => $majo,
-    //     'majo_gojek' => $majo_gojek,
-    //     'void' => $void,
-    //     'pembayaran' => $pembayaran,
-
-
-    // ];
-
     $service_charge = $total_not_gojek->total * 0.07;
     $pb1_not_gojek = ($total_not_gojek->total + $service_charge) * 0.1;
     $penjualan = $total_not_gojek->total + $service_charge + $pb1_not_gojek;
@@ -945,7 +923,7 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
 
     $pnjlStk = $majo->bayar_majo + ($majo->bayar_majo * 0.1);
 
-    $dp = $transaksi->dp;
+    $dp = $transaksi->dp ?? 0;
     $totalPb1 = $pb1_gojek + $pb1_not_gojek + $majo->bayar_majo * 0.1;
     $totalTotalTanpaDp = $transaksi->total_bayar;
     $totalTotalTambahDp = $transaksi->total_bayar + $dp;
