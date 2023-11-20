@@ -76,6 +76,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
                         <td style="font-weight: bold;" class="text-end">{{ number_format($total_diskon, 0) }}</td>
                         <td style="font-weight: bold;" class="text-end">{{ number_format($total, 0) }}</td>
                     </tr>

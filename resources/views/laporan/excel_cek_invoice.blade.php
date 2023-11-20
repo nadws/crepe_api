@@ -70,6 +70,7 @@ header("Content-Disposition: attachment; filename=$file");
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
                         <td style="font-weight: bold">{{ number_format($total_diskon, 0) }}</td>
                         <td style="font-weight: bold">{{ number_format($total, 0) }}</td>
                     </tr>
