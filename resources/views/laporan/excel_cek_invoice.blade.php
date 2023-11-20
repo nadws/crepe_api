@@ -42,6 +42,7 @@ header("Content-Disposition: attachment; filename=$file");
                 <tbody>
                     @php
                         $total = 0;
+                        $total_diskon = 0;
                     @endphp
                     @foreach ($invoice as $no => $i)
                         @php
@@ -58,6 +59,7 @@ header("Content-Disposition: attachment; filename=$file");
                         </tr>
                         @php
                             $total += $i->nominal;
+                            $total_diskon += $i->diskon_bank;
                         @endphp
                     @endforeach
                 </tbody>
@@ -68,7 +70,7 @@ header("Content-Disposition: attachment; filename=$file");
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
+                        <td style="font-weight: bold">{{ number_format($total_diskon, 0) }}</td>
                         <td style="font-weight: bold">{{ number_format($total, 0) }}</td>
                     </tr>
                 </tfoot>
