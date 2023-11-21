@@ -2,9 +2,9 @@
 @section('content')
     <style>
         /* .icon-menu:hover{
-                                                                                                                                                                                                background: #C8BED8;
-                                                                                                                                                                                                border-radius: 50px;
-                                                                                                                                                                                            } */
+                                                                                                                                                                                                        background: #C8BED8;
+                                                                                                                                                                                                        border-radius: 50px;
+                                                                                                                                                                                                    } */
 
         h6 {
             color: #155592;
@@ -116,9 +116,9 @@
 
                 </div>
                 <!-- <div class="modal-footer">
-                                                                                                                                                                                                                <button type="button" class="btn btn-costume" data-dismiss="modal">Close</button>
-                                                                                                                                                                                                                <button type="submit" class="btn btn-costume">Edit/Save</button>
-                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                        <button type="button" class="btn btn-costume" data-dismiss="modal">Close</button>
+                                                                                                                                                                                                                        <button type="submit" class="btn btn-costume">Edit/Save</button>
+                                                                                                                                                                                                                    </div> -->
             </div>
         </div>
     </div>
@@ -137,12 +137,12 @@
                 console.log(kat);
                 $.ajax({
                     type: "GET",
-                    url: "{{route('laporan_ibu')}}",
+                    url: "{{ route('laporan_ibu') }}",
                     data: {
-                        tgl1:tgl1,
-                        tgl2:tgl2,
+                        tgl1: tgl1,
+                        tgl2: tgl2,
                     },
-                    success: function (r) {
+                    success: function(r) {
                         $("#laporanIbu").html(r);
                     }
                 });

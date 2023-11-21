@@ -15,6 +15,7 @@
                     <th>Nama Akun</th>
                     <th>Jenis pembayaran</th>
                     <th>CFM</th>
+                    <th class="text-right">Diskon Bank</th>
                     <th class="text-right">Total Rp</th>
                 </tr>
             </thead>
@@ -30,6 +31,7 @@
                         <td>PENJUALAN {{ $i->id_distribusi == '1' ? $lokasi : 'GOJEK' }}</td>
                         <td>{{ $i->nm_akun . ' ' . $i->nm_klasifikasi }} {{ $i->pengirim }}</td>
                         <td>{{ $i->no_nota }}</td>
+                        <td align="right">{{ number_format($i->diskon_bank, 0) }}</td>
                         <td align="right">{{ number_format($i->nominal, 0) }}</td>
                     </tr>
                 @endforeach

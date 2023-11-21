@@ -599,7 +599,7 @@ class LaporanController extends Controller
     {
         $loc = $r->session()->get('id_lokasi');
         $data = [
-            'invoice' => DB::select("SELECT a.tgl, a.id_akun_pembayaran, a.no_nota, b.nm_akun, c.nm_klasifikasi, a.nominal, d.id_distribusi, d.id_lokasi, a.pengirim
+            'invoice' => DB::select("SELECT a.tgl, a.id_akun_pembayaran, a.no_nota, b.nm_akun, c.nm_klasifikasi, a.nominal, d.id_distribusi, d.id_lokasi, a.pengirim, a.diskon_bank
             FROM pembayaran as a
             left JOIN akun_pembayaran as b on b.id_akun_pembayaran = a.id_akun_pembayaran
             left join klasifikasi_pembayaran as c on c.id_klasifikasi_pembayaran = b.id_klasifikasi
@@ -620,7 +620,7 @@ class LaporanController extends Controller
     {
         $loc = $r->session()->get('id_lokasi');
         $data = [
-            'invoice' => DB::select("SELECT a.tgl, a.id_akun_pembayaran, a.no_nota, b.nm_akun, c.nm_klasifikasi, a.nominal, d.id_distribusi, d.id_lokasi
+            'invoice' => DB::select("SELECT a.tgl, a.id_akun_pembayaran, a.no_nota, b.nm_akun, c.nm_klasifikasi, a.nominal, d.id_distribusi, d.id_lokasi, a.diskon_bank
             FROM pembayaran as a
             left JOIN akun_pembayaran as b on b.id_akun_pembayaran = a.id_akun_pembayaran
             left join klasifikasi_pembayaran as c on c.id_klasifikasi_pembayaran = b.id_klasifikasi
@@ -641,7 +641,7 @@ class LaporanController extends Controller
     {
         $loc = $r->session()->get('id_lokasi');
         $data = [
-            'invoice' => DB::select("SELECT a.tgl, a.id_akun_pembayaran, a.no_nota, b.nm_akun, c.nm_klasifikasi, a.nominal, d.id_distribusi, d.id_lokasi
+            'invoice' => DB::select("SELECT a.tgl, a.id_akun_pembayaran, a.no_nota, b.nm_akun, c.nm_klasifikasi, a.nominal, d.id_distribusi, d.id_lokasi,  a.diskon_bank
             FROM pembayaran as a
             left JOIN akun_pembayaran as b on b.id_akun_pembayaran = a.id_akun_pembayaran
             left join klasifikasi_pembayaran as c on c.id_klasifikasi_pembayaran = b.id_klasifikasi

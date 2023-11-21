@@ -104,7 +104,7 @@
                 <span style="font-weight: bold;"> SUBTOTAL </span>
             </td>
             <td style="font-weight: bold; font-size: 20px; text-align:center;" width="8%">
-                <?= number_format($s_total) ?>
+                <?= number_format($s_total + $s_total_majo) ?>
             </td>
 
             <td width="15%" align="right">

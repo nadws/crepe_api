@@ -42,17 +42,20 @@
                         <th class="text-center">Nama Akun</th>
                         <th class="text-center">Jenis Pembayaran</th>
                         <th class="text-center">CFM</th>
-                        <th class="text-center">Total Rp</th>
+                        <th class="text-right">Diskon Bank</th>
+                        <th class="text-right">Total Rp</th>
                     </tr>
                 </thead>
                 <tbody>
                     @php
                         $total = 0;
+                        $total_diskon = 0;
                     @endphp
                     @foreach ($invoice as $no => $i)
                         @php
                             $lokasi = $i->id_lokasi == '1' ? 'TAKEMORI' : 'SOONDOBU';
                             $total += $i->nominal;
+                            $total_diskon += $i->diskon_bank;
                         @endphp
                         <tr>
                             <td>{{ $no + 1 }}</td>
@@ -61,6 +64,7 @@
                             <td>PENJUALAN {{ $i->id_distribusi == '1' ? $lokasi : 'GOJEK' }}</td>
                             <td>{{ $i->nm_akun . ' ' . $i->nm_klasifikasi }}</td>
                             <td>{{ $i->no_nota }}</td>
+                            <td align="right">{{ number_format($i->diskon_bank, 0) }}</td>
                             <td align="right">{{ number_format($i->nominal, 0) }}</td>
                         </tr>
                     @endforeach
@@ -73,6 +77,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td style="font-weight: bold;" class="text-end">{{ number_format($total_diskon, 0) }}</td>
                         <td style="font-weight: bold;" class="text-end">{{ number_format($total, 0) }}</td>
                     </tr>
                 </tfoot>
