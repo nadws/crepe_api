@@ -916,8 +916,7 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
     $pb1_gojek = ($total_gojek->total + $majo_gojek->bayar_majo * 0.8) / 11;
     $pb1_all = $pb1_gojek + $pb1_not_gojek + $majo->bayar_majo * 0.1;
     $totalSubtotal = $total_gojek->total + $majo_gojek->bayar_majo - $pb1_gojek + ($total_not_gojek->total + $majo->bayar_majo);
-    $ttlPb1 = $pb1_gojek + $pb1_not_gojek + $majo->bayar_majo * 0.1;
-    $sub_all = $totalSubtotal - $transaksi->voucher + $ttlPb1 + $service_charge;
+    $sub_all = $pb1_all + $totalSubtotal + $service_charge;
     $rounding = $dp + $total_bayar - $sub_all;
 
 
