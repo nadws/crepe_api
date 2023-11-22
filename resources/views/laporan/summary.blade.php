@@ -169,7 +169,7 @@ $total_total = $total_gojek->total + $total_not_gojek->total + $service_charge +
                 $pb1_all = $pb1_gojek + $pb1_not_gojek + $majo->bayar_majo * 0.1;
                 $total_all = $total_gojek->total + $majo_gojek->bayar_majo - $pb1_gojek + ($total_not_gojek->total + $majo->bayar_majo);
 
-                $sub_all = $pb1_all + $total_all + $service_charge;
+                $sub_all = $pb1_all + $total_all + $service_charge - $transaksi->discount;
             @endphp
             <tr>
                 <td style="font-weight: bold;">total pb1</td>
