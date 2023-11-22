@@ -168,15 +168,17 @@ $total_total = $total_gojek->total + $total_not_gojek->total + $service_charge +
             @php
                 $pb1_all = $pb1_gojek + $pb1_not_gojek + $majo->bayar_majo * 0.1;
                 $total_all = $total_gojek->total + $majo_gojek->bayar_majo - $pb1_gojek + ($total_not_gojek->total + $majo->bayar_majo);
-
-                $sub_all = $pb1_all + $total_all + $service_charge - $transaksi->discount;
+                $ttlSubtotal = $total_gojek->total + $majo_gojek->bayar_majo - $pb1_gojek + ($total_not_gojek->total + $majo->bayar_majo);
+                $ttlPb1 = $pb1_gojek + $pb1_not_gojek + $majo->bayar_majo * 0.1;
+                // $sub_all = $pb1_all + $total_all + $service_charge;
+                $sub_all = $ttlSubtotal - $transaksi->discount + $ttlPb1 + $service_charge;
             @endphp
             <tr>
                 <td style="font-weight: bold;">total pb1</td>
                 <td style="font-weight: bold;" width="1%">:</td>
                 <td></td>
                 <td style="text-align: right;font-weight: bold;">
-                    <?= number_format($pb1_gojek + $pb1_not_gojek + $majo->bayar_majo * 0.1, 0) ?>
+                    <?= number_format($ttlPb1, 0) ?>
                 </td>
             </tr>
 
@@ -193,7 +195,7 @@ $total_total = $total_gojek->total + $total_not_gojek->total + $service_charge +
                 <td style="font-weight: bold;" width="1%">:</td>
                 <td></td>
                 <td style="text-align: right;font-weight: bold;">
-                    <?= number_format($total_gojek->total + $majo_gojek->bayar_majo - $pb1_gojek + ($total_not_gojek->total + $majo->bayar_majo), 0) ?>
+                    <?= number_format($ttlSubtotal, 0) ?>
                 </td>
             </tr>
 
