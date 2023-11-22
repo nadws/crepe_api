@@ -307,7 +307,7 @@ $total_total = $total_gojek->total + $total_not_gojek->total + $service_charge +
                 <td style="text-align: right;"><?= number_format($transaksi->tax, 0) ?></td>
             </tr> -->
             <tr>
-                <td>rounding</td>
+                <td>rounding {{$sub_all}}</td>
                 <td width="1%">:</td>
                 <td></td>
                 <td style="text-align: right;">
