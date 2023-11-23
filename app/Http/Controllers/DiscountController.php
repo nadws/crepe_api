@@ -35,7 +35,7 @@ class DiscountController extends Controller
                 'title' => 'Discount',
                 'logout' => $request->session()->get('logout'),
                 'disc' => Discount::where('lokasi', $id_lokasi)->orderBy('id_discount', 'desc')->get(),
-                'voucher' => Voucher::where('lokasi', $id_lokasi)->whereBetween('expired', [$tgl1,$tgl2])->orderBy('id_voucher', 'desc')->get(),
+                'voucher' => Voucher::where('lokasi', $id_lokasi)->orderBy('id_voucher', 'desc')->get(),
                 'diskonPeritem' => DB::select("SELECT 
                                         a.id_diskon,
                                         a.jenis,
