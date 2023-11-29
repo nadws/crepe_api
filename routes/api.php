@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\ApiInvoiceController;
 use App\Models\Absen;
 use Illuminate\Http\Request as r;
 use Illuminate\Support\Facades\Route;
@@ -1011,3 +1011,4 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
     ];
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
+Route::get('/invoice_nanda', [ApiInvoiceController::class, 'invoice'])->name('invoice_nanda');
