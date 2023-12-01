@@ -391,7 +391,7 @@ class Server
 {
   public static function gaji_server($tgl1, $tgl2)
   {
-   return DB::select("SELECT a.tgl_masuk, a.nama, sum(c.qty_m) as m, sum(c.qty_e) as e, sum(c.qty_sp) as sp, sum(c.qty_off) as off,  b.rp_e, b.rp_m, b.rp_sp, b.g_bulanan,
+    return DB::select("SELECT a.tgl_masuk, a.nama, sum(c.qty_m) as m, sum(c.qty_e) as e, sum(c.qty_sp) as sp, sum(c.qty_off) as off,  b.rp_e, b.rp_m, b.rp_sp, b.g_bulanan,
    d.kasbon, e.denda, a.point, f.nm_posisi
    FROM tb_karyawan as a 
    left join tb_gaji as b on b.id_karyawan =  a.id_karyawan
@@ -422,8 +422,8 @@ class Server
    group by a.id_karyawan;");
   }
 
-  
-  
+
+
   public static function komstk($tgl1, $tgl2)
   {
     return DB::select("SELECT b.komisi, sum(a.total) as total, sum(a.total * (b.komisi/100)) as komisi_bagi, a.lokasi
@@ -433,7 +433,7 @@ class Server
     group by b.komisi , a.lokasi;");
   }
 
-  public static function penjualan_stk($id_lokasi,$tgl1, $tgl2)
+  public static function penjualan_stk($id_lokasi, $tgl1, $tgl2)
   {
     return DB::select("SELECT b.nm_produk, sum(a.jumlah) as jumlah, b.komisi, sum(a.total) as total, a.lokasi 
     FROM tb_pembelian as a 
@@ -441,7 +441,4 @@ class Server
     where a.tanggal BETWEEN '$tgl1' and '$tgl2' and b.komisi != '0' and a.lokasi = '$id_lokasi'
     group by a.id_produk");
   }
-
-
 }
-

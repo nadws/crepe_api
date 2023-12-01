@@ -651,7 +651,7 @@ class Point_masak extends Controller
             $sheet2->setCellValue('G' . $kolomTkm, $ttlAbsenTkm);
             $sheet2->setCellValue('H' . $kolomTkm, $k->rp_m);
             $sheet2->setCellValue('I' . $kolomTkm, $k->rp_e);
-            $sheet2->setCellValue('K' . $kolomTkm, $k->rp_sp);
+            $sheet2->setCellValue('J' . $kolomTkm, $k->rp_sp);
             $gaji = ($k->rp_m * $k->qty_m) + ($k->rp_e * $k->qty_e) + ($k->rp_sp * $k->qty_sp);
             $kom1 =  round(($k->point_berhasil / $point) * $kom, 0);
             $sheet2->setCellValue('K' . $kolomTkm, $gaji);
@@ -1062,7 +1062,7 @@ class Point_masak extends Controller
         $batasLapSdb = $kolapSdb - 1;
         $sheet4->getStyle('K1:Q' . $batasLapSdb)->applyFromArray($style);
 
-        
+
 
 
         // Start Denda
