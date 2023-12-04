@@ -34,7 +34,7 @@ class Export_gaji_server extends Controller
         $service_charge_tkm = PointQuery::getService(1, $tgl1, $tgl2);
         $service_charge_sdb = PointQuery::getService(2, $tgl1, $tgl2);
         $komstk = Server::komstk($tgl1, $tgl2);
-        $komisiMajo = Http::get("https://majoo-laravel.putrirembulan.com/api/kom_majo_server/$tgl1/$tgl2");
+        $komisiMajo = Http::get("https://majoo.ptagafood.com/api/kom_majo_server/$tgl1/$tgl2");
         $laporanMajo = $komisiMajo['komisi'];
         $jumlah_orang = DB::table('tb_jumlah_orang')->where('ket_karyawan', 'Server')->where('id_lokasi', 1)->first();
         $persen = DB::table('persentse_komisi')->where('nama_persentase', 'Server')->where('id_lokasi', 1)->first();
@@ -345,9 +345,9 @@ class Export_gaji_server extends Controller
         $sheet3 = $spreadsheet->getActiveSheet();
         $sheet3->setTitle('Penjualan MAJO Bagi Komisi');
 
-        $majo_takemori =  Http::get("https://majoo-laravel.putrirembulan.com/api/penjualn_server/TAKEMORI/$tgl1/$tgl2");
+        $majo_takemori =  Http::get("https://majoo.ptagafood.com/api/penjualn_server/TAKEMORI/$tgl1/$tgl2");
         $majo_tkmr = $majo_takemori['komisi'];
-        $majo_soondobu =  Http::get("https://majoo-laravel.putrirembulan.com/api/penjualn_server/SOONDOBU/$tgl1/$tgl2");
+        $majo_soondobu =  Http::get("https://majoo.ptagafood.com/api/penjualn_server/SOONDOBU/$tgl1/$tgl2");
         $majo_sdb = $majo_soondobu['komisi'];
 
         $sheet3

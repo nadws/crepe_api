@@ -61,14 +61,14 @@ class LaporanController extends Controller
         $tkmrTotal = $this->getQueryTransaksi($tgl1, $tgl2, 1)->dp + $this->getQueryTransaksi($tgl1, $tgl2, 1)->total_bayar;
         $sdbTotal = $this->getQueryTransaksi($tgl1, $tgl2, 2)->dp + $this->getQueryTransaksi($tgl1, $tgl2, 2)->total_bayar;
 
-        $komisiTkm = Http::get("https://majoo-laravel.putrirembulan.com/api/laporan/takemori/$tgl1/$tgl2");
+        $komisiTkm = Http::get("https://majoo.ptagafood.com/api/laporan/takemori/$tgl1/$tgl2");
         $laporanTkm = $komisiTkm['laporan'];
         $tkmrMajo = 0;
         foreach ($laporanTkm as $d) {
             $tkmrMajo += $d['total'];
         }
 
-        $komisiSdb = Http::get("https://majoo-laravel.putrirembulan.com/api/laporan/soondobu/$tgl1/$tgl2");
+        $komisiSdb = Http::get("https://majoo.ptagafood.com/api/laporan/soondobu/$tgl1/$tgl2");
         $laporanSdb = $komisiSdb['laporan'];
         $sdbMajo = 0;
         foreach ($laporanSdb as $d) {
@@ -117,6 +117,8 @@ class LaporanController extends Controller
         $dp = DB::selectOne("SELECT SUM(a.jumlah) AS jumlah_dp
         FROM tb_dp AS a
         WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' and a.id_lokasi = '$loc'");
+
+        
 
         $data = [
             'title'    => 'Summary',

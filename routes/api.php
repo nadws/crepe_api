@@ -31,6 +31,7 @@ use App\Models\Gaji;
 use App\Models\Orderan;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +45,7 @@ use Illuminate\Support\Facades\DB;
 */
 
 Route::get('komisi_gaji', function () {
-    $komisi = Http::get("https://majoo-laravel.putrirembulan.com/api/komisiGaji/1/2022-11-01/2022-11-09");
+    $komisi = Http::get("https:/majoo.ptagafood.com/api/komisiGaji/1/2022-11-01/2022-11-09");
     $kom = $komisi['komisi'];
     dd($kom[0]);
     return $kom;

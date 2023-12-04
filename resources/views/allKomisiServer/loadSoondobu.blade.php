@@ -89,7 +89,7 @@
                             {{ number_format(round($k->kom, 0), 0) }}
                         </td>
                         @php
-                            $komisiG = Http::get("https://majoo-laravel.putrirembulan.com/api/komisiGaji/2/$k->karyawan_majo/$tgl1/$tgl2");
+                            $komisiG = Http::get("https://majoo.ptagafood.com/api/komisiGaji/2/$k->karyawan_majo/$tgl1/$tgl2");
                             $komaj = empty($komisiG['komisi']) ? 0 : $komisiG['komisi'][0]['dt_komisi'];
                         @endphp 
                         <td style="text-align: right">

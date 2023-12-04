@@ -995,9 +995,9 @@ class Point_masak extends Controller
         $sheet4 = $spreadsheet->getActiveSheet();
         $sheet4->setTitle('Data Laporan Penjualan Majo');
 
-        $komisiTkm = Http::get("https://majoo-laravel.putrirembulan.com/api/laporan/takemori/$tgl1/$tgl2");
+        $komisiTkm = Http::get("https://majoo.ptagafood.com/api/laporan/takemori/$tgl1/$tgl2");
         $laporanTkm = $komisiTkm['laporan'];
-        $komisiSdb = Http::get("https://majoo-laravel.putrirembulan.com/api/laporan/soondobu/$tgl1/$tgl2");
+        $komisiSdb = Http::get("https://majoo.ptagafood.com/api/laporan/soondobu/$tgl1/$tgl2");
         $laporanSdb = $komisiSdb['laporan'];
 
         $sheet4

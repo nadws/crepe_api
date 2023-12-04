@@ -78,7 +78,7 @@ class KaryawanController extends Controller
             DB::table('tb_karyawan_majo')->insert($data3);
             Http::withHeaders([
                 'X-API-KEY' => '@Takemor.'
-            ])->get("https://majoo-laravel.putrirembulan.com/api/add_karyawan/$nm_karyawan");
+            ])->get("https://majoo.ptagafood.com/api/add_karyawan/$nm_karyawan");
 
             return redirect()->route('karyawan')->with('sukses', 'Berhasil tambah karyawan');
         }

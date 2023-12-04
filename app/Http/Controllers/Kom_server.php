@@ -170,7 +170,7 @@ class Kom_server extends Controller
         $lokasiApi = $id_lokasi == 1 ? 'takemori' : 'soondobu';
         
        
-        $komisi = Http::get("https://majoo-laravel.putrirembulan.com/api/komisi/$lokasiApi/$tgl1/$tgl2");
+        $komisi = Http::get("https://majoo.ptagafood.com/api/komisi/$lokasiApi/$tgl1/$tgl2");
        
     
         // $kom = $komisi['komisi'];
@@ -393,7 +393,7 @@ class Kom_server extends Controller
         
 
         $lokasiApi = $id_lokasi == 1 ? 'takemori' : 'soondobu';
-        // $komisi = Http::get("https://majoo-laravel.putrirembulan.com/api/komisi/$lokasiApi/$tgl1/$tgl2");
+        // $komisi = Http::get("https://majoo.ptagafood.com/api/komisi/$lokasiApi/$tgl1/$tgl2");
         
         // $komisiMajoo = $komisi['komisi'];
         // $dt_rules = $komisi['dt_rules'];
@@ -510,7 +510,7 @@ class Kom_server extends Controller
             $sheet->setCellValue('G' . $kolom, round($kom1, 0));
             $sheet->setCellValue('H' . $kolom, round($k->kom, 0));
             
-            $komisiG = Http::get("https://majoo-laravel.putrirembulan.com/api/komisiGaji/$id_lokasi/$k->karyawan_majo/$tgl1/$tgl2");
+            $komisiG = Http::get("https://majoo.ptagafood.com/api/komisiGaji/$id_lokasi/$k->karyawan_majo/$tgl1/$tgl2");
             $komaj = empty($komisiG['komisi']) ? 0 : $komisiG['komisi'][0]['dt_komisi'];
 
             $sheet->setCellValue('I' . $kolom, $komaj);
