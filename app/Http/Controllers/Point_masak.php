@@ -665,14 +665,15 @@ class Point_masak extends Controller
             $sheet2->setCellValue('R' . $kolomTkm, $k->point == 'Y' ? 'Ya' : 'Tidak');
             $sheet2->setCellValue('S' . $kolomTkm, $tKerja->y . ' Tahun ' . $tKerja->m . ' Bulan');
             $kolomTkm++;
+            $i++;
         }
         $batas = $absenTkm;
         $batasA = count($batas) + 2;
         $sheet2->getStyle('A2:S' . $batasA)->applyFromArray($style);
         $rowSdba = $batasA;
-        $rSdba = $rowSdba + 1;
+        $rSdba = $rowSdba;
         $kolomSdba = $rSdba;
-        $i = 1;
+        // $i = 1;
         $ttlAbsenSdb = 0;
         foreach ($absenSdb as $k) {
             $ttlAbsenSdb = $k->qty_m + $k->qty_e + $k->qty_sp;
@@ -702,7 +703,6 @@ class Point_masak extends Controller
             $sheet2->setCellValue('S' . $kolomSdba, $tKerja->y . ' Tahun ' . $tKerja->m . ' Bulan');
             $kolomSdba++;
         }
-
         $batasAwala = $rowSdba + 1;
         $batasSdba = $kolomSdba - 1;
 
