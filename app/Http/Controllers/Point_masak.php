@@ -665,7 +665,7 @@ class Point_masak extends Controller
             $sheet2->setCellValue('R' . $kolomTkm, $k->point == 'Y' ? 'Ya' : 'Tidak');
             $sheet2->setCellValue('S' . $kolomTkm, $tKerja->y . ' Tahun ' . $tKerja->m . ' Bulan');
             $kolomTkm++;
-            $i++;
+            // $i++;
         }
         $batas = $absenTkm;
         $batasA = count($batas) + 2;
