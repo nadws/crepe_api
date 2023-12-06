@@ -14,6 +14,12 @@ class ApiInvoiceModel extends Model
         $result = DB::select("SELECT a.tgl_transaksi, a.no_order, sum(a.total_orderan ) as sub_total , 
         sum(if(b.bayar is null ,0, b.bayar)) as stk,
         sum(a.voucher) as voucher , 
+        GREATEST(
+    sum(a.total_orderan) - 
+    sum(a.voucher) - 
+    round(( (a.total_orderan + if(b.bayar is null,0,b.bayar) - a.voucher + a.service + a.tax) *  (a.discount / 100)), 0),
+    0
+) AS penjualanKurangVoucherDiskon,
         sum(a.service) as service, 
         sum(a.tax) as  tax, 
         round(( (a.total_orderan + if(b.bayar is null,0,b.bayar) - a.voucher + a.service + a.tax) *  (a.discount / 100)),0) as discount,
