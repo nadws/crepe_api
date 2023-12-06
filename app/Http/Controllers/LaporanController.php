@@ -106,19 +106,21 @@ class LaporanController extends Controller
         $jml_telat20 = DB::selectOne("SELECT SUM(qty) AS jml_telat FROM view_koki_masak WHERE tgl >= '$tgl1' AND tgl <= '$tgl2' AND id_lokasi = $loc AND menit_bagi > 20");
         $jml_ontime = DB::selectOne("SELECT SUM(qty) AS jml_ontime FROM view_koki_masak WHERE tgl >= '$tgl1' AND tgl <= '$tgl2' AND id_lokasi = $loc AND menit_bagi <= 25");
 
-        $majo = DB::selectOne("SELECT SUM(a.bayar) AS bayar_majo
+        $majo = DB::selectOne("SELECT sum(a.bayar) AS bayar_majo , a.no_nota, b.no_order
         FROM tb_invoice AS a
-        WHERE a.tgl_jam BETWEEN '$tgl1' AND '$tgl2' and a.lokasi = '$loc' and a.id_distribusi = '1'");
+        left join tb_transaksi as b on b.no_order = a.no_nota
+        WHERE a.tgl_jam BETWEEN '$tgl1' AND '$tgl2' and a.lokasi = '1' and a.id_distribusi = '1' and b.no_order is not null;");
 
         $majo_gojek = DB::selectOne("SELECT SUM(a.bayar) AS bayar_majo
         FROM tb_invoice AS a
-        WHERE a.tgl_jam BETWEEN '$tgl1' AND '$tgl2' and a.lokasi = '$loc' and a.id_distribusi = '2'");
+        left join tb_transaksi as b on b.no_order = a.no_nota
+        WHERE a.tgl_jam BETWEEN '$tgl1' AND '$tgl2' and a.lokasi = '$loc' and a.id_distribusi = '2'and b.no_order is not null;");
 
         $dp = DB::selectOne("SELECT SUM(a.jumlah) AS jumlah_dp
         FROM tb_dp AS a
         WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' and a.id_lokasi = '$loc'");
 
-        
+
 
         $data = [
             'title'    => 'Summary',
