@@ -36,7 +36,7 @@ d.nm_akun, if(d.nominal is null ,0,d.nominal) as nominal , if(d.diskon_bank is n
         where c.id_lokasi = ? and c.tgl BETWEEN ? and ?
             group by c.no_order2 ) as c on c.no_order2 = a.no_order 
             left join (
-                SELECT d.no_nota, e.id_akun, e.nm_akun, sum(d.nominal) as nominal, sum(d.diskon_bank) as diskon_bank
+                SELECT d.no_nota, e.id_akun_pembayaran, e.nm_akun, sum(d.nominal) as nominal, sum(d.diskon_bank) as diskon_bank
                 FROM pembayaran as d 
                 left join akun_pembayaran as e on e.id_akun_pembayaran = d.id_akun_pembayaran
                 GROUP by d.no_nota
