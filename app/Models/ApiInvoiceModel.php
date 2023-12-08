@@ -42,7 +42,7 @@ d.nm_akun, if(d.nominal is null ,0,d.nominal) as nominal , if(d.diskon_bank is n
                 left join klasifikasi_pembayaran as f on f.id_klasifikasi_pembayaran = e.id_klasifikasi
                 GROUP by d.no_nota
             ) as d on d.no_nota = a.no_order
-            where a.tgl_transaksi BETWEEN ? and ? and a.id_lokasi = ? and c.id_distribusi = ?
+            where a.tgl_transaksi BETWEEN ? and ? and a.id_lokasi = ? and c.id_distribusi = ? and a.total_orderan  != 0
             GROUP by a.no_order; 
         ;", [$id_lokasi, $tgl1, $tgl2, $tgl1, $tgl2, $id_lokasi, $id_distribusi]);
 
