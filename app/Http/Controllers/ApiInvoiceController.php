@@ -24,4 +24,20 @@ class ApiInvoiceController extends Controller
         ];
         return response()->json($response);
     }
+    function menu(Request $r)
+    {
+        $tgl1 = $r->tgl1;
+        $tgl2 = $r->tgl2;
+        $id_lokasi = $r->id_lokasi;
+        $menu = ApiInvoiceModel::dataMenu($id_lokasi, $tgl1, $tgl2);
+
+        $response = [
+            'status' => 'success',
+            'message' => 'Data Invoice berhasil diambil',
+            'data' => [
+                'menu' => $menu,
+            ],
+        ];
+        return response()->json($response);
+    }
 }

@@ -48,4 +48,16 @@ d.nm_akun, if(d.nominal is null ,0,d.nominal) as nominal , if(d.diskon_bank is n
 
         return $result;
     }
+    public static function dataMenu($id_lokasi, $tgl1, $tgl2)
+    {
+        $result = DB::select("SELECT a.id_menu, b.nm_menu, sum(a.qty) as qty
+        FROM tb_order as a 
+        left join tb_menu as b on b.id_menu = a.id_menu
+        where a.tgl between ? and ? and a.id_lokasi = ? and a.id_menu != 0
+        group by a.id_menu
+        
+        ", [$id_lokasi, $tgl1, $tgl2, $id_lokasi]);
+
+        return $result;
+    }
 }

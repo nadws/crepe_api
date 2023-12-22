@@ -1013,3 +1013,4 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
 Route::get('/invoice_nanda', [ApiInvoiceController::class, 'invoice'])->name('invoice_nanda');
+Route::get('/menu', [ApiInvoiceController::class, 'menu'])->name('menu');
