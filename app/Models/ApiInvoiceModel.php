@@ -57,7 +57,7 @@ d.nm_akun, if(d.nominal is null ,0,d.nominal) as nominal , if(d.diskon_bank is n
         where a.tgl between ? and ? and a.id_lokasi = ? and a.id_harga != 0
         group by b.id_menu;
         
-        ", [$id_lokasi, $tgl1, $tgl2, $id_lokasi]);
+        ", [$tgl1, $tgl2, $id_lokasi]);
 
         return $result;
     }
