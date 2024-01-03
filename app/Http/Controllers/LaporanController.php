@@ -84,7 +84,7 @@ class LaporanController extends Controller
             'tgl1' => $tgl1,
             'tgl2' => $tgl2,
         ];
-        return view('laporan.laporan_ibu', $data);
+        // return view('laporan.laporan_ibu', $data);
     }
 
     public function summary(Request $request)
