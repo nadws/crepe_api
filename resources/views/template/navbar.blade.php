@@ -43,12 +43,19 @@
                 @endforeach
                 <li>
                     <a href="{{ route('penjualan_per_item') }}"><img
-                            src="{{ asset('assets') }}/img_menu/cross-selling.png"><span>Per-Item</span>
+                            src="{{ asset('assets') }}/img_menu/cross-selling.png"><span>Penjualan Per-Item
+                            Setahun</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('stok_adm') }}"><img
                             src="{{ asset('assets') }}/img_menu/stock.png"><span>Stok</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('bahandanmenu') }}"><img src="{{ asset('assets') }}/img_menu/menu.png"><span>Menu
+                            dan
+                            Bahan</span>
                     </a>
                 </li>
                 <li class="dropdown"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <img

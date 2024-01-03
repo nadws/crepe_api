@@ -22,6 +22,7 @@ class ApiInvoiceModel extends Model
 ) AS penjualanKurangVoucherDiskon,
         sum(a.service) as service, 
         sum(a.tax) as  tax, 
+        sum(a.dp) as dp,
         round(( (a.total_orderan + if(b.bayar is null,0,b.bayar) - a.voucher + a.service + a.tax) *  (a.discount / 100)),0) as discount,
         round((a.total_orderan + if(b.bayar is null,0,b.bayar) - a.voucher + a.service + a.tax) - ( (a.total_orderan + if(b.bayar is null,0,b.bayar) - a.voucher + a.service + a.tax) *  (a.discount / 100)),0 ) as ttl_sebelum_round,
         sum(a.total_bayar) as total_bayar,

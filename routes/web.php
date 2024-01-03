@@ -71,6 +71,12 @@ use App\Http\Controllers\PenjualanPeritemController;
 //     return view('welcome');
 // });
 Route::get('/order', [OrderController::class, 'index'])->name('order');
+Route::get('/bahandanmenu', function () {
+    $data = [
+        'title' => 'bahan dan menu'
+    ];
+    return view('bahandanmen', $data);
+})->name('bahandanmenu');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/loginTakemori', [LoginTakemoriController::class, 'index'])->name('loginTakemori');
