@@ -109,7 +109,7 @@ class LaporanController extends Controller
         $majo = DB::selectOne("SELECT sum(a.bayar) AS bayar_majo , a.no_nota, b.no_order
         FROM tb_invoice AS a
         left join tb_transaksi as b on b.no_order = a.no_nota
-        WHERE a.tgl_jam BETWEEN '$tgl1' AND '$tgl2' and a.lokasi = '1' and a.id_distribusi = '1' and b.no_order is not null;");
+        WHERE a.tgl_jam BETWEEN '$tgl1' AND '$tgl2' and a.lokasi = '$loc' and a.id_distribusi = '1' and b.no_order is not null;");
 
         $majo_gojek = DB::selectOne("SELECT SUM(a.bayar) AS bayar_majo
         FROM tb_invoice AS a
