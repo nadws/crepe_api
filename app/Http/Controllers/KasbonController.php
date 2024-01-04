@@ -25,7 +25,9 @@ class KasbonController extends Controller
                 'title' => 'Data Kasbon',
                 'logout' => $r->session()->get('logout'),
                 'kasbon' => Kasbon::whereBetween('tgl', [$tgl1,$tgl2])->orderBy('id_kasbon','desc')->get(),
-                'karyawan' => Karyawan::all()
+                'karyawan' => Karyawan::all(),
+                'tgl1' => $tgl1,
+                'tgl2' => $tgl2,
             ];
     
             return view('kasbon.kasbon', $data);

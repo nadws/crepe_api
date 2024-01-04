@@ -23,7 +23,7 @@
                                 <h5 class="float-left">Data Kasbon</h5>
                                 <a href="" data-toggle="modal" data-target="#tambah"
                                     class="btn btn-info btn-sm float-right"><i class="fas fa-plus"></i> Tambah kasbon</a>
-                                <a href="#" data-toggle="modal" data-target="#print"
+                                <a href="{{route('printKasbon', ['tgl1' => $tgl1, 'tgl2' => $tgl2])}}"
                                     class="btn btn-info btn-sm float-right mr-2"><i class="fas fa-print"></i> Print
                                     kasbon</a>
                                 <a href="#" data-toggle="modal" data-target="#view"
@@ -125,39 +125,7 @@
         </div>
     </form>
     {{-- print --}}
-    <form action="{{ route('printKasbon') }}" method="GET">
-        <div class="modal fade" id="print" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg-max" role="document">
-                <div class="modal-content ">
-                    <div class="modal-header btn-costume">
-                        <h5 class="modal-title text-light" id="exampleModalLabel">Print kasbon</h5>
-                        <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="">Dari</label>
-                                    <input class="form-control" type="date" name="dari">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="">Sampai</label>
-                                    <input class="form-control" type="date" name="sampai">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Save</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
+   
     {{-- ------------------------------------ --}}
     <form action="{{ route('addKasbon') }}" method="post" accept-charset="utf-8">
         @csrf
