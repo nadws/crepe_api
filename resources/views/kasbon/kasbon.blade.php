@@ -231,6 +231,8 @@
 @section('script')
     <script>
         $(document).ready(function() {
+            $('.select').select2()
+
             var count = 1;
             $('.tbh').click(function() {
                 count = count + 1;
