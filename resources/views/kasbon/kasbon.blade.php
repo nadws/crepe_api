@@ -41,7 +41,13 @@
                                                     <tr>
                                                         <th>No</th>
                                                         <th>Nama</th>
-                                                        <th>Nominal</th>
+                                                        @php
+                                                        $ttl = 0;
+                                                            foreach($kasbon as $k) {
+                                                                $ttl += $k->nominal;
+                                                            }
+                                                        @endphp
+                                                        <th>Nominal (Rp. {{number_format($ttl,0)}})</th>
                                                         <th>Tanggal</th>
                                                         <th>Admin</th>
                                                         <th>Aksi</th>
