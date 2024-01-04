@@ -34,19 +34,22 @@ class KasbonController extends Controller
         }
     }
 
-    public function addKasbon(Request $request)
+    public function addKasbon(Request $r)
     {   
-        $nm_karyawan = $request->nama;
-        $nominal = $request->nominal;
-        $tgl = $request->tgl;
+        $nm_karyawan = $r->nama;
+        $nominal = $r->nominal;
+        $tgl = $r->tgl;
         for ($i=0; $i < count($nm_karyawan) ; $i++) { 
-            $data = [
-                'nm_karyawan' => $nm_karyawan[$i],
-                'nominal' => $nominal[$i],
-                'tgl' => $tgl,
-                'admin' => Auth::user()->nama,
-            ];
-            Kasbon::create($data);
+            $cek = Kasbon::where('tgl', $tgl)->first();
+            if(!$cek) {
+                $data = [
+                    'nm_karyawan' => $nm_karyawan[$i],
+                    'nominal' => $nominal[$i],
+                    'tgl' => $tgl,
+                    'admin' => Auth::user()->nama,
+                ];
+                Kasbon::create($data);
+            }
         }
         
 
