@@ -78,8 +78,9 @@ class KasbonController extends Controller
 
     public function printKasbon(Request $r)
     {
+        dd($r->all());
         $dari = $r->tgl1;
-        $sampai = $r->tgl1;
+        $sampai = $r->tgl2;
         // dd($sampai);
         $data = [
             'title' => 'Kasbon Prtint',
