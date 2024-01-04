@@ -11,7 +11,7 @@ use PDF;
 
 class KasbonController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $r)
     {
         $id_user = Auth::user()->id;
         $id_menu = DB::table('tb_permission')->select('id_menu')->where('id_user',$id_user)
@@ -19,11 +19,12 @@ class KasbonController extends Controller
         if(empty($id_menu)) {
             return back();
         } else {
-
+            $tgl1 = $r->tgl1 ?? date('Y-m-01');
+            $tgl2 = $r->tgl2 ?? date('Y-m-t');
             $data = [
                 'title' => 'Data Kasbon',
-                'logout' => $request->session()->get('logout'),
-                'kasbon' => Kasbon::whereYear('tgl', date('Y-m-d'))->orderBy('id_kasbon','desc')->get(),
+                'logout' => $r->session()->get('logout'),
+                'kasbon' => Kasbon::whereBetween('tgl', [$tgl1,$tgl2])->orderBy('id_kasbon','desc')->get(),
                 'karyawan' => Karyawan::all()
             ];
     

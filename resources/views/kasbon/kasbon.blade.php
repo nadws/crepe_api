@@ -26,6 +26,9 @@
                                 <a href="#" data-toggle="modal" data-target="#print"
                                     class="btn btn-info btn-sm float-right mr-2"><i class="fas fa-print"></i> Print
                                     kasbon</a>
+                                <a href="#" data-toggle="modal" data-target="#view"
+                                    class="btn btn-info btn-sm float-right mr-2"><i class="fas fa-eye"></i> View
+                                    </a>
                             </div>
                             <div class="card-body">
                                 <div id="table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
@@ -82,6 +85,40 @@
         </div>
         <!-- /.content -->
     </div>
+    <form action="">
+        @csrf
+        <div class="modal fade" id="view" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg-max" role="document">
+                <div class="modal-content ">
+                    <div class="modal-header btn-costume">
+                        <h5 class="modal-title text-light" id="exampleModalLabel">View Kasbon</h5>
+                        <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="">Dari</label>
+                                    <input class="form-control" type="date" name="tgl1">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="">Sampai</label>
+                                    <input class="form-control" type="date" name="tgl2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
     {{-- print --}}
     <form action="{{ route('printKasbon') }}" method="post" accept-charset="utf-8">
         @csrf
