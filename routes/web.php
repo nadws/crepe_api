@@ -392,7 +392,7 @@ Route::get('/kasbon', [KasbonController::class, 'index'])->name('kasbon')->middl
 Route::post('/addKasbon', [KasbonController::class, 'addKasbon'])->name('addKasbon')->middleware('auth');
 Route::get('/deleteKasbon', [KasbonController::class, 'deleteKasbon'])->name('deleteKasbon')->middleware('auth');
 Route::patch('/editKasbon', [KasbonController::class, 'editKasbon'])->name('editKasbon')->middleware('auth');
-Route::post('/printKasbon', [KasbonController::class, 'printKasbon'])->name('printKasbon')->middleware('auth');
+Route::get('/printKasbon', [KasbonController::class, 'printKasbon'])->name('printKasbon')->middleware('auth');
 
 Route::get('/mencuci', [MencuciController::class, 'index'])->name('mencuci')->middleware('auth');
 Route::post('/addMencuci', [MencuciController::class, 'addMencuci'])->name('addMencuci')->middleware('auth');
