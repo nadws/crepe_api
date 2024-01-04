@@ -327,7 +327,7 @@ Route::post('tb_denda', function (r $b) {
             'id_lokasi' =>  $t['id_lokasi'],
             'admin' => $t['admin'],
         ];
-        Denda::create($data);
+        // Denda::create($data);
     }
 });
 
@@ -350,7 +350,7 @@ Route::post('tb_kasbon', function (r $b) {
             'admin' =>  $t['admin'],
             'nominal' =>  $t['nominal'],
         ];
-        Kasbon::create($data);
+        // Kasbon::create($data);
     }
 });
 
