@@ -37,18 +37,21 @@ class DendaController extends Controller
         }
     }
 
-    public function addDenda(Request $request)
+    public function addDenda(Request $r)
     {
-        $data = [
-            'nama' => $request->nama,
-            'alasan' => $request->alasan,
-            'nominal' => $request->nominal,
-            'tgl' => $request->tgl,
-            'id_lokasi' => $request->session()->get('id_lokasi'),
-            'admin' => Auth::user()->nama
-        ];
-
-        Denda::create($data);
+        $cek = Denda::where([['tgl',$r->tgl],['nominal', $r->nominal],['alasan', $r->alasan]])->first();
+        if(!$cek){
+            $data = [
+                'nama' => $r->nama,
+                'alasan' => $r->alasan,
+                'nominal' => $r->nominal,
+                'tgl' => $r->tgl,
+                'id_lokasi' => $r->session()->get('id_lokasi'),
+                'admin' => Auth::user()->nama
+            ];
+    
+            Denda::create($data);
+        }
 
         return redirect()->route('denda')->with('sukses', 'Berhasil tambah denda');
     }
