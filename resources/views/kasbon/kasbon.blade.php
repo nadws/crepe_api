@@ -92,7 +92,6 @@
         <!-- /.content -->
     </div>
     <form action="">
-        @csrf
         <div class="modal fade" id="view" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg-max" role="document">
                 <div class="modal-content ">
@@ -127,7 +126,6 @@
     </form>
     {{-- print --}}
     <form action="{{ route('printKasbon') }}" method="GET">
-        @csrf
         <div class="modal fade" id="print" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg-max" role="document">
                 <div class="modal-content ">
