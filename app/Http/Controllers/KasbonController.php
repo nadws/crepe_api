@@ -76,17 +76,10 @@ class KasbonController extends Controller
         return redirect()->route('kasbon')->with('error', 'Berhasil hapus kasbon');
     }
 
-    public function printKasbon(Request $request)
+    public function printKasbon(Request $r)
     {
-        $tglDari = $request->dari;
-        $tglSampai = $request->sampai;
-        if (empty($tglDari)) {
-            $dari = date('Y-m-1');
-            $sampai = date('Y-m-d');
-        } else {
-            $dari = $tglDari;
-            $sampai = $tglSampai;
-        }
+        $dari = $r->tgl1;
+        $sampai = $r->tgl1;
         // dd($sampai);
         $data = [
             'title' => 'Kasbon Prtint',
