@@ -40,7 +40,7 @@ class KasbonController extends Controller
         $nominal = $r->nominal;
         $tgl = $r->tgl;
         for ($i=0; $i < count($nm_karyawan) ; $i++) { 
-            $cek = Kasbon::where('tgl', $tgl)->first();
+            $cek = Kasbon::where([['tgl', $tgl],['nm_karyawan', $nm_karyawan[$i]],['nominal', $nominal[$i]]])->first();
             if(!$cek) {
                 $data = [
                     'nm_karyawan' => $nm_karyawan[$i],
