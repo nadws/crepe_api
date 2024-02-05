@@ -39,8 +39,8 @@ class DendaController extends Controller
 
     public function addDenda(Request $r)
     {
-        $cek = Denda::where([['tgl',$r->tgl],['nominal', $r->nominal],['alasan', $r->alasan]])->first();
-        if(!$cek){
+        $cek = Denda::where([['tgl', $r->tgl], ['nominal', $r->nominal], ['alasan', $r->alasan], ['nama', $r->nama]])->first();
+        if (!$cek) {
             $data = [
                 'nama' => $r->nama,
                 'alasan' => $r->alasan,
@@ -49,7 +49,7 @@ class DendaController extends Controller
                 'id_lokasi' => $r->session()->get('id_lokasi'),
                 'admin' => Auth::user()->nama
             ];
-    
+
             Denda::create($data);
         }
 
@@ -172,18 +172,18 @@ class DendaController extends Controller
                 // $alasan = Denda::where('nama', $l->nama)->get();
                 // if($alasan) {
                 //     foreach($alasan as $a) {
-               
+
                 //         $sheet->setCellValue('C' . $rowAl, $a->alasan)
                 //         ->setCellValue('D' . $rowAl, $a->nominal)
                 //         ->setCellValue('E' . $rowAl, $a->tgl);
                 //         $rowAl++; 
-                        
+
                 //     }
                 // } else {
                 //     continue;
                 // }
-                
-                $row++; 
+
+                $row++;
                 $namaAda = $l->nama;
             }
 
