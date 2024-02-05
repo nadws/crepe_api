@@ -519,6 +519,9 @@ class LaporanController extends Controller
 
             'kategori' => DB::select("SELECT b.nm_produk, a.harga, SUM(a.jumlah) as qty FROM `tb_pembelian` as a
             LEFT JOIN tb_produk as b ON a.id_produk = b.id_produk
+            join (
+                SELECT no_nota FROM tb_invoice GROUP BY no_nota
+            ) c on c.no_nota = a.no_nota2
             WHERE a.tanggal BETWEEN '$tgl1' AND '$tgl2' AND a.lokasi = '$loc' GROUP BY a.id_produk;")
         ];
         return view('laporan.itemMajo', $data);
