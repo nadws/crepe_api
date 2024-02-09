@@ -33,10 +33,13 @@ class ProdukController extends Controller
                 ) AS d ON d.id_produk = a.id_produk
 
                 LEFT JOIN (
-                    
-                SELECT e.id_produk , SUM(e.jumlah) AS kredit_penjualan
-                FROM tb_pembelian AS e 
-                GROUP BY e.id_produk
+                    SELECT b.id_produk,b.nm_produk, a.harga, SUM(a.jumlah) as kredit_penjualan 
+                    FROM `tb_pembelian` as a
+                    LEFT JOIN tb_produk as b ON a.id_produk = b.id_produk
+                    join (
+                        SELECT no_nota FROM tb_invoice GROUP BY no_nota
+                    ) c on c.no_nota = a.no_nota2
+                    GROUP BY a.id_produk
                 )AS e ON e.id_produk = a.id_produk
                 
                 WHERE a.id_lokasi = '$id_lokasi'"),
