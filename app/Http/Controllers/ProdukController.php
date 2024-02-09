@@ -39,9 +39,7 @@ class ProdukController extends Controller
                         SELECT no_nota FROM tb_invoice GROUP BY no_nota
                     ) c on c.no_nota = a.no_nota2
                     WHERE GROUP BY a.id_produk
-                -- SELECT e.id_produk , SUM(e.jumlah) AS kredit_penjualan
-                -- FROM tb_pembelian AS e 
-                -- GROUP BY e.id_produk
+                
                 )AS e ON e.id_produk = a.id_produk
                 
                 WHERE a.id_lokasi = '$id_lokasi'"),
