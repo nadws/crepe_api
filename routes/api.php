@@ -44,6 +44,8 @@ use Illuminate\Support\Facades\Http;
 |
 */
 
+
+
 Route::get('komisi_gaji', function () {
     $komisi = Http::get("https:/majoo.ptagafood.com/api/komisiGaji/1/2022-11-01/2022-11-09");
     $kom = $komisi['komisi'];
@@ -1014,3 +1016,13 @@ Route::get('laporan/{id_lokasi}/{tgl1}/{tgl2}', function ($id_lokasi, $tgl1, $tg
 });
 Route::get('/invoice_nanda', [ApiInvoiceController::class, 'invoice'])->name('invoice_nanda');
 Route::get('/menu', [ApiInvoiceController::class, 'menu'])->name('menu');
+
+
+Route::post('api_tes', function (r $b) {
+    foreach ($b->all() as $t) {
+        $data = [
+            'tes' => $t['tes'],
+        ];
+        DB::table('api_tes')->insert($data);
+    }
+});
