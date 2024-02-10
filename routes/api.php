@@ -1050,19 +1050,19 @@ Route::post('api_pembelian_crepe', function (r $b) {
     foreach ($b->all() as $t) {
         $data = [
             'no_nota' => $t['no_nota'],
-            'id_karyawan' => $t['id_karyawan'],
-            'id_produk' => $t['id_produk'],
-            'nm_karyawan' => $t['nm_karyawan'],
-            'tanggal' => $t['tanggal'],
-            'jumlah' => $t['jumlah'],
-            'harga' => $t['harga'],
-            'diskon' => $t['diskon'],
-            'total' => $t['total'],
-            'admin' => $t['admin'],
-            'kategori' => $t['kategori'],
-            'id_produk_toping' => $t['id_produk_toping'],
-            'id_distribusi' => $t['id_distribusi'],
-            'void' => $t['void']
+            // 'id_karyawan' => $t['id_karyawan'],
+            // 'id_produk' => $t['id_produk'],
+            // 'nm_karyawan' => $t['nm_karyawan'],
+            // 'tanggal' => $t['tanggal'],
+            // 'jumlah' => $t['jumlah'],
+            // 'harga' => $t['harga'],
+            // 'diskon' => $t['diskon'],
+            // 'total' => $t['total'],
+            // 'admin' => $t['admin'],
+            // 'kategori' => $t['kategori'],
+            // 'id_produk_toping' => $t['id_produk_toping'],
+            // 'id_distribusi' => $t['id_distribusi'],
+            // 'void' => $t['void']
         ];
         DB::table('tb_pembelian')->insert($data);
     }
