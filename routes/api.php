@@ -1032,7 +1032,7 @@ Route::post('api_invoice_crepe', function (r $b) {
             'bca_debit' => $t['bca_debit'],
             'gopay' => $t['gopay'],
             'diskon' => $t['diskon'],
-            // 'id_voucher' => $t['id_voucher'],
+            'id_voucher' => $t['id_voucher'],
             // 'nominal_voucher' => $t['nominal_voucher'],
             // 'tgl_jam' => $t['tgl_jam'],
             // 'id_customer' => $t['id_customer'],
