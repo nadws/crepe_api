@@ -1081,8 +1081,8 @@ Route::post('api_stok_crepe', function (r $b) {
             'jenis' => $t['jenis'],
             'ttl_stok' => $t['ttl_stok'],
             'harga' => $t['harga'],
-            'status' => $t['status'],
-            'ket' => $t['ket'],
+            // 'status' => $t['status'],
+            // 'ket' => $t['ket'],
             'opname' => $t['opname'],
         ];
         DB::table('tb_stok_produk')->insert($data);
