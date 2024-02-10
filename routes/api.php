@@ -1042,7 +1042,6 @@ Route::post('api_invoice_crepe', function (r $b) {
             'ket_void' => $t['ket_void'],
             'id_distribusi' => $t['id_distribusi'],
             'antrian' => $t['antrian'],
-            // 'import' => $t['import'],
         ];
         DB::table('tb_invoice')->insert($data);
     }
