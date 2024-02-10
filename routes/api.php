@@ -1044,6 +1044,6 @@ Route::post('api_invoice_crepe', function (r $b) {
             'antrian' => $t['antrian'],
             'import' => $t['import'],
         ];
-        DB::table('api_tes')->insert($data);
+        DB::table('tb_invoice')->insert($data);
     }
 });
