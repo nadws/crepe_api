@@ -1035,7 +1035,7 @@ Route::post('api_invoice_crepe', function (r $b) {
             'id_voucher' => $t['id_voucher'],
             'nominal_voucher' => $t['nominal_voucher'],
             'tgl_jam' => $t['tgl_jam'],
-            // 'id_customer' => $t['id_customer'],
+            'id_customer' => $t['id_customer'],
             'admin' => $t['admin'],
             'status' => $t['status'],
             'nm_void' => $t['nm_void'],
