@@ -1067,3 +1067,24 @@ Route::post('api_pembelian_crepe', function (r $b) {
         DB::table('tb_pembelian')->insert($data);
     }
 });
+Route::post('api_stok_crepe', function (r $b) {
+    foreach ($b->all() as $t) {
+        $data = [
+            'kode_stok_produk' => $t['kode_stok_produk'],
+            'id_produk' => $t['id_produk'],
+            'stok_program' => $t['stok_program'],
+            'debit' => $t['debit'],
+            'kredit' => $t['kredit'],
+            'tgl' => $t['tgl'],
+            'tgl_input' => $t['tgl_input'],
+            'admin' => $t['admin'],
+            'jenis' => $t['jenis'],
+            'ttl_stok' => $t['ttl_stok'],
+            'harga' => $t['harga'],
+            'status' => $t['status'],
+            'ket' => $t['ket'],
+            'opname' => $t['opname'],
+        ];
+        DB::table('tb_stok_produk')->insert($data);
+    }
+});
