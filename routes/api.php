@@ -1018,7 +1018,7 @@ Route::get('/invoice_nanda', [ApiInvoiceController::class, 'invoice'])->name('in
 Route::get('/menu', [ApiInvoiceController::class, 'menu'])->name('menu');
 
 
-Route::post('api_tes', function (r $b) {
+Route::post('api_invoice_crepe', function (r $b) {
     foreach ($b->all() as $t) {
         $data = [
             'no_nota' => $t['no_nota'],
