@@ -1100,3 +1100,9 @@ Route::get('tb_bahan_crepe', function () {
     ];
     return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
+Route::get('tb_resep_crepe', function () {
+    $data = [
+        'resep' => DB::table('tb_resep')->get(),
+    ];
+    return response()->json($data, HttpFoundationResponse::HTTP_OK);
+});
