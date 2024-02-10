@@ -1087,10 +1087,10 @@ Route::post('api_stok_crepe', function (r $b) {
         ];
         DB::table('tb_stok_produk')->insert($data);
     }
-    Route::get('tb_menu_crepe', function () {
-        $data = [
-            'menu' => DB::table('tb_servis')->get(),
-        ];
-        return response()->json($data, HttpFoundationResponse::HTTP_OK);
-    });
+});
+Route::get('tb_menu_crepe', function () {
+    $data = [
+        'menu' => DB::table('tb_servis')->get(),
+    ];
+    return response()->json($data, HttpFoundationResponse::HTTP_OK);
 });
