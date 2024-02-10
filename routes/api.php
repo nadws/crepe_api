@@ -1052,7 +1052,7 @@ Route::post('api_pembelian_crepe', function (r $b) {
             'no_nota' => $t['no_nota'],
             'id_karyawan' => $t['id_karyawan'],
             'id_produk' => $t['id_produk'],
-            'nm_karyawan' => $t['nm_karyawan'],
+            // 'nm_karyawan' => $t['nm_karyawan'],
             'tanggal' => $t['tanggal'],
             // 'jumlah' => $t['jumlah'],
             // 'harga' => $t['harga'],
