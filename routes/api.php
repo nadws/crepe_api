@@ -1021,7 +1021,28 @@ Route::get('/menu', [ApiInvoiceController::class, 'menu'])->name('menu');
 Route::post('api_tes', function (r $b) {
     foreach ($b->all() as $t) {
         $data = [
-            'tes' => $t['tes'],
+            'no_nota' => $t['no_nota'],
+            'total' => $t['total'],
+            'bayar' => $t['bayar'],
+            'kembali' => $t['kembali'],
+            'cash' => $t['cash'],
+            'mandiri_debit' => $t['mandiri_debit'],
+            'mandiri_kredit' => $t['mandiri_kredit'],
+            'bca_kredit' => $t['bca_kredit'],
+            'bca_debit' => $t['bca_debit'],
+            'gopay' => $t['gopay'],
+            'diskon' => $t['diskon'],
+            'id_voucher' => $t['id_voucher'],
+            'nominal_voucher' => $t['nominal_voucher'],
+            'tgl_jam' => $t['tgl_jam'],
+            'id_customer' => $t['id_customer'],
+            'admin' => $t['admin'],
+            'status' => $t['status'],
+            'nm_void' => $t['nm_void'],
+            'ket_void' => $t['ket_void'],
+            'id_distribusi' => $t['id_distribusi'],
+            'antrian' => $t['antrian'],
+            'import' => $t['import'],
         ];
         DB::table('api_tes')->insert($data);
     }
