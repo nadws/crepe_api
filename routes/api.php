@@ -1022,8 +1022,8 @@ Route::post('api_invoice_crepe', function (r $b) {
     foreach ($b->all() as $t) {
         $data = [
             'no_nota' => $t['no_nota'],
-            // 'total' => $t['total'],
-            // 'bayar' => $t['bayar'],
+            'total' => $t['total'],
+            'bayar' => $t['bayar'],
             // 'kembali' => $t['kembali'],
             // 'cash' => $t['cash'],
             // 'mandiri_debit' => $t['mandiri_debit'],
