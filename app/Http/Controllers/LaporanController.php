@@ -617,7 +617,11 @@ class LaporanController extends Controller
             ) as d on d.no_order2 = a.no_nota
             where a.tgl BETWEEN '$r->tgl1' and '$r->tgl2' and a.id_lokasi = '$loc' ;"),
             'tgl1' => $r->tgl1,
-            'tgl2' => $r->tgl2
+            'tgl2' => $r->tgl2,
+            'pembayaran' => DB::select("SELECT *
+            FROM akun_pembayaran as a
+            left join klasifikasi_pembayaran as b on b.id_klasifikasi_pembayaran = a.id_klasifikasi
+            ")
         ];
 
         return view('laporan.cek_invoice', $data);
